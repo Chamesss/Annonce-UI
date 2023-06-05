@@ -1,8 +1,7 @@
 # Annonce-UI
 
-# Getting Started with Create React App
+Annonce-UI is a React.js application that serves as the client-side component responsible for handling various functionalities and rendering user interfaces for the Annonce project.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
