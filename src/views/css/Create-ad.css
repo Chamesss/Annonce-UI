@@ -1,0 +1,79 @@
+.box {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    background-color: rgb(229, 229, 229);
+    border: 0px solid #ccc;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+
+
+.drop{
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 20px;
+}
+
+.spacing{
+    margin-top: 10px;
+}
+
+.yoo div {
+    flex-direction: row !important;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.yoo h5 {
+    color: rgb(56, 55, 60);
+}
+
+.aaa {
+    flex-direction: row !important;
+}
+
+.uploaded-pictures {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.uploaded-pictures img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-top: 100px;
+}
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.suggestion-item {
+    cursor: pointer;
+    padding: 5px;
+}
+
+
+.title {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    background-color: rgb(229, 229, 229);
+    border: 0px solid #ccc;
+    margin-bottom: 20px;
+}
