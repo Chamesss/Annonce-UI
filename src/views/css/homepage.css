@@ -1,15 +1,11 @@
-.parent-container {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-} 
+
 .horizontal-bar {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   margin-left : 50px !important;
   border: 4px solid #D85A60;
-  width : 700px;
+  width : 300px;
   border-radius: 3px;
 }
 

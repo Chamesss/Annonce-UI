@@ -3,8 +3,8 @@ import React from 'react';
 const NotFoundPage = () => {
   return (
     <div>
-      <h1>404 - Page Not Found</h1>
-      <p>The requested page could not be found.</p>
+      <h1>404 - Page Introuvable</h1>
+      <p>La page demandée n'a pu être trouvée.</p>
     </div>
   );
 };

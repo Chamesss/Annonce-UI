@@ -1,29 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaMapMarkerAlt, FaCity, FaPhoneAlt, FaHome, FaBuilding, FaEnvelope, FaUser } from "react-icons/fa";
 import { Button } from "react-bootstrap";
+import { Spinner } from 'react-bootstrap';
 
 function Profile({ userinfo }) {
   const [user, setUser] = useState(userinfo);
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const handleSendVerification = async (userid, email) => {
+    setIsLoading(true);
     try {
-    const response = await fetch(`http://localhost:8080/user/send/${email}/${userid}`, {
-      method:"GET"
-    })
-    const data = await response.json();
-    if (data.status === true) {
-      setMessage(data.message);
+      const response = await fetch(`http://localhost:8080/user/send/${email}/${userid}`, {
+        method: "GET"
+      })
+      const data = await response.json();
+      if (data.status === true) {
+        setIsLoading(false);
+        setMessage(data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
 
   }
 
   return (
     <div className="container mx-5">
-      <h2>My profile</h2>
+      <h2>Mon profile</h2>
       {user !== null ? (
         <div className="container d-flex justify-content-center align-items-center py-5">
           <div className="row justify-content-center ">
@@ -38,7 +46,7 @@ function Profile({ userinfo }) {
               <div className="col-lg-8">
                 <div>
                   {user.type === "individual" ? (
-                    <div><p><FaHome /><strong> Type: </strong>Individual</p></div>
+                    <div><p><FaHome /><strong> Type: </strong>Individuelle</p></div>
                   ) : (<div><p><FaBuilding /><strong> Type: </strong>Entreprise</p></div>)}
                   <p><FaPhoneAlt /><strong> Telephone:</strong> +216 {user.tel}</p>
                   <p><FaEnvelope /><strong> E-mail:</strong> {user.email} </p>
@@ -46,14 +54,21 @@ function Profile({ userinfo }) {
                   <p><FaCity /><strong> Ville:</strong> {user.city}</p>
                   <p><FaMapMarkerAlt /><strong> Rejoint à:</strong> {new Date(user.createdAt).toLocaleDateString()}</p>
                   {user.state ? (
-                    <p className="d-flex flex-row"><FaUser /><strong> State: </strong><p className="text text-success"> Account activated </p></p>
+                    <p className="d-flex flex-row"><FaUser /><strong> Status:</strong><p className="text text-success"> Compte activé                    </p></p>
                   ) : (<div>
-                    <p><FaUser /><strong> State:</strong> Account not activated</p>
+                    <p><FaUser /><strong> Status:</strong> Compte non activé</p>
                     <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => handleSendVerification(user._id,user.email)}
-                    >Request verification</button>
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => handleSendVerification(user._id, user.email)}
+                    >Demande de vérification</button>
+                    {isLoading && (
+                      <div className="loading-block">
+                        <Spinner animation="border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                      </div>
+                    )}
                     {message && <p className="text text-success">{message}</p>}
                   </div>)}
                 </div>

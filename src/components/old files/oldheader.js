@@ -4,7 +4,7 @@ import { Button, Dropdown, Modal } from "react-bootstrap";
 import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaBell, FaFilter, FaMapMarkerAlt } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import "./css/Header.css";
-import SearchBar from "./searchBar";
+import SearchBar from "../searchBar";
 
 function Header({ onSearchData }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, FormGroup, Label, Input } from "reactstrap";
 import { Button, Modal } from 'react-bootstrap';
 import { FaUpload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Select from 'react-select';
+import './css/Profile.css';
 
 function EditProfile({ userinfo }) {
     const [user, setUser] = useState(userinfo);
@@ -11,7 +13,8 @@ function EditProfile({ userinfo }) {
     const [success, setSuccess] = useState(false);
     const [deleted, setDeleted] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [locations, setLocation] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [location, setLocation] = useState('');
     const [searchTerm, setSearchTerm] = useState(`${userinfo.country}, ${userinfo.city}`);
     const [suggestions, setSuggestions] = useState([]);
     const [selectedLocationId, setSelectedLocationId] = useState(null);
@@ -19,23 +22,13 @@ function EditProfile({ userinfo }) {
     const [password, setPassword] = useState();
     const [showdeletemodal, setShowDeleteModel] = useState(false);
     const navigate = useNavigate();
-    const inputRef = useRef();
 
     useEffect(() => {
-        fetchPlaces();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (inputRef.current && !inputRef.current.contains(event.target)) {
-                setSuggestions([]);
-            }
-        };
-
-        document.addEventListener("click", handleClickOutside);
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
-        };
+        fetchPlaces();
     }, []);
 
     useEffect(() => {
@@ -64,6 +57,12 @@ function EditProfile({ userinfo }) {
         }
     }, [success]);
 
+    const options = suggestions.slice(0, 8).map((location) => ({
+        id: `${location._id}`,
+        value: `${location.admin_name}, ${location.city}`,
+        label: `${location.admin_name}, ${location.city}`,
+    }));
+
 
 
     const handleChange = (e) => {
@@ -90,14 +89,27 @@ function EditProfile({ userinfo }) {
             });
             const data = await response.json();
             const { locations: locations } = data;
-            setLocation(locations);
+            setLocations(locations);
+            const selectedLocation = locations.find(
+                (loc) =>
+                    loc.city === userinfo.city
+            );
+
+            if (selectedLocation) {
+                const defaultLocation = {
+                    id: selectedLocation._id,
+                    value: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
+                    label: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
+                };
+                setSelectedLocationId(selectedLocation._id);
+                setLocation(defaultLocation);
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleInputChange = (event) => {
-        const { value } = event.target;
+    const handleInputChange = (value) => {
         setSearchTerm(value);
         // Filter the locations based on the search term
         const filteredLocations = locations.filter(
@@ -105,17 +117,14 @@ function EditProfile({ userinfo }) {
                 location.admin_name.toLowerCase().includes(value.toLowerCase()) ||
                 location.city.toLowerCase().includes(value.toLowerCase())
         );
-        const limitedSuggestions = filteredLocations.slice(0, 6);
-        setSuggestions(limitedSuggestions);
+        setSuggestions(filteredLocations);
     };
 
-    const handleLocationSelect = (event, locationId, city, country) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setSelectedLocationId(locationId);
-        let place = country + ', ' + city;
-        setSearchTerm(place);
-        setSuggestions([]);
+    const handleLocationSelect = (location) => {
+        setSelectedLocationId(location.id);
+        setSearchTerm(location);
+        setLocation(location);
+        setError('');
     };
 
 
@@ -125,17 +134,13 @@ function EditProfile({ userinfo }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Validation checks
         if (user.oldPassword == null) {
-            setError("Please enter password");
+            setError("Veuillez entrer le mot de passe");
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
-
         if (user.newPassword != null && user.newPassword != ' ' && user.newPassword.length > 0) {
-            console.log('ahawa', user.newPassword)
             if (!user.newPassword || user.newPassword.length < 6) {
                 setError("Invalid password length (minimum 6 characters)");
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -147,10 +152,6 @@ function EditProfile({ userinfo }) {
                 return;
             }
         }
-
-
-
-        // Make API call to update user profile
         try {
             const formData = new FormData();
             formData.append("firstname", user.firstname);
@@ -162,7 +163,7 @@ function EditProfile({ userinfo }) {
             formData.append("type", user.type);
             formData.append("uncheck", false);
             formData.append("file", image);
-            console.log('file', image)
+
 
             const response = await fetch(`http://localhost:8080/user/edituser/${user._id}/${selectedLocationId}`, {
                 method: "PATCH",
@@ -194,7 +195,7 @@ function EditProfile({ userinfo }) {
         try {
             const response = await fetch(`http://localhost:8080/user/deleteuser/${user._id}`, {
                 method: "DELETE",
-                headers: {password: password}
+                headers: { password: password }
             });
             const data = await response.json();
             if (data.status === true) {
@@ -213,7 +214,7 @@ function EditProfile({ userinfo }) {
     return (
         <div className="container d-flex justify-content-center align-items-center">
             <div className="row">
-                <h2 className="text-center mb-4">Edit Profile</h2>
+                <h2 className="text-center mb-4">Editer le profil</h2>
                 <Form>
 
 
@@ -241,13 +242,13 @@ function EditProfile({ userinfo }) {
                     <div className="row">
                         <div className="col-md-6">
                             <FormGroup>
-                                <Label htmlFor="firstname">First Name:</Label>
+                                <Label htmlFor="firstname">Prénom:</Label>
                                 <Input type="text" id="firstname" name="firstname" value={user.firstname} onChange={handleChange} />
                             </FormGroup>
                         </div>
                         <div className="col-md-6">
                             <FormGroup>
-                                <Label htmlFor="lastname">Last Name:</Label>
+                                <Label htmlFor="lastname">Nom:</Label>
                                 <Input type="text" id="lastname" name="lastname" value={user.lastname} onChange={handleChange} />
                             </FormGroup>
                         </div>
@@ -266,7 +267,7 @@ function EditProfile({ userinfo }) {
                                 <Label htmlFor="type">Type:</Label>
                                 <Input type="select" id="type" name="type" value={user.type} onChange={handleChange}>
                                     <option value="">Select Type</option>
-                                    <option value="Individual">Individual</option>
+                                    <option value="Individual">Individuelle</option>
                                     <option value="Entreprise">Entreprise</option>
                                 </Input>
                             </FormGroup>
@@ -277,35 +278,16 @@ function EditProfile({ userinfo }) {
                     <div className="row">
                         <div className="col-md-6">
                             <FormGroup>
-                                <div ref={inputRef}>
+                                <div>
                                     <Label htmlFor="location">Location:</Label>
-                                    <Input
-                                        type="text"
-                                        defaultValue={user.country}
-                                        value={searchTerm}
-                                        onChange={handleInputChange}
+                                    <Select
+                                        options={options}
+                                        value={location}
+                                        onChange={handleLocationSelect}
+                                        onInputChange={handleInputChange}
                                         placeholder="Enter an address"
+                                        blurInputOnSelect={false}
                                     />
-                                    {suggestions.length > 0 && (
-                                        <ul>
-                                            {suggestions.map((location, index) => (
-                                                <li
-                                                    key={index}
-                                                    onClick={(event) =>
-                                                        handleLocationSelect(
-                                                            event,
-                                                            location._id,
-                                                            location.city,
-                                                            location.admin_name
-                                                        )
-                                                    }
-                                                    style={{ cursor: 'pointer' }}
-                                                >
-                                                    {location.admin_name}, {location.city}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
                                 </div>
                             </FormGroup>
                         </div>
@@ -337,7 +319,7 @@ function EditProfile({ userinfo }) {
                     <div className="row">
                         <div className="col-md-12">
                             <FormGroup>
-                                <Label htmlFor="oldPassword">Old Password:</Label>
+                                <Label htmlFor="oldPassword">Mot de passe:</Label>
                                 <Input type="password" id="oldPassword" name="oldPassword" onChange={handleChange} />
                             </FormGroup>
                         </div>
@@ -347,13 +329,13 @@ function EditProfile({ userinfo }) {
                     <div className="row">
                         <div className="col-md-6">
                             <FormGroup>
-                                <Label htmlFor="newPassword">New Password:</Label>
+                                <Label htmlFor="newPassword">Nouveau mot de passe:</Label>
                                 <Input type="password" id="newPassword" name="newPassword" value={user.newPassword} onChange={handleChange} />
                             </FormGroup>
                         </div>
                         <div className="col-md-6">
                             <FormGroup>
-                                <Label htmlFor="confirmNewPassword">Confirm New Password:</Label>
+                                <Label htmlFor="confirmNewPassword">Confirmez Nouveau mot de passe:</Label>
                                 <Input type="password" id="confirmNewPassword" name="confirmNewPassword" value={newPasswordConfirm} onChange={handleConfirmPasswordChange} />
                             </FormGroup>
                         </div>
@@ -361,43 +343,44 @@ function EditProfile({ userinfo }) {
                     {error && <div className="text-danger mb-3">{error}</div>}
                     <div className="d-flex justify-content-between">
                         <button class="btn btn-primary" type="primary" variant="primary" onClick={handleSubmit}>
-                            Save Profile
+                            Enregistrer le profil
                         </button>
                         <button class="btn btn-danger" type="delete" variant="danger" onClick={handleShowModal}>
-                            Delete Profile
+                            Supprimer le profil
                         </button>
                     </div>
-                    {success && <div className="text-success mb-3">Profile updated successfully</div>}
-                    {deleted && <div className="text-success mb-3">Profile deleted successfully.. See you soon..</div>}
-                </Form>
-            </div>
+                    {success && <div className="text-success mb-3">Mise à jour du profil réussie</div>}
+                    {deleted && <div className="text-success mb-3">Profil supprimé avec succès.. À bientôt !..</div>}
+                </Form >
+            </div >
             {showdeletemodal && (
                 <Modal show={showdeletemodal} onHide={handleHideModal} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Confirmation</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Are you sure you want to delete your profile?</p>
-                        <p>Enter password to confirm</p>
-                        <input 
-                        type="password"
-                        id="Password" 
-                        name="Password"
-                        className="form-control"
-                        onChange={(e) => setPassword(e.target.value)}
+                        <p>Êtes-vous sûr de vouloir supprimer votre profil?</p>
+                        <p>Entrez le mot de passe pour confirmer</p>
+                        <input
+                            type="password"
+                            id="Password"
+                            name="Password"
+                            className="form-control"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleHideModal}>
-                            Cancel
+                            Annuler
                         </Button>
-                        <Button variant="danger" onClick={(e) => handleDeleteUser(e,password) }>
-                            Yes, Delete
+                        <Button variant="danger" onClick={(e) => handleDeleteUser(e, password)}>
+                            Oui, Supprimé
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }
 

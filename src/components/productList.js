@@ -1,88 +1,92 @@
 import React from 'react';
 import Product from './product';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import './css/ProductList.css';
 import { useNavigate } from 'react-router-dom';
-import './css/ProductList.css'
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 function ProductList({ products }) {
   const navigate = useNavigate();
 
   const handleProductClick = (product) => {
-    console.log('aaaaaaaaaaaaaaaaa',product);
     navigate(`/annonce/${product._id}`);
   };
 
-  // Group the products into chunks of 5 cards
-  const groupedProducts = [];
-  for (let i = 0; i < products.length; i += 5) {
-    groupedProducts.push(products.slice(i, i + 5));
-  }
+  const CustomPrevArrow = (props) => (
+    <button
+      type="button"
+      className="carousel-arrow prev-arrow"
+      onClick={props.onClick}
+    >
+      <FaChevronLeft />
+    </button>
+  );
 
-  // Calculate the number of empty placeholders needed for the last slide
-  const lastSlideEmptySlots = 5 - (products.length % 5);
+  const CustomNextArrow = (props) => (
+    <button
+      type="button"
+      className="carousel-arrow next-arrow"
+      onClick={props.onClick}
+    >
+      <FaChevronRight />
+    </button>
+  );
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
+  };
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <div
-        id="carouselExample"
-        className="carousel slide"
-        data-bs-ride="carousel"
-        style={{ width: '100%', backgroundColor:"white"}}
-      >
-        <div className="carousel-inner">
-          {groupedProducts.map((group, index) => (
-            <div key={index} className={`carousel-item${index === 0 ? ' active' : ''}`} >
-              <div
-                className="row d-flex flex-row justify-content-center align-items-center"
-                style={{ backgroundColor:"white" }}
-              >
-                {group.map((product) => (
-                  <div
-                    key={product._id}
-                    className="col-md-2 mx-3"
-                    onClick={() => handleProductClick(product)}
-                  >
-                    <Product product={product} />
-                  </div>
-                ))}
-                {/* Add empty placeholders for the last slide */}
-                {index === groupedProducts.length - 1 &&
-                  [...Array(lastSlideEmptySlots)].map((_, placeholderIndex) => (
-                    <div
-                      key={placeholderIndex}
-                      className="col-md-2 mx-3 card"
-                      style={{ visibility: 'visible', width: '250px', height:'400px'}}
-                    ></div>
-                  ))}
-              </div>
-            </div>
-          ))}
+    <div className="p-5">
+      <Slider {...settings}>
+        {products.map((product) => (
+          <div
+          key={product._id}
+          className="col mb-4"
+          onClick={() => handleProductClick(product)}
+        >
+          <Product product={product} />
         </div>
-        {groupedProducts.length > 1 && (
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="prev"
-            style={{width:"6%"}}
-          >
-            <span className="carousel-control-prev-icon custom-carousel-button" aria-hidden="true"></span>
-            <span className="visually-hidden">Précédent</span>
-          </button>
-        )}
-        {groupedProducts.length > 1 && (
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="next"
-            style={{width:"6%"}}
-          >
-            <span className="carousel-control-next-icon custom-carousel-button" aria-hidden="true"></span>
-            <span className="visually-hidden">Suivant</span>
-          </button>
-        )}
-      </div>
+        ))}
+      </Slider>
     </div>
   );
 }

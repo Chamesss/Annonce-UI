@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaBell, FaToolbox, FaFolderOpen } from "react-icons/fa";
+import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen } from "react-icons/fa";
 import { VscBellDot, VscBell } from "react-icons/vsc";
 import { TiPlus } from "react-icons/ti";
 import "./css/Header.css";
@@ -35,8 +35,6 @@ function Header() {
           setisAdmin(data.user.isAdmin);
           fetchNotifications(token);
           setIsAuthenticated(true);
-          console.log(data.user.isAdmin);
-          console.log(data.user);
         } else {
           setIsAuthenticated(false);
         }
@@ -54,7 +52,6 @@ function Header() {
       });
       const data = await response.json();
       setNotifications(data.notifications);
-      console.log('aaaa', data.notifications);
       setSeen(data.notifications[0].isRead);
     } catch (error) {
       console.error(error);
@@ -68,7 +65,6 @@ function Header() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
-      console.log('work');
       if (data.status === true) {
         setSeen(true);
       }
@@ -103,10 +99,6 @@ function Header() {
     fetchNotifications(token);
     updateNotifications(token);
     setShowNotfBar(!showNotfbar);
-  };
-
-  const handleMyFavs = () => {
-    isAuthenticated ? navigate("/my-ads") : navigate("/login");
   };
 
   const handleLinkClick = () => {
@@ -199,14 +191,14 @@ function Header() {
               className="login-btn"
               onClick={handleLoginClick}
             >
-              Login
+              Connexion
             </Button>
             <Button
               variant="primary"
               className="login-btn"
               onClick={() => navigate("/create-account")}
             >
-              Sign Up
+              S'inscrire
             </Button>
           </>
         )}
@@ -240,16 +232,16 @@ function Header() {
                     </a>
                   )}
                   <a href="#" onClick={handleMyAds}>
-                    <FaFolderOpen /> My Ads
+                    <FaFolderOpen /> Mes Annonces
                   </a>
                   <a href="#" onClick={handleLinkClick}>
-                    <FaHeart /> Favorites
+                    <FaHeart /> Favoris
                   </a>
                   <a href="/help">
-                    <FaQuestionCircle /> FAQ
+                    <FaQuestionCircle /> FAQs
                   </a>
                   <a href="#" style={{ color: "red" }} onClick={handleLogout}>
-                    <FaSignOutAlt /> Log Out
+                    <FaSignOutAlt /> Se déconnecter
                   </a>
                 </nav>
               </div>

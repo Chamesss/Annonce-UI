@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/header';
 import Banner from '../components/banner';
 import Category from '../components/category';
@@ -6,17 +6,19 @@ import ProductList from '../components/productList';
 import Footer from '../components/footer';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './css/homepage.css';
+import Spinner from './../components/Spinner';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
 
   const fetchCategories = async () => {
@@ -24,6 +26,7 @@ function HomePage() {
       const response = await fetch('http://localhost:8080/category/getall');
       const data = await response.json();
       setCategories(data.category);
+      return (data.category)
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -32,12 +35,19 @@ function HomePage() {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:8080/ad/get`, {
-          method: 'GET',
-          headers: { authorization: `Bearer ${token}`, searchquery:'', categoryid:'', subcategoryid:'', locationid:'' },
-        });
-        const data = await response.json();
-        setProducts(data.ads);
+      const responseNouveaute = await fetch(`http://localhost:8080/ad/get`, {
+        method: 'GET',
+        headers: { authorization: `Bearer ${token}`, searchquery: '', categoryid: '', subcategoryid: '', locationid: '' },
+      });
+      const dataNouveaute = await responseNouveaute.json();
+      const categoriess = await fetchCategories();
+      const productsByCategory = await Promise.all(
+        categoriess.map((category) =>
+          fetchProductsByCategory(category._id)
+        )
+      );
+
+      setProducts([dataNouveaute.ads, ...productsByCategory]);
       setLoading(false);
     } catch (err) {
       setError(err.message);
@@ -45,51 +55,50 @@ function HomePage() {
     }
   };
 
+  const fetchProductsByCategory = async (categoryId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:8080/ad/get`, {
+        method: 'GET',
+        headers: { authorization: `Bearer ${token}`, searchquery: '', categoryid: categoryId, subcategoryid: '', locationid: '' },
+      });
+      const data = await response.json();
+      return data.ads;
+    } catch (err) {
+      console.error(`Error fetching products for category ${categoryId}:`, err);
+      return [];
+    }
+  };
 
   return (
     <div>
       <div className="header">
         <Header />
       </div>
+      <Category />
+      <Banner />
       {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
+        <div><Spinner /></div>
       ) : (
-        <>
-          <div className="parent-container">
-            <Category />
+        <div>
+          <div>
+            <h2 className="titleCat mt-5">Nouveauté</h2>
+            <div className="horizontal-bar"> </div>
             <div>
-              <h2 className="titleCat mt-5">Nouveauté</h2>
-              <div className="horizontal-bar"> </div>
-              <div className="products-container">
-                <ProductList products={products}/>
+              <ProductList products={products[0]} />
+            </div>
+          </div>
+          {categories.map((category, index) => (
+            <div key={category._id}>
+              <h2 className='titleCat mt-5'>{category.name}</h2>
+              <div className="horizontal-bar"></div>
+              <div>
+                <ProductList products={products[index + 1]} />
               </div>
             </div>
-            {categories.map((category) => (
-              <div key={category._id}>
-                <h2 className='titleCat mt-5'>{category.name}</h2>
-                <div className="horizontal-bar"></div>
-                <div className="products-container">
-                  {Array.isArray(products) && products.length > 0 ? (
-                    <ProductList
-                      products={products.filter(
-                        (product) => product.category === category._id
-                      )}
-                    />
-                  ) : (
-                    <p>No products available</p>
-                  )}
-                </div>
-
-              </div>
-            ))}
-          </div>
-        </>
-
+          ))}
+        </div>
       )}
-
-
       <Footer />
     </div>
   );

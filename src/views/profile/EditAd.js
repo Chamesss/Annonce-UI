@@ -5,6 +5,7 @@ import { FaUpload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import ReactAudioPlayer from "react-audio-player";
 import axios from "axios";
+import Select from 'react-select';
 
 function EditAd({ ad }) {
     const [advertisement, setAdvertisement] = useState(ad);
@@ -15,10 +16,11 @@ function EditAd({ ad }) {
     const [newImages, setNewImages] = useState([]);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(ad.category);
+    const [selectedCategory, setSelectedCategory] = useState(ad.categoryId);
     const [subcategories, setSubcategories] = useState([]);
-    const [selectedSubcategory, setSelectedSubcategory] = useState(ad.subcategory);
-    const [locations, setLocation] = useState([]);
+    const [selectedSubcategory, setSelectedSubcategory] = useState(ad.subCategoryId);
+    const [locations, setLocations] = useState([]);
+    const [location, setLocation] = useState([]);
     const [searchTerm, setSearchTerm] = useState(`${ad.country}, ${ad.city}`);
     const [suggestions, setSuggestions] = useState([]);
     const [selectedLocationId, setSelectedLocationId] = useState(null);
@@ -28,6 +30,10 @@ function EditAd({ ad }) {
     const inputRef = useRef();
     const mediaRecorderRef = useRef(null);
     const audioPlayerRef = useRef(null);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     useEffect(() => {
         if (success) {
@@ -63,7 +69,7 @@ function EditAd({ ad }) {
             try {
                 const response = await axios.get("http://localhost:8080/category/getall");
                 setCategories(response.data.category);
-                const foundCategory = response.data.category.find(category => category._id === ad.category);
+                const foundCategory = response.data.category.find(category => category._id === ad.categoryId);
                 setSubcategories(foundCategory ? foundCategory.subcategories : []);
             } catch (error) {
                 console.log(error);
@@ -78,6 +84,13 @@ function EditAd({ ad }) {
         setAdvertisement({ ...advertisement, [e.target.name]: e.target.value });
     };
 
+    const options = suggestions.slice(0, 8).map((location) => ({
+        id: `${location._id}`,
+        value: `${location.admin_name}, ${location.city}`,
+        label: `${location.admin_name}, ${location.city}`,
+    }));
+
+
     const fetchPlaces = async () => {
         try {
             const response = await fetch("http://localhost:8080/location/get", {
@@ -85,14 +98,27 @@ function EditAd({ ad }) {
             });
             const data = await response.json();
             const { locations: locations } = data;
-            setLocation(locations);
+            setLocations(locations);
+            const selectedLocation = locations.find(
+                (loc) =>
+                    loc.city === ad.city
+            );
+
+            if (selectedLocation) {
+                const defaultLocation = {
+                    id: selectedLocation._id,
+                    value: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
+                    label: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
+                };
+                setSelectedLocationId(selectedLocation._id);
+                setLocation(defaultLocation);
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleInputChange = (event) => {
-        const { value } = event.target;
+    const handleInputChange = (value) => {
         setSearchTerm(value);
         // Filter the locations based on the search term
         const filteredLocations = locations.filter(
@@ -100,17 +126,14 @@ function EditAd({ ad }) {
                 location.admin_name.toLowerCase().includes(value.toLowerCase()) ||
                 location.city.toLowerCase().includes(value.toLowerCase())
         );
-        const limitedSuggestions = filteredLocations.slice(0, 6);
-        setSuggestions(limitedSuggestions);
+        setSuggestions(filteredLocations);
     };
 
-    const handleLocationSelect = (event, locationId, city, country) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setSelectedLocationId(locationId);
-        let place = country + ', ' + city;
-        setSearchTerm(place);
-        setSuggestions([]);
+    const handleLocationSelect = (location) => {
+        setSelectedLocationId(location.id);
+        setSearchTerm(location);
+        setLocation(location);
+        setError('');
     };
 
     const handleImageChange = (e) => {
@@ -235,7 +258,7 @@ function EditAd({ ad }) {
     return (
         <div className="container d-flex justify-content-center align-items-center">
             <div className="row">
-                <h2 className="text-center mb-4">Edit Advertisement</h2>
+                <h2 className="text-center mb-4">Modifier l'Annonce</h2>
                 <Form onSubmit={handleSubmit}>
                     {selectedImages && selectedImages.length > 0 ? (
                         <div className="mb-4 d-flex flex-row justify-content-center align-items-center">
@@ -265,7 +288,7 @@ function EditAd({ ad }) {
                     <Row>
                         <Col>
                             <FormGroup>
-                                <Label for="pictures">Upload Pictures</Label>
+                                <Label for="pictures">Upload Photos:</Label>
                                 <Input
                                     type="file"
                                     name="pictures"
@@ -275,7 +298,7 @@ function EditAd({ ad }) {
                                     onChange={handleImageChange}
                                 />
                                 <small className="form-text text-muted">
-                                    You can select multiple images
+                                    Vous pouvez sélectionner plusieurs images
                                 </small>
                             </FormGroup>
                         </Col>
@@ -283,7 +306,7 @@ function EditAd({ ad }) {
                     <Row>
                         <Col>
                             <FormGroup>
-                                <Label for="title">Title</Label>
+                                <Label for="title">Titre:</Label>
                                 <Input
                                     type="text"
                                     name="title"
@@ -295,7 +318,7 @@ function EditAd({ ad }) {
                         </Col>
                         <Col>
                             <FormGroup>
-                                <Label for="price">Price</Label>
+                                <Label for="price">Prix:</Label>
                                 <Input
                                     type="number"
                                     name="price"
@@ -309,7 +332,7 @@ function EditAd({ ad }) {
                     <FormGroup>
                         <Row>
                             <Col>
-                                <Label for="description">Description</Label>
+                                <Label for="description">Description:</Label>
                                 <Input
                                     type="textarea"
                                     name="description"
@@ -320,34 +343,16 @@ function EditAd({ ad }) {
                                 />
                             </Col>
                             <Col>
-                                <div ref={inputRef}>
+                                <div>
                                     <Label htmlFor="location">Location:</Label>
-                                    <Input
-                                        type="text"
-                                        value={searchTerm}
-                                        onChange={handleInputChange}
+                                    <Select
+                                        options={options}
+                                        value={location}
+                                        onChange={handleLocationSelect}
+                                        onInputChange={handleInputChange}
                                         placeholder="Enter an address"
+                                        blurInputOnSelect={false}
                                     />
-                                    {suggestions.length > 0 && (
-                                        <ul>
-                                            {suggestions.map((location, index) => (
-                                                <li
-                                                    key={index}
-                                                    onClick={(event) =>
-                                                        handleLocationSelect(
-                                                            event,
-                                                            location._id,
-                                                            location.city,
-                                                            location.admin_name
-                                                        )
-                                                    }
-                                                    style={{ cursor: 'pointer' }}
-                                                >
-                                                    {location.admin_name}, {location.city}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
                                 </div>
                             </Col>
                         </Row>
@@ -363,7 +368,7 @@ function EditAd({ ad }) {
                                     value={selectedCategory}
                                     onChange={handleCategoryChange}
                                 >
-                                    <option value="">Select a category</option>
+                                    <option value="">Select category</option>
                                     {categories && (
                                         <>
                                             {categories.map((category) => (
@@ -387,7 +392,7 @@ function EditAd({ ad }) {
                                     onChange={handleSubcategoryChange}
                                     disabled={!selectedCategory}
                                 >
-                                    <option value="">Select a subcategory</option>
+                                    <option value="">Select Subcategory</option>
                                     {subcategories.map((subcategory) => (
                                         <option key={subcategory._id} value={subcategory._id}>
                                             {subcategory.name}
@@ -419,37 +424,37 @@ function EditAd({ ad }) {
                     {error && <div className="alert alert-danger">{error}</div>}
                     {success && (
                         <div className="alert alert-success">
-                            Ad updated successfully!
+                            Annonce mise à jour avec succès!
                         </div>
                     )}
                     {deleted && (
                         <div className="alert alert-success">
-                            Ad Deleted successfully!
+                            Annonce supprimée avec succès!
                         </div>
                     )}
                     <div className="text-center p-5 d-flex flex-row justify-content-between align-items-center">
                         <Button type="submit" variant="primary">
-                            Save Changes
+                            Sauvegarder
                         </Button>{" "}
                         <Button variant="danger" onClick={handleShowModal}>
-                            Delete Advertisement
+                            Supprimer l'annonce
                         </Button>
                     </div>
                 </Form>
             </div>
             <Modal show={showDeleteModal} onHide={handleHideModal} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete Advertisement</Modal.Title>
+                    <Modal.Title>Suppression l'annonce</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Are you sure you want to delete this advertisement?</p>
+                    <p>Êtes-vous sûr de vouloir supprimer cette annonce?</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleHideModal}>
-                        Cancel
+                        Retourner
                     </Button>
                     <Button variant="danger" onClick={handleDeleteAd}>
-                        Delete
+                        Supprimer
                     </Button>
                 </Modal.Footer>
             </Modal>

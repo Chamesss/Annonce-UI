@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
@@ -12,6 +12,26 @@ const ResetCodeForm = () => {
   const location = useLocation();
   const email = location.state.email;
 
+  const handlelogin = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/protected", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const data = await response.json();
+      if (data.status === true) {
+        navigate('/');
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    handlelogin();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,14 +45,14 @@ const ResetCodeForm = () => {
       });
       const data = await response.json();
       if (data.success === true) {
-        setMessage('Reset code verified successfully.');
+        setMessage('Code de réinitialisation vérifié avec succès.');
         navigate('/new-password', { state: { email } });
       } else {
-        setError('Failed to verify reset code.');
+        setError('Échec de la vérification du code de réinitialisation.');
       }
     } catch (error) {
       console.error(error);
-      setMessage('Failed to verify reset code.');
+      setMessage('Échec de la vérification du code de réinitialisation.');
     }
   };
 
@@ -46,8 +66,8 @@ const ResetCodeForm = () => {
           <div class="row justify-content-center">
             <div class="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
               <form onSubmit={handleSubmit}>
-              <h2 class="my-4 d-block" style={{margin:"10px"}}>Reset Code</h2>
-              <p>Confirmation code has been sent to your E-mail:</p>
+              <h2 class="my-4 d-block" style={{margin:"10px"}}>Code de réinitialisation</h2>
+              <p>Le code de confirmation a été envoyé à votre adresse e-mail:</p>
                 <input
                   type="text"
                   placeholder="Reset Code"
@@ -56,7 +76,7 @@ const ResetCodeForm = () => {
                   class="form-control my-3"
                 />
                 <button type="submit" class="btn btn-primary my-3">
-                  Submit
+                  Valider
                 </button>
               </form>
               {message && <p style={{ color: 'green' }}>{message}</p>}

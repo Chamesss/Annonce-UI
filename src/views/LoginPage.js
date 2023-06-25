@@ -27,6 +27,10 @@ const LoginPage = () => {
     }
   }, [welcome]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -48,9 +52,9 @@ const LoginPage = () => {
         if (data.success == true) {
           localStorage.setItem('token', data.token);
           setWelcome(true);
+          setError('');
         } else {
           setError(data.message);
-          console.log(data.message);
         }
       } catch (error) {
         console.error('Login failed:', error.message);
@@ -67,7 +71,7 @@ const LoginPage = () => {
       <div class="container">
         <div className="d-flex justify-content-end align-items-center">
           <div className="mt-5" style={{ width: "400px", height: " 400px" }}>
-            <h2 className="text-center mb-4">Login</h2>
+            <h2 className="text-center mb-4">Connexion</h2>
             <Form>
               <FormGroup>
                 <Label for="email">Email:</Label>
@@ -91,7 +95,7 @@ const LoginPage = () => {
                 />
               </FormGroup>
               {error && <div className="text-danger mb-3">{error}</div>}
-              {welcome && <div className="text-success mb-3">Welcome... redirecting..</div>}
+              {welcome && <div className="text-success mb-3">Bienvenue, rediriger..</div>}
               <Button
                 color="primary"
                 onClick={handleLogin}
@@ -102,13 +106,13 @@ const LoginPage = () => {
               </Button>
             </Form>
             <p style={{ textAlign: 'center', marginTop: '10px' }}>
-              Forgot password? <a href="/forgot-password" style={{ color: 'blue' }}>
-                Click here
+              Mot de passe oublié? <a href="/forgot-password" style={{ color: 'blue' }}>
+              Cliquez ici
               </a>
             </p>
             <p style={{ textAlign: 'center', marginTop: '10px' }}>
               <a href="/create-account" style={{ color: 'blue' }}>
-                Create Account
+              Créer un compte
               </a>
             </p>
           </div>

@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Tab, Tabs, Form, Button, ProgressBar } from 'react-bootstrap';
+import { Container, Tab, Tabs, Form, Button, ProgressBar, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaBell } from "react-icons/fa";
+import Select from 'react-select';
+
 import Header from '../components/header';
 import Footer from '../components/footer';
 import './css/Create-ad.css';
 import { useNavigate } from 'react-router-dom';
+
 
 const CreateAdPage = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -17,19 +20,33 @@ const CreateAdPage = () => {
     const [description, setDescription] = useState('');
     const [pictures, setPictures] = useState([]);
     const [categoryId, setCategoryId] = useState('');
-    const [subCategoryId, setSubCategoryId] = useState(null);
+    const [subCategoryId, setSubCategoryId] = useState('');
     const [vocal, setVocal] = useState(null);
     const [categories, setCategories] = useState([]);
     const [locations, setLocations] = useState([]);
     const [recording, setRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
+    const [location, setLocation] = useState('');
     const [token, setToken] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
-    const [selectedLocationId, setSelectedLocationId] = useState(null);
+    const [selectedLocationId, setSelectedLocationId] = useState('');
     const mediaRecorderRef = useRef(null);
     const audioPlayerRef = useRef(null);
     const Navigate = useNavigate();
+
+    const [errorcategory, setErrorCategory] = useState('');
+    const [errorinfo, setInfoError] = useState('');
+    const [errorpicture, setPicturesError] = useState('');
+    const [errorlocation, setLocationError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [errorsuccess, setErrorSuccess] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
 
     useEffect(() => {
         controlToken();
@@ -39,15 +56,34 @@ const CreateAdPage = () => {
         fetchLocations();
     }, []);
 
+    const options = suggestions.slice(0, 8).map((location) => ({
+        id: `${location._id}`,
+        value: `${location.admin_name}, ${location.city}`,
+        label: `${location.admin_name}, ${location.city}`,
+    }));
+
+    useEffect(() => {
+        if (success) {
+            // Wait for 5 seconds before navigating to another page
+            const timeout = setTimeout(() => {
+                Navigate('/');
+            }, 5000);
+
+            return () => {
+                clearTimeout(timeout);
+            };
+        }
+    }, [success]);
+
     const controlToken = async () => {
-        try{
+        try {
             const token = localStorage.getItem('token');
             const response = await fetch(`http://localhost:8080/protected/`, {
-                method:"GET",
+                method: "GET",
                 headers: { Authorization: `Bearer ${token}` }
             })
             const data = await response.json();
-            if (data.status !== true){
+            if (data.status !== true) {
                 Navigate('/login');
             }
             setToken(token);
@@ -66,6 +102,10 @@ const CreateAdPage = () => {
         }
     };
 
+    const handleGoBack = () => {
+        Navigate(-1);
+    };
+
     const fetchLocations = async () => {
         try {
             const response = await fetch('http://localhost:8080/location/get');
@@ -77,6 +117,38 @@ const CreateAdPage = () => {
     };
 
     const handleTabSelect = (selectedTab) => {
+        if (selectedTab === 1 && (categoryId === '' || subCategoryId === '')) {
+            setErrorCategory("Please select a category and subcategory for your ad.");
+            return;
+        }
+
+        setErrorCategory('');
+
+        if (selectedTab === 2) {
+            if (title === '') {
+                setInfoError("Please enter a title");
+                return;
+            }
+            if (price === '') {
+                setInfoError("Please enter a price");
+                return;
+            }
+            if (description.length < 15) {
+                setInfoError("Description must be at least 15 characters");
+                return;
+            }
+            setInfoError("");
+        }
+
+        if (selectedTab === 3) {
+            if (pictures.length === 0) {
+                setPicturesError("Please add at least one picture");
+                return;
+            }
+            setPicturesError("");
+        }
+
+
         setActiveTab(selectedTab);
         const newProgress = (selectedTab / 5) * 100; // Assuming there are 4 tabs (0, 1, 2, 3)
         setProgress(newProgress);
@@ -125,6 +197,13 @@ const CreateAdPage = () => {
     };
 
     const handleFormSubmit = async (e) => {
+
+        if (selectedLocationId === '') {
+            setLocationError("Please select a valid location");
+            return
+        } else {
+            setLocationError("");
+        }
         setProgress(100);
         const formData = new FormData();
         formData.append('title', title);
@@ -139,42 +218,28 @@ const CreateAdPage = () => {
         pictures.forEach((picture) => {
             formData.append('picture', picture);
         });
-        
+
         try {
+            setIsLoading(true);
             const response = await fetch(`http://localhost:8080/ad/create/${selectedLocationId}`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData
             });
             const data = await response.json();
-            if (data.status === true){
-                console.log('ad successfully created');
-                Navigate('/');
+            if (data.status === true) {
+                setIsLoading(false);
+                setSuccess("Successful.. Redirecting to home page");
             }
             else {
-                console.log(data.message);
+                setErrorSuccess(data.message);
             }
         } catch (error) {
-            console.log(error.message);
+            setErrorSuccess(error.message);
         }
-
-        // Reset form
-        // setTitle('');
-        // setPrice('');
-        // setWebsite('');
-        // setDescription('');
-        // setPictures([]);
-        // setCategoryId('');
-        // setSubCategoryId(null);
-        // setVocal(null);
-        // setLocations('');
-
-        // Go back to the first tab
-        setActiveTab(0);
     };
 
-    const handleInputChange = (event) => {
-        const { value } = event.target;
+    const handleInputChange = (value) => {
         setSearchTerm(value);
         // Filter the locations based on the search term
         const filteredLocations = locations.filter(
@@ -185,13 +250,11 @@ const CreateAdPage = () => {
         setSuggestions(filteredLocations);
     };
 
-    const handleLocationSelect = (event, locationId, city, country) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setSelectedLocationId(locationId);
-        let place = country + ', ' + city;
-        setSearchTerm(place);
-        setSuggestions([]);
+    const handleLocationSelect = (location) => {
+        setSelectedLocationId(location.id);
+        setSearchTerm(location);
+        setLocation(location);
+        setLocationError('');
     };
 
     const renderPictures = () => {
@@ -200,213 +263,255 @@ const CreateAdPage = () => {
         ));
     };
 
+    const datalistOptionStyle = {
+        fontSize: '0.8em',
+        padding: '0.3em 1em',
+        backgroundColor: '#ccc',
+        cursor: 'pointer',
+    };
+
     return (
         <div>
             <div class="header"><Header />
-                <ProgressBar now={progress} label={`${progress}%`} />
-                <div class="container">
-                    <Tabs activeKey={activeTab} onSelect={handleTabSelect} id="createAdTabs">
-                        <Tab eventKey={0}>
-                            <Form>
-                                <h5 class="title">Choisir une catégorie:</h5>
-                                <div className="d-flex justify-content-between align-items-center mb-3">
-                                    <Form.Group controlId="categoryId" className="mr-3">
-                                        <div class="drop">
-                                            <Form.Label>Category</Form.Label>
+                <ProgressBar now={progress} label={`${progress}%`} className="my-4" />
+                <Tabs activeKey={activeTab} onSelect={handleTabSelect} id="createAdTabs" className="my-4">
+                    <Tab eventKey={0}>
+                        <Form>
+                            <div className="d-flex flex-column justify-content-center align-items-center">
+                                <div class="container d-flex justify-content-center ">
+                                    <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
+                                        <h2 className="mb-5 mt-4">Choisir une catégorie:</h2>
+                                        <div className="mb-3">
+                                            <Form.Group controlId="categoryId">
+                                                <div className="drop">
+                                                    <Form.Label>Category</Form.Label>
+                                                    <Form.Control
+                                                        as="select"
+                                                        value={categoryId}
+                                                        onChange={(e) => setCategoryId(e.target.value)}
+                                                        required
+                                                    >
+                                                        <option value=''>Select category</option>
+                                                        {categories.map((category) => (
+                                                            <option key={category._id} value={category._id}>
+                                                                {category.name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Control>
+                                                </div>
+                                            </Form.Group>
+                                        </div>
+                                        <div className="mb-3">
+                                            <Form.Group controlId="subCategoryId">
+                                                <div className="drop">
+                                                    <Form.Label>Subcategory</Form.Label>
+                                                    <Form.Control
+                                                        as="select"
+                                                        value={subCategoryId}
+                                                        onChange={(e) => setSubCategoryId(e.target.value)}
+                                                    >
+                                                        <option value=''>Select subcategory</option>
+                                                        {categories.find((category) => category._id === categoryId)?.subcategories.map(
+                                                            (subcategory) => (
+                                                                <option key={subcategory._id} value={subcategory._id}>
+                                                                    <span className="subcategory-icon">
+                                                                        <FontAwesomeIcon icon={faChevronDown} />
+                                                                    </span>
+                                                                    {subcategory.name}
+                                                                </option>
+                                                            )
+                                                        )}
+                                                    </Form.Control>
+                                                </div>
+                                            </Form.Group>
+                                        </div>
+                                        <p className="mx-3 text-danger">{errorcategory}</p>
+                                        <div className="d-flex justify-content-between">
+                                            <div className="mx-3">
+                                                <Button variant="primary" onClick={() => handleGoBack()}>
+                                                    Retourner
+                                                </Button>
+                                            </div>
+                                            <div className="mx-3">
+                                                <Button variant="primary" onClick={() => handleTabSelect(1)}>
+                                                    Suivant
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Form>
+                    </Tab>
+                    <Tab eventKey={1}>
+                        <Form>
+                            <div className="d-flex flex-column justify-content-center align-items-center">
+                                <div class="container d-flex justify-content-center">
+                                    <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
+                                        <h2 className="mb-5 mt-4">Infos générales:</h2>
+                                        <Form.Group controlId="title">
+                                            <Form.Label>Title</Form.Label>
                                             <Form.Control
-                                                as="select"
-                                                value={categoryId}
-                                                onChange={(e) => setCategoryId(e.target.value)}
+                                                type="text"
+                                                placeholder="Enter title"
+                                                value={title}
+                                                onChange={(e) => setTitle(e.target.value)}
                                                 required
-                                            >
-                                                <option value="">Select category</option>
-                                                {categories.map((category) => (
-                                                    <option key={category._id} value={category._id}>
-                                                        {category.name}
-                                                    </option>
-                                                ))}
-                                            </Form.Control>
-                                        </div>
-                                    </Form.Group>
-                                    <Form.Group controlId="subCategoryId" className="ml-3">
-                                        <div class="drop">
-                                            <Form.Label>Subcategory</Form.Label>
+                                            />
+                                        </Form.Group>
+                                        <Form.Group controlId="price">
+                                            <Form.Label>Prix</Form.Label>
                                             <Form.Control
-                                                as="select"
-                                                value={subCategoryId}
-                                                onChange={(e) => setSubCategoryId(e.target.value)}
-                                            >
-                                                <option value="">Select subcategory</option>
-                                                {categories.find((category) => category._id === categoryId)?.subcategories.map(
-                                                    (subcategory) => (
-                                                        <option key={subcategory._id} value={subcategory._id}>
-                                                            <span className="subcategory-icon">
-                                                                <FontAwesomeIcon icon={faChevronDown} />
-                                                            </span>
-                                                            {subcategory.name}
-                                                        </option>
-                                                    )
+                                                type="number"
+                                                placeholder="Enter price"
+                                                value={price}
+                                                onChange={(e) => setPrice(e.target.value)}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group controlId="website">
+                                            <Form.Label>Website (optional)</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Enter website"
+                                                value={website}
+                                                onChange={(e) => setWebsite(e.target.value)}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group controlId="description">
+                                            <Form.Label>Description:</Form.Label>
+                                            <Form.Control
+                                                as="textarea"
+                                                rows={3}
+                                                placeholder="Enter description (at least 15 characters)"
+                                                value={description}
+                                                onChange={(e) => setDescription(e.target.value)}
+                                                minLength={15}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <p className="mx-3 text-danger">{errorinfo}</p>
+                                        <div className="d-flex justify-content-between">
+                                            <div className="drop">
+                                                <Button variant="primary" onClick={() => handleTabSelect(0)}>
+                                                Retourner
+                                                </Button></div>
+                                            <div className="drop">
+                                                <Button variant="primary" onClick={() => handleTabSelect(2)}>
+                                                    Suivant
+                                                </Button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Form>
+                    </Tab>
+                    <Tab eventKey={2}>
+                        <Form>
+                            <div className="d-flex flex-column justify-content-center align-items-center">
+                                <div class="container d-flex justify-content-center">
+                                    <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
+                                        <h2 className="mb-5 mt-4">Photos:</h2>
+                                        <Form.Group controlId="pictures">
+                                            <Form.Label>Upload Photos</Form.Label>
+                                            <Form.Control type="file" multiple onChange={handlePictureSelect} />
+                                        </Form.Group>
+                                        <div className="uploaded-pictures">
+                                            {renderPictures()}
+                                        </div>
+                                        <p className="mx-3 text-danger">{errorpicture}</p>
+                                        <div className="d-flex justify-content-between">
+                                            <div className="drop">
+                                                <Button variant="primary" onClick={() => handleTabSelect(1)}>
+                                                    Retourner
+                                                </Button></div>
+                                            <div className="drop">
+                                                <Button variant="primary" onClick={() => handleTabSelect(3)}>
+                                                    Suivant
+                                                </Button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Form>
+                    </Tab>
+                    <Tab eventKey={3}>
+                        <Form>
+                            <div className="d-flex flex-column justify-content-center align-items-center">
+                                <div class="container d-flex justify-content-center">
+                                    <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
+                                        <h2 className="mb-5 mt-4">Enregistrement audio: </h2>
+                                        <Form.Group controlId="audio">
+                                            <Form.Label>Record Audio (optionnel)</Form.Label>
+                                            <div>
+                                                <Button onClick={handleRecord}>{recording ? 'Stop Recording' : 'Start Recording'}</Button>
+                                            </div>
+                                            <div>
+                                                <input type="file" className="form-control" accept="audio/*" onChange={handleAudioChange} />
+                                                {audioBlob && (
+                                                    <audio ref={audioPlayerRef} src={URL.createObjectURL(audioBlob)} controls />
                                                 )}
-                                            </Form.Control>
-                                        </div>
-                                    </Form.Group>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleTabSelect(0)}>
-                                            Precedant
-                                        </Button></div>
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleTabSelect(1)}>
-                                            Next
-                                        </Button></div>
-                                </div>
-                            </Form>
-                        </Tab>
-                        <Tab eventKey={1}>
-                            <Form>
-                                <h5 class="title">Infos générales:</h5>
-                                <Form.Group controlId="title">
-                                    <Form.Label>Title</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter title"
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
-                                        required
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="price">
-                                    <Form.Label>Price</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        placeholder="Enter price"
-                                        value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
-                                        required
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="website">
-                                    <Form.Label>Website</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter website"
-                                        value={website}
-                                        onChange={(e) => setWebsite(e.target.value)}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="description">
-                                    <Form.Label>Description</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        rows={3}
-                                        placeholder="Enter description (at least 15 characters)"
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        minLength={15}
-                                        required
-                                    />
-                                </Form.Group>
-                                <div className="d-flex justify-content-between box">
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleTabSelect(0)}>
-                                            Precedant
-                                        </Button></div>
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleTabSelect(2)}>
-                                            Next
-                                        </Button></div>
-                                </div>
-                            </Form>
-                        </Tab>
-                        <Tab eventKey={2}>
-                            <Form>
-                                <h5 class="title">Photos:</h5>
-                                <Form.Group controlId="pictures">
-                                    <Form.Label>Upload Pictures</Form.Label>
-                                    <Form.Control type="file" multiple onChange={handlePictureSelect} />
-                                </Form.Group>
-                                <div className="uploaded-pictures">
-                                    {renderPictures()}
-                                </div>
-                                <div className="d-flex justify-content-between box">
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleTabSelect(1)}>
-                                            Precedant
-                                        </Button></div>
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleTabSelect(3)}>
-                                            Next
-                                        </Button></div>
-                                </div>
-                            </Form>
-                        </Tab>
-                        <Tab eventKey={3}>
-                            <Form>
-                                <h5 class="title">Enregistrement audio: </h5>
-                                <Form.Group controlId="audio">
-                                    <Form.Label>Record Audio (optional)</Form.Label>
-                                    <div>
-                                        <Button onClick={handleRecord}>{recording ? 'Stop Recording' : 'Start Recording'}</Button>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <div className="drop">
+                                                    <Button variant="primary" onClick={() => handleTabSelect(2)}>
+                                                        Retourner
+                                                    </Button></div>
+                                                <div className="drop">
+                                                    <Button variant="primary" onClick={() => handleTabSelect(4)}>
+                                                        Suivant
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </Form.Group>
                                     </div>
-                                    {audioBlob && (
-                                        <div>
-                                            <input type="file" accept="audio/*" onChange={handleAudioChange} />
-                                            <audio ref={audioPlayerRef} src={URL.createObjectURL(audioBlob)} controls />
-                                        </div>
-                                    )}
-                                    <div className="d-flex justify-content-between box">
-                                        <div className="drop">
-                                            <Button variant="primary" onClick={() => handleTabSelect(2)}>
-                                                Precedant
-                                            </Button></div>
-                                        <div className="drop">
-                                            <Button variant="primary" onClick={() => handleTabSelect(4)}>
-                                                Next
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </Form.Group>
-                            </Form>
-                        </Tab>
-                        <Tab eventKey={4}>
-                            <Form>
-                                <Form.Group controlId="location">
-                                    <Form.Label>Location</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={searchTerm}
-                                        onChange={handleInputChange}
-                                        placeholder="Enter an address"
-                                    />
-                                    {searchTerm.length > 1 && suggestions.length > 0 && (
-                                        <ul>
-                                            {suggestions.slice(0, 6).map((location) => (
-                                                <li
-                                                    key={location._id}
-                                                    onClick={(event) => handleLocationSelect(event, location._id, location.city, location.admin_name)}
-                                                    style={{ cursor: 'pointer' }}
-                                                >
-                                                    {location.admin_name}, {location.city}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </Form.Group>
-                                <div className="d-flex justify-content-between box">
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleTabSelect(3)}>
-                                            Precedant
-                                        </Button></div>
-                                    <div className="drop">
-                                        <Button variant="primary" onClick={() => handleFormSubmit()}>
-                                            Valider
-                                        </Button></div>
                                 </div>
-                            </Form>
-                        </Tab>
-                    </Tabs>
-                </div>
+                            </div>
+                        </Form>
+                    </Tab>
+                    <Tab eventKey={4}>
+                        <Form>
+                            <div className="d-flex flex-column justify-content-center align-items-center">
+                                <div class="container d-flex justify-content-center">
+                                    <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
+                                        <h2 className="mb-5 mt-4">Location select: </h2>
+                                        <Form.Group controlId="location">
+                                            <Form.Label>Location</Form.Label>
+                                            <Select
+                                                options={options}
+                                                value={location}
+                                                onChange={handleLocationSelect}
+                                                onInputChange={handleInputChange}
+                                                placeholder="Enter an address"
+                                                blurInputOnSelect={false}
+                                            />
+                                        </Form.Group>
+                                        <p className="mx-3 text-danger">{errorlocation}</p>
+                                        <div className="d-flex justify-content-between">
+                                            <div className="drop">
+                                                <Button variant="primary" onClick={() => handleTabSelect(3)}>
+                                                    Retourner
+                                                </Button></div>
+                                            <div className="drop">
+                                                <Button variant="primary" onClick={() => handleFormSubmit()}>
+                                                    Suivant
+                                                </Button></div>
+                                        </div>
+                                        {isLoading && (
+                                            <div className="loading-block">
+                                                <Spinner animation="border" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </Spinner>
+                                            </div>
+                                        )}
+                                        <p className="mx-3 text-danger">{errorsuccess}</p>
+                                        <p className="mx-3 text-success">{success}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Form>
+                    </Tab>
+                </Tabs>
             </div>
             <Footer />
         </div >

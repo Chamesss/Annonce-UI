@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './css/Category.css';
-import { useNavigate } from "react-router-dom";
 
 function Categories() {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
-  const Navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories();
@@ -22,11 +20,9 @@ function Categories() {
   };
 
   function handleSubmit(activeCategoryid, subcategoryid) {
-    const queryString = `?keyword=${encodeURIComponent('')}&categoryId=${encodeURIComponent(activeCategoryid)}&subcategoryId=${encodeURIComponent(subcategoryid)}&locationId=${encodeURIComponent('')}`;
-    Navigate(`/search${queryString}`);
+    const queryString = `?keyword=${encodeURIComponent('')}&categoryid=${encodeURIComponent(activeCategoryid)}&subcategoryid=${encodeURIComponent(subcategoryid)}&locationid=${encodeURIComponent('')}`;
+    window.location.href = `/search${queryString}`;
   }
-
-
 
   const handleCategoryMouseEnter = (category) => {
     setActiveCategory(category);
@@ -43,6 +39,7 @@ function Categories() {
         {categories.map((category, index) => (
           <div
             className="category-item"
+            style={{cursor:"pointer"}}
             key={index}
             onMouseEnter={() => handleCategoryMouseEnter(category)}
             onMouseLeave={handleCategoryMouseLeave}
@@ -58,7 +55,7 @@ function Categories() {
               <ul className="subcategory-list">
                 {category.subcategories.map((subcategory, subIndex) => (
                   <li className="subcategory-item" key={subIndex}>
-                    <span onClick={() => handleSubmit(activeCategory._id, subcategory._id)}>{subcategory.name}</span>
+                    <span onClick={() => handleSubmit(activeCategory._id, subcategory._id)} style={{cursor:"pointer"}} >{subcategory.name}</span>
                   </li>
                 ))}
               </ul>

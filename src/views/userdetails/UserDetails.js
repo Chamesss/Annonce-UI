@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../../components/header';
 import Category from '../../components/category';
 import Footer from '../../components/footer';
 import ProductList from '../../components/productList';
-import { FaMapMarkerAlt, FaCity, FaPhoneAlt, FaHome, FaBuilding, FaUser } from "react-icons/fa";
+import { FaChevronLeft } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCity, FaPhoneAlt, FaHome, FaBuilding } from "react-icons/fa";
+import Spinner from '../../components/Spinner';
 
 const UserDetailsPage = () => {
     const { userId } = useParams();
     const [user, setUser] = useState(null);
     const [ads, setAds] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserDetails();
-        console.log('pzdd');
         fetchAds();
     }, [userId]);
 
@@ -25,7 +27,6 @@ const UserDetailsPage = () => {
             })
             const data = await response.json();
             setUser(data.user);
-            console.log('hehehe')
         } catch (error) {
             console.error('Error fetching user details:', error);
         }
@@ -33,22 +34,21 @@ const UserDetailsPage = () => {
 
     const fetchAds = async () => {
         try {
-            const response = await fetch('http://localhost:8080/ad/specific', {
+            const response = await fetch('http://localhost:8080/ad/specific?Page=1', {
                 method: "GET",
                 headers: { id: userId },
             })
             const data = await response.json();
-            setAds(data.ad);
+            setAds(data.ads);
         } catch (error) {
             console.log(error);
         }
     }
 
+    const handleGoBack = () => {
+        navigate(-1);
+    };
 
-
-    if (!user) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div>
@@ -56,6 +56,10 @@ const UserDetailsPage = () => {
                 <Header />
             </div>
             <Category />
+            <div className="p-3" onClick={handleGoBack} style={{ transform: "translateY(50%)" }}>
+                <FaChevronLeft className="carousel-arrow" />
+            </div>
+            {user && (
             <div class="container d-flex justify-content-center align-items-center py-5">
                 <div class="row justify-content-center ">
                     <div class=" profile-picture border border-2 rounded-circle shadow-lg p-3 mb-1 bg-white rounded" style={{ width: '150px', height: '150px' }}>
@@ -69,7 +73,7 @@ const UserDetailsPage = () => {
                         <div class="col-lg-8">
                             <div>
                                 {user.type === "individual" ? (
-                                    <div><p><FaHome /><strong> Type: </strong>Individual</p></div>
+                                    <div><p><FaHome /><strong> Type: </strong>Individuelle</p></div>
                                 ) : (<div><p><FaBuilding /><strong> Type: </strong>Entreprise</p></div>)}
                                 <p><FaPhoneAlt /><strong> Telephone:</strong> +216 {user.tel}</p>
                                 <p><FaMapMarkerAlt /><strong> Région:</strong> {user.country} </p>
@@ -80,19 +84,22 @@ const UserDetailsPage = () => {
                     </div>
                 </div>
             </div>
+            )}
             <div class="d-flex justify-content-center align-items-center">
                 <hr class="my-4" style={{ width: '90%', borderWidth: '4px', fontWeight: 'bold' }} />
             </div>
+            {user && (
             <div class="container pb-5">
                 <h3 style={{ color: "#D85A60" }}>Autre Annonces de <strong>{user.firstname}</strong>:</h3>
             </div>
-            <div >
+            )}
+            <div>
                 {ads.length > 0 ? (
                     <div>
                         <ProductList products={ads} />
                     </div>
                 ) : (
-                    <p>No products available</p>
+                    <div><Spinner /></div>
                 )}
             </div>
             <Footer />

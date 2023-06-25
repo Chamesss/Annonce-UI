@@ -17,3 +17,22 @@ p {
 a {
     color: blue;
 }
+
+.custom-datalist {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    list-style: none;
+    margin: 0;
+  }
+  
+  .custom-datalist li {
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .custom-datalist li:hover {
+    background-color: #f5f5f5;
+  }

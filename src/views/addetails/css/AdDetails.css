@@ -28,3 +28,24 @@
   backdrop-filter: blur(10px);
   z-index: -1;
 }
+
+.carousel-indicators {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.carousel-indicators li {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+}
+
+.carousel-indicators li.active {
+  background-color: #000;
+}

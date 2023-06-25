@@ -12,6 +12,27 @@ const NewPasswordPage = () => {
   const location = useLocation();
   const email = location.state.email;
 
+  const handlelogin = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/protected", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const data = await response.json();
+      if (data.status === true) {
+        navigate('/');
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    handlelogin();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   useEffect(() => {
     if (confirmed) {
       // Wait for 5 seconds before navigating to another page
@@ -29,9 +50,6 @@ const NewPasswordPage = () => {
     e.preventDefault();
 
     try {
-      // Send new password to Node.js API
-      console.log(email);
-      console.log(password);
       const response = await fetch(`http://localhost:8080/user/edituser/null/null`, {
         method: 'PATCH',
         headers: {
@@ -42,13 +60,13 @@ const NewPasswordPage = () => {
       const data = await response.json();
       if (data.success) {
         setErrorMessage('');
-        setConfirmed('Password has been changed.. redirecting to login page')
+        setConfirmed('Le mot de passe a été changé.. redirection vers la page de connexion..')
       } else {
-        setErrorMessage('Failed to reset password.');
+        setErrorMessage('Échec de la réinitialisation du mot de passe.');
       }
     } catch (error) {
       console.error(error);
-      setErrorMessage('Failed to reset password. ' + error);
+      setErrorMessage('Échec de la réinitialisation du mot de passe. ' + error);
     }
   };
 
@@ -70,9 +88,9 @@ const NewPasswordPage = () => {
           <div class="row justify-content-center">
             <div class="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
               <form onSubmit={handleSubmit}>
-                <h2 class="my-4 d-block" style={{ margin: "10px" }}>Reset Password</h2>
+                <h2 class="my-4 d-block" style={{ margin: "10px" }}>Réinitialiser le mot de passe</h2>
                 <div>
-                  <label htmlFor="password">New Password:</label>
+                  <label htmlFor="password">Nouveau mot de passe:</label>
                   <input
                     id="password"
                     type="password"
@@ -83,7 +101,7 @@ const NewPasswordPage = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="confirmPassword">Confirm Password:</label>
+                  <label htmlFor="confirmPassword">Confirmer le nouveau mot de passe:</label>
                   <input
                     id="confirmPassword"
                     type="password"
@@ -98,7 +116,7 @@ const NewPasswordPage = () => {
                   disabled={password !== confirmPassword}
                   class="btn btn-primary my-3"
                 >
-                  Submit
+                  Valider
                 </button>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                 {confirmed && <p style={{ color: 'green' }}>{confirmed}</p>}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import './css/Profile.css';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
@@ -9,33 +9,40 @@ import Category from '../../components/category';
 import Profile from './profile';
 import EditProfile from "./EditProfile";
 import MyAds from "./myads";
+import Spinner from "../../components/Spinner";
 
 function Main() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState("profile");
   const [starteditprofile, setStartEditProfile] = useState(false);
   const location = useLocation();
+  const sectionParams = new URLSearchParams(location.search);
+  const [selectedOption, setSelectedOption] = useState(sectionParams.get('section'));
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   useEffect(() => {
     const sectionParams = new URLSearchParams(location.search);
     const keyword = sectionParams.get('section');
-    console.log("bisbis", keyword);
 
-    if (keyword) {
-      setSelectedOption(keyword);
-    } else {
-      setSelectedOption("profile");
+
+    if (user) {
+      if (keyword) {
+        setSelectedOption(keyword);
+      } else {
+        setSelectedOption("profile");
+      }
     }
-  }, []);
+  }, [user]);
 
 
-  const handleLogout = () => {
-    document.cookie =
-      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    navigate("/");
-  };
+  function handleLogout() {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  }
 
   const handleSwitchProfile = () => {
     setStartEditProfile(!starteditprofile);
@@ -58,7 +65,6 @@ function Main() {
           if (innerData.status === true) {
             setUser(innerData.user);
             setIsLoading(false);
-            console.log('marhaba')
           } else {
           }
         } else {
@@ -76,8 +82,8 @@ function Main() {
       case "ads":
         return (
           <div className="container d-flex justify-content-center align-items-center">
-            <div className="content">
-              <h1 class="mx-5p-5" ></h1>
+            <div className="content p-5">
+              <h1 className="mx-5" ></h1>
               <MyAds user={user} />
             </div>
           </div>
@@ -86,7 +92,7 @@ function Main() {
         return (
           <div className="container d-flex justify-content-center align-items-center">
             <div className="content p-5">
-              <h1 class="mx-5"></h1>
+              <h1 className="mx-5"></h1>
               {user !== null ? (<Favorites user={user} />) : (null)}
             </div>
           </div>
@@ -100,7 +106,7 @@ function Main() {
                 <div>
                   <Profile userinfo={user} />
                   <div className="d-flex justify-content-center pl-5">
-                    <Button onClick={() => handleSwitchProfile()}>Edit Profile</Button>
+                    <Button onClick={() => handleSwitchProfile()}>Editer le profil</Button>
                   </div>
                 </div>
 
@@ -111,7 +117,7 @@ function Main() {
               <div>
                 <EditProfile userinfo={user} />
                 <div className="d-flex justify-content-center pl-5">
-                  <Button onClick={() => handleSwitchProfile()}>Retour</Button>
+                  <Button onClick={() => handleSwitchProfile()}>Retourner</Button>
                 </div>
               </div>
 
@@ -123,9 +129,6 @@ function Main() {
     }
   };
 
-  if (isLoading) {
-    return <Spinner animation="border" />;
-  }
 
   return (
     <div>
@@ -134,20 +137,23 @@ function Main() {
         <Category />
       </div>
       <div className="profile-page">
-        <div className="sidebar position-fixed " style={{ color: "black", backgroundColor: "rgba(180, 180, 180, 0.5)", height: "150%", top:"20vh" }}>
+        <div className="sidebar position-fixed " style={{ color: "black", backgroundColor: "rgba(180, 180, 180, 0.5)", height: "150%", top: "20vh" }}>
           <ul >
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("profile")}>My Profile</li>
+            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("profile")}>Mon Profile</li>
             <hr style={{ width: "90%" }}></hr>
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("ads")}>My Ads</li>
+            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("ads")}>Mes Annonces</li>
             <hr style={{ width: "90%" }}></hr>
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("favorites")}>Favorites</li>
+            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("favorites")}>Mes Favoris</li>
             <hr style={{ width: "90%" }}></hr>
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={handleLogout}>Logout</li>
+            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={handleLogout}>Se déconnecter</li>
           </ul>
         </div>
-        <div className="content" style={{ display: "flex", minHeight: "350px" }}>
-          {renderContent()}
-        </div>
+        {isLoading && (<div className="content"><Spinner /></div>)}
+        {user && selectedOption && (
+          <div className="content" style={{ display: "flex", minHeight: "350px" }}>
+            {renderContent()}
+          </div>
+        )}
       </div>
       <div class="position-relative z-index-2">
         <Footer />
