@@ -59,7 +59,7 @@ const CreateAccountPage = () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
-        const response = await fetch('http://localhost:8080/protected', {
+        const response = await fetch('https://annonce-backend.azurewebsites.net/protected', {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -77,7 +77,7 @@ const CreateAccountPage = () => {
 
   const fetchLocations = async () => {
     try {
-      const response = await fetch('http://localhost:8080/location/get');
+      const response = await fetch('https://annonce-backend.azurewebsites.net/location/get');
       const data = await response.json();
       setLocations(data.locations);
     } catch (error) {
@@ -146,7 +146,7 @@ const CreateAccountPage = () => {
       data.append('password', formData.password);
       data.append('type', formData.type);
       data.append('file', file);
-      const response = await fetch(`http://localhost:8080/user/register/${selectedLocationId}`, {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/user/register/${selectedLocationId}`, {
         method: "POST",
         body: data
       });

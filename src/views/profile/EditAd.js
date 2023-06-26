@@ -67,7 +67,7 @@ function EditAd({ ad }) {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/category/getall");
+                const response = await axios.get("https://annonce-backend.azurewebsites.net/category/getall");
                 setCategories(response.data.category);
                 const foundCategory = response.data.category.find(category => category._id === ad.categoryId);
                 setSubcategories(foundCategory ? foundCategory.subcategories : []);
@@ -93,7 +93,7 @@ function EditAd({ ad }) {
 
     const fetchPlaces = async () => {
         try {
-            const response = await fetch("http://localhost:8080/location/get", {
+            const response = await fetch("https://annonce-backend.azurewebsites.net/location/get", {
                 method: "GET",
             });
             const data = await response.json();
@@ -218,7 +218,7 @@ function EditAd({ ad }) {
             formData.append("vocal", advertisement.vocal);
 
             const response = await axios.patch(
-                `http://localhost:8080/ad/editad/${ad._id}/${selectedLocationId}`,
+                `https://annonce-backend.azurewebsites.net/ad/editad/${ad._id}/${selectedLocationId}`,
                 formData
             );
             const data = response.data;
@@ -243,7 +243,7 @@ function EditAd({ ad }) {
     const handleDeleteAd = async () => {
         try {
             const response = await axios.delete(
-                `http://localhost:8080/ad/delete/${ad._id}`
+                `https://annonce-backend.azurewebsites.net/ad/delete/${ad._id}`
             );
             const data = response.data;
             if (data.success) {

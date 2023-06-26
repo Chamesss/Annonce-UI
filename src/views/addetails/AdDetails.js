@@ -35,7 +35,7 @@ function AdDetails() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setIsLoading(true);
       try {
-        const response = await fetch(`http://localhost:8080/ad/details/`, {
+        const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/details/`, {
           method: "GET",
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, idad: idAd.productId },
         });
@@ -59,7 +59,7 @@ function AdDetails() {
   const getAds = async (categoryId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8080/ad/get`, {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/get`, {
         method: 'GET',
         headers: { authorization: `Bearer ${token}`, searchquery: '', categoryid: categoryId, subcategoryid: '', locationid: '' },
       });
@@ -75,7 +75,7 @@ function AdDetails() {
 
   const fetchUserDetails = async (id) => {
     try {
-      const response = await fetch('http://localhost:8080/user/getuserdetails', {
+      const response = await fetch('https://annonce-backend.azurewebsites.net/user/getuserdetails', {
         method: "GET",
         headers: { id: id },
       })
@@ -100,13 +100,13 @@ function AdDetails() {
 
   const handleFavoritesAd = async () => {
     try {
-      const response = await fetch("http://localhost:8080/protected", {
+      const response = await fetch("https://annonce-backend.azurewebsites.net/protected", {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const data = await response.json();
       if (data.status === true) {
-        const InnerResponse = await fetch(`http://localhost:8080/ad/adfavorite/${data.userId}/${product._id}`, {
+        const InnerResponse = await fetch(`https://annonce-backend.azurewebsites.net/ad/adfavorite/${data.userId}/${product._id}`, {
           method: "POST"
         })
         const InnerData = await InnerResponse.json();
@@ -135,13 +135,13 @@ function AdDetails() {
   const handleRapportAd = async () => {
     setShowModal(false);
     try {
-      const response = await fetch("http://localhost:8080/protected", {
+      const response = await fetch("https://annonce-backend.azurewebsites.net/protected", {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const data = await response.json();
       if (data.status === true) {
-        const InnerResponse = await fetch(`http://localhost:8080/user/reclamation/${data.userId}/${product._id}`, {
+        const InnerResponse = await fetch(`https://annonce-backend.azurewebsites.net/user/reclamation/${data.userId}/${product._id}`, {
           method: "POST",
           body: JSON.stringify({ info }),
           headers: {

@@ -84,7 +84,7 @@ function EditProfile({ userinfo }) {
 
     const fetchPlaces = async () => {
         try {
-            const response = await fetch("http://localhost:8080/location/get", {
+            const response = await fetch("https://annonce-backend.azurewebsites.net/location/get", {
                 method: "GET",
             });
             const data = await response.json();
@@ -165,7 +165,7 @@ function EditProfile({ userinfo }) {
             formData.append("file", image);
 
 
-            const response = await fetch(`http://localhost:8080/user/edituser/${user._id}/${selectedLocationId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/user/edituser/${user._id}/${selectedLocationId}`, {
                 method: "PATCH",
                 body: formData,
             });
@@ -193,7 +193,7 @@ function EditProfile({ userinfo }) {
         setShowDeleteModel(false);
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8080/user/deleteuser/${user._id}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/user/deleteuser/${user._id}`, {
                 method: "DELETE",
                 headers: { password: password }
             });

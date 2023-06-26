@@ -11,7 +11,7 @@ function Categories() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:8080/category/getall');
+      const response = await fetch('https://annonce-backend.azurewebsites.net/category/getall');
       const data = await response.json();
       setCategories(data.category);
     } catch (error) {

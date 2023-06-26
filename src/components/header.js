@@ -25,7 +25,7 @@ function Header() {
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        const response = await fetch("http://localhost:8080/user/getuser", {
+        const response = await fetch("https://annonce-backend.azurewebsites.net/user/getuser", {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -46,7 +46,7 @@ function Header() {
 
   const fetchNotifications = async (token) => {
     try {
-      const response = await fetch(`http://localhost:8080/getnotifications/`, {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/getnotifications/`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -60,7 +60,7 @@ function Header() {
 
   const updateNotifications = async (token) => {
     try {
-      const response = await fetch('http://localhost:8080/getnotifications/seen', {
+      const response = await fetch('https://annonce-backend.azurewebsites.net/getnotifications/seen', {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });

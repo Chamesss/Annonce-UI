@@ -14,7 +14,7 @@ const ResetCodeForm = () => {
 
   const handlelogin = async () => {
     try {
-      const response = await fetch("http://localhost:8080/protected", {
+      const response = await fetch("https://annonce-backend.azurewebsites.net/protected", {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
@@ -36,7 +36,7 @@ const ResetCodeForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/user/verify', {
+      const response = await fetch('https://annonce-backend.azurewebsites.net/user/verify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

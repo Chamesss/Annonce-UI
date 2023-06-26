@@ -51,7 +51,7 @@ function AdminControl() {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await fetch("http://localhost:8080/verifyadmin", {
+                const response = await fetch("https://annonce-backend.azurewebsites.net/verifyadmin", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -71,7 +71,7 @@ function AdminControl() {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await fetch("http://localhost:8080/admin/getusers", {
+                const response = await fetch("https://annonce-backend.azurewebsites.net/admin/getusers", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -91,7 +91,7 @@ function AdminControl() {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await fetch("http://localhost:8080/admin/getads", {
+                const response = await fetch("https://annonce-backend.azurewebsites.net/admin/getads", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -108,7 +108,7 @@ function AdminControl() {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch('http://localhost:8080/category/getall');
+            const response = await fetch('https://annonce-backend.azurewebsites.net/category/getall');
             const data = await response.json();
 
             if (data) {
@@ -124,7 +124,7 @@ function AdminControl() {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await fetch(`http://localhost:8080/admin/getreclamation`, {
+                const response = await fetch(`https://annonce-backend.azurewebsites.net/admin/getreclamation`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -145,7 +145,7 @@ function AdminControl() {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await fetch(`http://localhost:8080/admin/getuser?search=${encodeURIComponent(searchQuery)}`, {
+                const response = await fetch(`https://annonce-backend.azurewebsites.net/admin/getuser?search=${encodeURIComponent(searchQuery)}`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -171,7 +171,7 @@ function AdminControl() {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await fetch(`http://localhost:8080/admin/getad?search=${encodeURIComponent(searchAdQuery)}`, {
+                const response = await fetch(`https://annonce-backend.azurewebsites.net/admin/getad?search=${encodeURIComponent(searchAdQuery)}`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -196,7 +196,7 @@ function AdminControl() {
     const handleApproveAd = async (adId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8080/admin/adapprove/${adId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/admin/adapprove/${adId}`, {
                 method: 'PATCH',
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -216,7 +216,7 @@ function AdminControl() {
     const handleDeleteUser = async (userId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8080/admin/deleteuser/${userId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/admin/deleteuser/${userId}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -235,7 +235,7 @@ function AdminControl() {
 
     const handleBanUser = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:8080/admin/banuser/${userId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/admin/banuser/${userId}`, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             })
@@ -255,7 +255,7 @@ function AdminControl() {
     const handleDeleteAd = async (adId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8080/admin/addelete/${adId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/admin/addelete/${adId}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -294,7 +294,7 @@ function AdminControl() {
             formData.append('name', name);
             formData.append('picture', pictureFile);
 
-            const response = await fetch('http://localhost:8080/category/add', {
+            const response = await fetch('https://annonce-backend.azurewebsites.net/category/add', {
                 method: 'POST',
                 body: formData,
             });
@@ -317,7 +317,7 @@ function AdminControl() {
             formData.append('name', editCategoryName);
             formData.append('picture', pictureFile);
 
-            const response = await fetch(`http://localhost:8080/category/edit/${editCategoryId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/category/edit/${editCategoryId}`, {
                 method: 'PATCH',
                 body: formData,
             });
@@ -341,7 +341,7 @@ function AdminControl() {
             formData.append('picture', pictureFile);
 
             const response = await fetch(
-                `http://localhost:8080/category/addsubcategory/${categoryId}`,
+                `https://annonce-backend.azurewebsites.net/category/addsubcategory/${categoryId}`,
                 {
                     method: 'POST',
                     body: formData,
@@ -371,7 +371,7 @@ function AdminControl() {
             const formData = new FormData();
             formData.append('name', newName);
             formData.append('picture', newPicture);
-            const response = await fetch(`http://localhost:8080/category/editsub/${currentCategoryId}/${subcategoryId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/category/editsub/${currentCategoryId}/${subcategoryId}`, {
                 method: 'PATCH',
                 body: formData,
             });
@@ -394,7 +394,7 @@ function AdminControl() {
 
     const handleDeleteCategory = async (categoryId) => {
         try {
-            const response = await fetch(`http://localhost:8080/category/delete/${categoryId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/category/delete/${categoryId}`, {
                 method: 'DELETE',
             });
             const data = await response.json();
@@ -409,7 +409,7 @@ function AdminControl() {
     const handleDeleteSubcategory = async (categoryId, subcategoryId) => {
         try {
             const response = await fetch(
-                `http://localhost:8080/category/deletesub/${categoryId}/${subcategoryId}`,
+                `https://annonce-backend.azurewebsites.net/category/deletesub/${categoryId}/${subcategoryId}`,
                 {
                     method: 'DELETE',
                 }

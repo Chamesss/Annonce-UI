@@ -14,7 +14,7 @@ const NewPasswordPage = () => {
 
   const handlelogin = async () => {
     try {
-      const response = await fetch("http://localhost:8080/protected", {
+      const response = await fetch("https://annonce-backend.azurewebsites.net/protected", {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
@@ -50,7 +50,7 @@ const NewPasswordPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8080/user/edituser/null/null`, {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/user/edituser/null/null`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'

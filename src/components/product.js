@@ -21,13 +21,13 @@ function Product({ product }) {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch('http://localhost:8080/protected', {
+      const response = await fetch('https://annonce-backend.azurewebsites.net/protected', {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       const data = await response.json();
       if (data.status) {
-        const innerResponse = await fetch(`http://localhost:8080/ad/adfavorite/${data.userId}/${product._id}`, {
+        const innerResponse = await fetch(`https://annonce-backend.azurewebsites.net/ad/adfavorite/${data.userId}/${product._id}`, {
           method: "POST",
         });
         const innerData = await innerResponse.json();
@@ -46,13 +46,13 @@ function Product({ product }) {
 
   const fetchUser2 = async () => {
     try {
-      const response = await fetch('http://localhost:8080/protected', {
+      const response = await fetch('https://annonce-backend.azurewebsites.net/protected', {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       const data = await response.json();
       if (data.status) {
-        const innerResponse = await fetch(`http://localhost:8080/ad/deletefavorite/${data.userId}/${product._id}`, {
+        const innerResponse = await fetch(`https://annonce-backend.azurewebsites.net/ad/deletefavorite/${data.userId}/${product._id}`, {
           method: "DELETE",
         });
         const innerData = await innerResponse.json();

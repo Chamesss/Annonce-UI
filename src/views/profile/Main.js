@@ -51,13 +51,13 @@ function Main() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('http://localhost:8080/protected', {
+        const response = await fetch('https://annonce-backend.azurewebsites.net/protected', {
           method: "GET",
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         const data = await response.json();
         if (data.status) {
-          const innerResponse = await fetch(`http://localhost:8080/user/getuserdetails`, {
+          const innerResponse = await fetch(`https://annonce-backend.azurewebsites.net/user/getuserdetails`, {
             method: "GET",
             headers: { id: data.userId }
           });

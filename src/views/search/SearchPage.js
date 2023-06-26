@@ -54,7 +54,7 @@ function SearchPage() {
 
     const fetchLocations = async () => {
       try {
-        const response = await fetch('http://localhost:8080/location/get');
+        const response = await fetch('https://annonce-backend.azurewebsites.net/location/get');
         const data = await response.json();
         setLocations(data.locations);
         fetchUser(data.locations);
@@ -65,7 +65,7 @@ function SearchPage() {
 
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:8080/category/getall');
+        const response = await fetch('https://annonce-backend.azurewebsites.net/category/getall');
         const data = await response.json();
         setCategories(data.category);
       } catch (error) {
@@ -114,13 +114,13 @@ function SearchPage() {
 
   const fetchUser = async (location) => {
     try {
-      const response = await fetch('http://localhost:8080/protected', {
+      const response = await fetch('https://annonce-backend.azurewebsites.net/protected', {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       const data = await response.json();
       if (data.status) {
-        const innerResponse = await fetch(`http://localhost:8080/user/getuserdetails`, {
+        const innerResponse = await fetch(`https://annonce-backend.azurewebsites.net/user/getuserdetails`, {
           method: "GET",
           headers: { id: data.userId }
         });
@@ -153,7 +153,7 @@ function SearchPage() {
     try {
       setIsLoading(true);
       setProducts([]);
-      const response = await fetch(`http://localhost:8080/ad/get?page=${currentPage}`, {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/get?page=${currentPage}`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

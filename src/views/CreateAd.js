@@ -78,7 +78,7 @@ const CreateAdPage = () => {
     const controlToken = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8080/protected/`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/protected/`, {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` }
             })
@@ -94,7 +94,7 @@ const CreateAdPage = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch('http://localhost:8080/category/getall');
+            const response = await fetch('https://annonce-backend.azurewebsites.net/category/getall');
             const data = await response.json();
             setCategories(data.category);
         } catch (error) {
@@ -108,7 +108,7 @@ const CreateAdPage = () => {
 
     const fetchLocations = async () => {
         try {
-            const response = await fetch('http://localhost:8080/location/get');
+            const response = await fetch('https://annonce-backend.azurewebsites.net/location/get');
             const data = await response.json();
             setLocations(data.locations);
         } catch (error) {
@@ -221,7 +221,7 @@ const CreateAdPage = () => {
 
         try {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:8080/ad/create/${selectedLocationId}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/create/${selectedLocationId}`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData

@@ -23,7 +23,7 @@ function HomePage() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:8080/category/getall');
+      const response = await fetch('https://annonce-backend.azurewebsites.net/category/getall');
       const data = await response.json();
       setCategories(data.category);
       return (data.category)
@@ -35,7 +35,7 @@ function HomePage() {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem('token');
-      const responseNouveaute = await fetch(`http://localhost:8080/ad/get`, {
+      const responseNouveaute = await fetch(`https://annonce-backend.azurewebsites.net/ad/get`, {
         method: 'GET',
         headers: { authorization: `Bearer ${token}`, searchquery: '', categoryid: '', subcategoryid: '', locationid: '' },
       });
@@ -58,7 +58,7 @@ function HomePage() {
   const fetchProductsByCategory = async (categoryId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8080/ad/get`, {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/get`, {
         method: 'GET',
         headers: { authorization: `Bearer ${token}`, searchquery: '', categoryid: categoryId, subcategoryid: '', locationid: '' },
       });

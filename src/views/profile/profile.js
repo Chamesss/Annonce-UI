@@ -15,7 +15,7 @@ function Profile({ userinfo }) {
   const handleSendVerification = async (userid, email) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/user/send/${email}/${userid}`, {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/user/send/${email}/${userid}`, {
         method: "GET"
       })
       const data = await response.json();

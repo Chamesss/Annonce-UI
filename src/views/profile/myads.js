@@ -26,7 +26,7 @@ function MyAds({ user }) {
     const fetchAds = async (currentPage) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/ad/specific?page=${currentPage}`, {
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/specific?page=${currentPage}`, {
                 method: 'GET',
                 headers: { id: user._id },
             });

@@ -21,7 +21,7 @@ const UserDetailsPage = () => {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await fetch('http://localhost:8080/user/getuserdetails', {
+            const response = await fetch('https://annonce-backend.azurewebsites.net/user/getuserdetails', {
                 method: "GET",
                 headers: { id: userId },
             })
@@ -34,7 +34,7 @@ const UserDetailsPage = () => {
 
     const fetchAds = async () => {
         try {
-            const response = await fetch('http://localhost:8080/ad/specific?Page=1', {
+            const response = await fetch('https://annonce-backend.azurewebsites.net/ad/specific?Page=1', {
                 method: "GET",
                 headers: { id: userId },
             })

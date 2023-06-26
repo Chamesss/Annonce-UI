@@ -40,7 +40,7 @@ const LoginPage = () => {
     } else {
       try {
         // Make API request to login endpoint with email and password 
-        const response = await fetch(`http://localhost:8080/user/login`, {
+        const response = await fetch(`https://annonce-backend.azurewebsites.net/user/login`, {
           method: "POST",
           body: JSON.stringify({ email: email, password: password }),
           headers: {

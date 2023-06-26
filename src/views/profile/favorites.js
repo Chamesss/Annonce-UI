@@ -40,7 +40,7 @@ function FavoritePage(user) {
     const fetchFavorites = async (user) => {
         try {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:8080/ad/getfavorites/${user._id}`);
+            const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/getfavorites/${user._id}`);
             const data = await response.json();
             if (data.success === true) {
                 setIsLoading(false);
@@ -58,7 +58,7 @@ function FavoritePage(user) {
 
     const handleDeleteFavorite = async (favoriteId) => {
         try {
-            const innerResponse = await fetch(`http://localhost:8080/ad/deletefavorite/${user.user._id}/${favoriteId}`, {
+            const innerResponse = await fetch(`https://annonce-backend.azurewebsites.net/ad/deletefavorite/${user.user._id}/${favoriteId}`, {
                 method: "DELETE",
             });
             const innerData = await innerResponse.json();

@@ -11,7 +11,7 @@ const ForgotPasswordForm = () => {
 
   const handlelogin = async () => {
     try {
-      const response = await fetch("http://localhost:8080/protected", {
+      const response = await fetch("https://annonce-backend.azurewebsites.net/protected", {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
@@ -34,7 +34,7 @@ const ForgotPasswordForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/user/reset', {
+      const response = await fetch('https://annonce-backend.azurewebsites.net/user/reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
