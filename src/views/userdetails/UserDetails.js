@@ -40,6 +40,7 @@ const UserDetailsPage = () => {
             })
             const data = await response.json();
             setAds(data.ads);
+            console.log('');
         } catch (error) {
             console.log(error);
         }
