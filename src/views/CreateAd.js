@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Tab, Tabs, Form, Button, ProgressBar, Spinner } from 'react-bootstrap';
+import { Tab, Tabs, Form, Button, ProgressBar, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaBell } from "react-icons/fa";
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Select from 'react-select';
-
 import Header from '../components/header';
 import Footer from '../components/footer';
 import './css/Create-ad.css';
 import { useNavigate } from 'react-router-dom';
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 
 const CreateAdPage = () => {
@@ -26,7 +26,6 @@ const CreateAdPage = () => {
     const [locations, setLocations] = useState([]);
     const [recording, setRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
     const [location, setLocation] = useState('');
     const [token, setToken] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
@@ -50,9 +49,7 @@ const CreateAdPage = () => {
 
     useEffect(() => {
         controlToken();
-        // Fetch categories from API
         fetchCategories();
-        // Fetch locations from API
         fetchLocations();
     }, []);
 
@@ -64,7 +61,6 @@ const CreateAdPage = () => {
 
     useEffect(() => {
         if (success) {
-            // Wait for 5 seconds before navigating to another page
             const timeout = setTimeout(() => {
                 Navigate('/');
             }, 5000);
@@ -150,7 +146,7 @@ const CreateAdPage = () => {
 
 
         setActiveTab(selectedTab);
-        const newProgress = (selectedTab / 5) * 100; // Assuming there are 4 tabs (0, 1, 2, 3)
+        const newProgress = (selectedTab / 5) * 100;
         setProgress(newProgress);
     };
 
@@ -240,8 +236,6 @@ const CreateAdPage = () => {
     };
 
     const handleInputChange = (value) => {
-        setSearchTerm(value);
-        // Filter the locations based on the search term
         const filteredLocations = locations.filter(
             (location) =>
                 location.admin_name.toLowerCase().includes(value.toLowerCase()) ||
@@ -252,22 +246,14 @@ const CreateAdPage = () => {
 
     const handleLocationSelect = (location) => {
         setSelectedLocationId(location.id);
-        setSearchTerm(location);
         setLocation(location);
         setLocationError('');
     };
 
     const renderPictures = () => {
         return pictures.map((picture, index) => (
-            <img key={index} src={URL.createObjectURL(picture)} alt={`Picture ${index + 1}`} />
+            <img key={index} src={URL.createObjectURL(picture)} alt={`${index + 1}`} />
         ));
-    };
-
-    const datalistOptionStyle = {
-        fontSize: '0.8em',
-        padding: '0.3em 1em',
-        backgroundColor: '#ccc',
-        cursor: 'pointer',
     };
 
     return (

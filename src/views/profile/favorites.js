@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Row, Col, Button } from "reactstrap";
+import { Button } from "reactstrap";
 import Product from "../../components/product";
 import Spinner from '../../components/Spinner';
 import { useNavigate } from "react-router-dom";

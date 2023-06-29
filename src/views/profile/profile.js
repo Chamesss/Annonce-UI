@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FaMapMarkerAlt, FaCity, FaPhoneAlt, FaHome, FaBuilding, FaEnvelope, FaUser } from "react-icons/fa";
-import { Button } from "react-bootstrap";
 import { Spinner } from 'react-bootstrap';
 
 function Profile({ userinfo }) {
-  const [user, setUser] = useState(userinfo);
+  const [user] = useState(userinfo);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

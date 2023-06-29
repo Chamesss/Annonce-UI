@@ -8,6 +8,8 @@ import { FaChevronLeft } from 'react-icons/fa';
 import { FaMapMarkerAlt, FaCity, FaPhoneAlt, FaHome, FaBuilding } from "react-icons/fa";
 import Spinner from '../../components/Spinner';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 const UserDetailsPage = () => {
     const { userId } = useParams();
     const [user, setUser] = useState(null);
@@ -40,7 +42,6 @@ const UserDetailsPage = () => {
             })
             const data = await response.json();
             setAds(data.ads);
-            console.log('');
         } catch (error) {
             console.log(error);
         }

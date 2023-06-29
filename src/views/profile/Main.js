@@ -11,6 +11,8 @@ import EditProfile from "./EditProfile";
 import MyAds from "./myads";
 import Spinner from "../../components/Spinner";
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 function Main() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +85,6 @@ function Main() {
         return (
           <div className="container d-flex justify-content-center align-items-center">
             <div className="content p-5">
-              <h1 className="mx-5" ></h1>
               <MyAds user={user} />
             </div>
           </div>
@@ -92,7 +93,6 @@ function Main() {
         return (
           <div className="container d-flex justify-content-center align-items-center">
             <div className="content p-5">
-              <h1 className="mx-5"></h1>
               {user !== null ? (<Favorites user={user} />) : (null)}
             </div>
           </div>

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');

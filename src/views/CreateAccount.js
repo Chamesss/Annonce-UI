@@ -5,15 +5,13 @@ import { Spinner } from 'react-bootstrap';
 import './css/CreateAccountPage.css';
 import Select from 'react-select';
 import { FaUpload } from "react-icons/fa";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 
-
+/* eslint-disable react-hooks/exhaustive-deps */
 
 const CreateAccountPage = () => {
   const [file, setFile] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
   const [locations, setLocations] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedLocationId, setSelectedLocationId] = useState('');
@@ -35,8 +33,6 @@ const CreateAccountPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-
-
   useEffect(() => {
     fetchToken();
     fetchLocations();
@@ -44,7 +40,6 @@ const CreateAccountPage = () => {
 
   useEffect(() => {
     if (message) {
-      // Wait for 5 seconds before navigating to another page
       const timeout = setTimeout(() => {
         navigate('/login');
       }, 5000);
@@ -86,8 +81,6 @@ const CreateAccountPage = () => {
   };
 
   const handleInputChange = (value) => {
-    setSearchTerm(value);
-    // Filter the locations based on the search term
     const filteredLocations = locations.filter(
       (location) =>
         location.admin_name.toLowerCase().includes(value.toLowerCase()) ||
@@ -104,7 +97,6 @@ const CreateAccountPage = () => {
 
   const handleLocationSelect = (location) => {
     setSelectedLocationId(location.id);
-    setSearchTerm(location);
     setLocation(location);
     setError('');
   };
@@ -125,9 +117,6 @@ const CreateAccountPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-  const onChangeFile = (e) => {
-    setFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -213,8 +202,8 @@ const CreateAccountPage = () => {
                       id="telPrefix"
                       name="telPrefix"
                       value="+216"
-                      readOnly // Make the prefix input field read-only
-                      style={{ width: '70px' }} // Adjust the width as needed
+                      readOnly
+                      style={{ width: '70px' }}
                       class="form-control"
                     />
                     <input
@@ -279,7 +268,7 @@ const CreateAccountPage = () => {
             </form>
           </div>
           <div className="col-lg-6">
-            <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1685622911/igo8dhxcvtsfbc1ofpfd.jpg" style={{ width: "100%", height: "auto" }} />
+            <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1685622911/igo8dhxcvtsfbc1ofpfd.jpg" alt="" style={{ width: "100%", height: "auto" }} />
           </div>
         </div>
       </div>

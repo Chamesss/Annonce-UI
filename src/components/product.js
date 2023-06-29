@@ -7,7 +7,7 @@ import { calculateTimeAgo } from './../utils/DateDefiner';
 
 function Product({ product }) {
   const [favoritetrue, setFavoriteTrue] = useState(product.isFavorite ? product.isFavorite : false);
-  const [distance, setDistance] = useState(product.distance ? product.distance : null)
+  const [distance] = useState(product.distance ? product.distance : null)
 
 
   const handleButtonClick = async (event) => {
@@ -71,7 +71,7 @@ function Product({ product }) {
 
   return (
     <div className="card">
-      <img className="card-img-top" src={product.pictures[0]} />
+      <img className="card-img-top" src={product.pictures[0]} alt=""/>
       <div className="position-absolute top-0 end-0 mt-3 me-3">
         {favoritetrue ? (
           <div className="icontrue" style={{ zIndex: 1 }} onClick={handleButtonClick}>

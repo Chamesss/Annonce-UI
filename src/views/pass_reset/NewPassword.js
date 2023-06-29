@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 const NewPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -35,7 +37,6 @@ const NewPasswordPage = () => {
 
   useEffect(() => {
     if (confirmed) {
-      // Wait for 5 seconds before navigating to another page
       const timeout = setTimeout(() => {
         navigate('/login');
       }, 5000);

@@ -22,7 +22,6 @@ function AdDetails() {
   const [showmodal, setShowModal] = useState(false);
   const [info, setInfo] = useState("");
   const [error, setError] = useState("");
-  const [Loading, setIsLoading] = useState(false);
   const [ads, setAds] = useState([]);
   const navigate = useNavigate();
 
@@ -33,14 +32,12 @@ function AdDetails() {
   useEffect(() => {
     const fetchProductDetails = async () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      setIsLoading(true);
       try {
         const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/details/`, {
           method: "GET",
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, idad: idAd.productId },
         });
         const data = await response.json();
-        setIsLoading(false);
         setProduct(data.ad);
         await fetchUserDetails(data.ad.idUser);
         await getAds(data.ad.categoryId);
@@ -205,7 +202,7 @@ function AdDetails() {
             {user !== null ? (
               <div>
                 <div class="d-flex align-items-center">
-                  <img src={user.picture} alt="User Picture" class="rounded-circle me-2 " style={{ width: "55px", height: "auto", cursor: "pointer" }} onClick={() => handleOwnerPage(user._id)} />
+                  <img src={user.picture} alt="" class="rounded-circle me-2 " style={{ width: "55px", height: "auto", cursor: "pointer" }} onClick={() => handleOwnerPage(user._id)} />
                   <div class="px-5 ">
                     <div class="d-flex align-items-center "><FaUser />
                       <p class="mb-2 px-2" style={{ color: "red", fontSize: "20px", cursor: "pointer" }} onClick={() => handleOwnerPage(user._id)}>  {user.firstname} {user.lastname}</p></div>

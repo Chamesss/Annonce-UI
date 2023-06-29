@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
 import { Button, Modal } from "react-bootstrap";
-import { FaUpload } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import ReactAudioPlayer from "react-audio-player";
 import axios from "axios";
 import Select from 'react-select';
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 function EditAd({ ad }) {
     const [advertisement, setAdvertisement] = useState(ad);
@@ -21,12 +20,10 @@ function EditAd({ ad }) {
     const [selectedSubcategory, setSelectedSubcategory] = useState(ad.subCategoryId);
     const [locations, setLocations] = useState([]);
     const [location, setLocation] = useState([]);
-    const [searchTerm, setSearchTerm] = useState(`${ad.country}, ${ad.city}`);
     const [suggestions, setSuggestions] = useState([]);
     const [selectedLocationId, setSelectedLocationId] = useState(null);
     const [recording, setRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState("");
-    const navigate = useNavigate();
     const inputRef = useRef();
     const mediaRecorderRef = useRef(null);
     const audioPlayerRef = useRef(null);
@@ -97,7 +94,7 @@ function EditAd({ ad }) {
                 method: "GET",
             });
             const data = await response.json();
-            const { locations: locations } = data;
+            const locations = data;
             setLocations(locations);
             const selectedLocation = locations.find(
                 (loc) =>
@@ -119,8 +116,6 @@ function EditAd({ ad }) {
     }
 
     const handleInputChange = (value) => {
-        setSearchTerm(value);
-        // Filter the locations based on the search term
         const filteredLocations = locations.filter(
             (location) =>
                 location.admin_name.toLowerCase().includes(value.toLowerCase()) ||
@@ -131,7 +126,6 @@ function EditAd({ ad }) {
 
     const handleLocationSelect = (location) => {
         setSelectedLocationId(location.id);
-        setSearchTerm(location);
         setLocation(location);
         setError('');
     };

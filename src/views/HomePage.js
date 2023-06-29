@@ -4,12 +4,12 @@ import Banner from '../components/banner';
 import Category from '../components/category';
 import ProductList from '../components/productList';
 import Footer from '../components/footer';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './css/homepage.css';
 import Spinner from './../components/Spinner';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -81,6 +81,7 @@ function HomePage() {
         <div><Spinner /></div>
       ) : (
         <div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
           <div>
             <h2 className="titleCat mt-5">Nouveauté</h2>
             <div className="horizontal-bar"> </div>

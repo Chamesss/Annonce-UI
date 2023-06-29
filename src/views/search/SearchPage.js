@@ -4,7 +4,6 @@ import Header from '../../components/header';
 import Category from '../../components/category';
 import Product from '../../components/product';
 import Footer from '../../components/footer';
-//import FilterPanel from './FilterPanel';
 import Spinner from '../../components/Spinner';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -13,36 +12,27 @@ import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 function SearchPage() {
   const search = window.location.search;
   const [products, setProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [locationId, setLocationId] = useState(null);
-  const [keyword, setKeyword] = useState(queryString.parse(search).keyword);
+  const [keyword] = useState(queryString.parse(search).keyword);
   const [categoryId, setCategoryId] = useState(queryString.parse(search).categoryid);
   const [subcatgeoryId, setSubCategoryid] = useState(queryString.parse(search).subcategoryid);
   const [radius, setRadius] = useState(13);
   const [currentPage, setCurrentPage] = useState(1);
   const [location, setLocation] = useState('');
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedLocationId, setSelectedLocationId] = useState('');
-  const [productsPerPage] = useState(5);
-  const [displaydata, setDisplayData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-
-
   const [categories, setCategories] = useState([]);
-  //const [subCategoryId, setSubCategoryId] = useState(subcatgeoryId);
-  //const [categoryId, setCategoryId] = useState(initialCategory);
   const [locations, setLocations] = useState([]);
-  //const [radius, setRadius] = useState(13);
-  const [user, setUser] = useState(null);
   const [userlng, setUserLng] = useState(10.1815);
   const [userlat, setUserLat] = useState(36.8065);
   const [markerRadius, setMarkerRadius] = useState('20');
-  //const [selectlocationid, setSelectedLocation] = useState(locationId);
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const geocoderRef = useRef(null);
@@ -77,11 +67,6 @@ function SearchPage() {
     fetchCategories();
   }, []);
 
-
-  // useEffect(() => {
-  //   fetchUser();
-  // }, [locations])
-
   useEffect(() => {
     mapRef.current = L.map(mapContainerRef.current, {
       dragging: false,
@@ -111,7 +96,6 @@ function SearchPage() {
   };
 
 
-
   const fetchUser = async (location) => {
     try {
       const response = await fetch('https://annonce-backend.azurewebsites.net/protected', {
@@ -126,14 +110,11 @@ function SearchPage() {
         });
         const innerData = await innerResponse.json();
         if (innerData.status === true) {
-          setUser(innerData.user);
           setUserLng(parseInt(innerData.user.lng, 10));
           setUserLat(parseInt(innerData.user.lat, 10));
           const selectedLocation = location.find((loc) => loc.city === innerData.user.city);
           setLocationId(selectedLocation._id);
-
           fetchData(keyword, categoryId, subcatgeoryId, selectedLocation._id, markerRadius, currentPage);
-
         }
       } else {
         setLocationId('646a282aa3d17726b7ad138d');
@@ -151,7 +132,6 @@ function SearchPage() {
     radius = radius === 'undefined' ? '' : radius;
 
     try {
-      setIsLoading(true);
       setProducts([]);
       const response = await fetch(`https://annonce-backend.azurewebsites.net/ad/get?page=${currentPage}`, {
         method: 'GET',
@@ -171,10 +151,7 @@ function SearchPage() {
       }
       setProducts(data.ads);
       setTotalPages(data.totalPages);
-      setDisplayData(data.ads);
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
       console.error('Error fetching Ads:', error);
 
     }
@@ -188,9 +165,6 @@ function SearchPage() {
 
 
   const handleLocationSelect = (location) => {
-    setSelectedLocationId(location.id);
-    console.log(location.id)
-    //setSearchTerm(location);
     setLocationId(location.id);
     const selectedLocation = locations.find((loc) => loc._id === location.id);
     if (selectedLocation) {
@@ -206,10 +180,9 @@ function SearchPage() {
         const longitude = parseFloat(lng);
         if (markerRef.current) {
           markerRef.current.setLatLng([latitude, longitude]);
-          //markerRef.current.setRadius(radius * 1000); // Convert the radius to meters
         } else {
           markerRef.current = L.circle([latitude, longitude], {
-            radius: radius * 1000, // Convert the radius to meters
+            radius: radius * 1000,
             color: 'blue',
             fillOpacity: 0.2,
           }).addTo(mapRef.current);
@@ -225,8 +198,6 @@ function SearchPage() {
   };
 
   const handleInputChange = (value) => {
-    //setSearchTerm(value);
-    // Filter the locations based on the search term
     const filteredLocations = locations.filter(
       (location) =>
         location.admin_name.toLowerCase().includes(value.toLowerCase()) ||
@@ -256,9 +227,9 @@ function SearchPage() {
 
     if (markerRef.current && mapRef.current) {
       const { lat, lng } = markerRef.current.getLatLng();
-      mapRef.current.removeLayer(markerRef.current); // Remove the existing marker
+      mapRef.current.removeLayer(markerRef.current); 
       markerRef.current = L.circle([lat, lng], {
-        radius: markerRadius * 1000, // Convert the radius to meters
+        radius: markerRadius * 1000, 
         color: 'blue',
         fillOpacity: 0.2,
       }).addTo(mapRef.current);

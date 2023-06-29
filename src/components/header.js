@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen } from "react-icons/fa";
 import { VscBellDot, VscBell } from "react-icons/vsc";
 import { TiPlus } from "react-icons/ti";
 import "./css/Header.css";
 import SearchBar from "./searchBar";
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -121,7 +123,6 @@ function Header() {
         <h1
           className="logo"
           onClick={navigatehome}
-          style={{ cursor: 'pointer', fontFamily: 'Helvetica', color: "#D85A60", fontWeight: "560", fontSize: "30px" }}
         >
           Annonce
         </h1>
@@ -219,7 +220,7 @@ function Header() {
                   </div>
                 )}
               </div>
-            </div>
+            </div> 
             {showNavbar && (
               <div>
                 <nav className="small-navbar">

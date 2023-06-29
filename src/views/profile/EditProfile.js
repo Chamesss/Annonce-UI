@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import './css/Profile.css';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 function EditProfile({ userinfo }) {
     const [user, setUser] = useState(userinfo);
     const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
@@ -15,7 +17,6 @@ function EditProfile({ userinfo }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [locations, setLocations] = useState([]);
     const [location, setLocation] = useState('');
-    const [searchTerm, setSearchTerm] = useState(`${userinfo.country}, ${userinfo.city}`);
     const [suggestions, setSuggestions] = useState([]);
     const [selectedLocationId, setSelectedLocationId] = useState(null);
     const [image, setPicture] = useState();
@@ -88,7 +89,7 @@ function EditProfile({ userinfo }) {
                 method: "GET",
             });
             const data = await response.json();
-            const { locations: locations } = data;
+            const locations = data;
             setLocations(locations);
             const selectedLocation = locations.find(
                 (loc) =>
@@ -110,8 +111,6 @@ function EditProfile({ userinfo }) {
     }
 
     const handleInputChange = (value) => {
-        setSearchTerm(value);
-        // Filter the locations based on the search term
         const filteredLocations = locations.filter(
             (location) =>
                 location.admin_name.toLowerCase().includes(value.toLowerCase()) ||
@@ -122,7 +121,6 @@ function EditProfile({ userinfo }) {
 
     const handleLocationSelect = (location) => {
         setSelectedLocationId(location.id);
-        setSearchTerm(location);
         setLocation(location);
         setError('');
     };
@@ -140,7 +138,7 @@ function EditProfile({ userinfo }) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
-        if (user.newPassword != null && user.newPassword != ' ' && user.newPassword.length > 0) {
+        if (user.newPassword !== null && user.newPassword !== ' ' && user.newPassword.length > 0) {
             if (!user.newPassword || user.newPassword.length < 6) {
                 setError("Invalid password length (minimum 6 characters)");
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -170,7 +168,7 @@ function EditProfile({ userinfo }) {
                 body: formData,
             });
             const data = await response.json();
-            if (data.success == true) {
+            if (data.success === true) {
                 setSuccess(true);
             } else {
                 console.log(data.error);

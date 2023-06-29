@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 const ResetCodeForm = () => {
   const [code, setResetCode] = useState('');
   const [message, setMessage] = useState('');

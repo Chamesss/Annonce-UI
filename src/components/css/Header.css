@@ -1,3 +1,4 @@
+/* Common Changes */
 header {
   display: flex;
   align-items: center;
@@ -28,8 +29,12 @@ header {
   margin-top: 5px;
   height: auto;
   width: auto;
+  cursor: pointer;
+  font-family: Helvetica;
+  color: #D85A60;
+  font-size: 30px;
+  font-weight: 560;
 }
-
 
 .buttons-container {
   display: flex;
@@ -46,8 +51,6 @@ header {
   margin-left: 10px;
   max-width: 100px !important;
 }
-
-
 
 .create-ad-button {
   border-color: #D85A60 !important;
@@ -73,18 +76,14 @@ header {
   max-width: 90px;
 }
 
-
 .ms-4 .vertical-line {
   border-left: 2px solid rgba(117, 117, 117, 0.5);
   height: 40px;
 }
 
-
-
 .category-icon {
   margin-right: 3px;
 }
-
 
 .profile-picture-container {
   width: 40px;
@@ -120,7 +119,6 @@ header {
   border: 0px solid #ccc;
 }
 
-
 .small-navbar a {
   display: block;
   padding: 5px;
@@ -151,8 +149,6 @@ header {
   margin-top: 10px;
   margin-right: 20px;
 }
-
-
 
 .location-icon {
   display: flex;
@@ -202,8 +198,6 @@ header {
   margin-right: 8px;
 }
 
-
-
 .fixed-content {
   display: flex;
   justify-content: center;
@@ -231,7 +225,6 @@ header {
   margin-right: 5px;
   font-size: 3rem;
 }
-
 
 .category {
   display: flex;
@@ -306,4 +299,102 @@ header {
 
 .orginize {
   display: grid;
+}
+
+/* Responsive Changes */
+@media (max-width: 768px) {
+  .header-transition {
+    width: 90%;
+  }
+
+  .dropdown-container {
+    margin-left: 5px;
+  }
+
+  .searchbar {
+    margin-right: 10px;
+  }
+
+  .selected-location {
+    display: none;
+  }
+
+  .ms-4 .vertical-line {
+    display: none;
+  }
+
+  .create-ad-button {
+    margin: 5px;
+  }
+
+  .profile-picture-container {
+    margin-left: 10px;
+  }
+
+  .small-navbar {
+    width: 120px;
+  }
+
+  .my-ad-button {
+    width: 120px;
+    height: 30px;
+  }
+
+  .location-icon,
+  .heart-icon,
+  .bell-icon,
+  .bell-icon-unseen {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 10px;
+  }
+
+  .header-transition {
+    padding: 15px;
+    height: 50px;
+  }
+
+  .logo {
+    width: 80px;
+  }
+
+  .buttons-container {
+    justify-content: center !important;
+  }
+
+  .create-ad-button {
+    margin: 5px;
+    font-size: 12px;
+  }
+
+  .searchbar {
+    margin-right: 5px;
+  }
+
+  .my-ad-button {
+    width: 100px;
+    height: 25px;
+    font-size: 12px;
+  }
+
+  .small-navbar {
+    width: 100px;
+    font-size: 12px;
+  }
+
+  .location-icon,
+  .heart-icon,
+  .bell-icon,
+  .bell-icon-unseen {
+    font-size: 1rem;
+  }
+
+  .notification-navbar {
+    width: 250px;
+    max-height: 300px !important;
+  }
 }

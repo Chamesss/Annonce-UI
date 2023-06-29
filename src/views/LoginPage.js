@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './css/LoginPage.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -13,10 +14,8 @@ const LoginPage = () => {
   const [welcome, setWelcome] = useState(false);
 
   const navigate = useNavigate();
-
   useEffect(() => {
     if (welcome) {
-      // Wait for 5 seconds before navigating to another page
       const timeout = setTimeout(() => {
         navigate('/');
       }, 5000);
@@ -33,13 +32,10 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    // Add your login logic here using email and password state values
     if (email === '' || password === '') {
       setError('Please enter both email and password');
     } else {
       try {
-        // Make API request to login endpoint with email and password 
         const response = await fetch(`https://annonce-backend.azurewebsites.net/user/login`, {
           method: "POST",
           body: JSON.stringify({ email: email, password: password }),
@@ -47,9 +43,8 @@ const LoginPage = () => {
             "Content-Type": "application/json",
           },
         });
-        // Check if login was successful
         const data = await response.json();
-        if (data.success == true) {
+        if (data.success === true) {
           localStorage.setItem('token', data.token);
           setWelcome(true);
           setError('');
@@ -117,7 +112,7 @@ const LoginPage = () => {
             </p>
           </div>
           <div class="col-lg-6 mx-5" style={{ overflow: "hidden" }}>
-            <img src="http://res.cloudinary.com/dncjxhygd/image/upload/v1685627659/ugzsl8zelozm54dwrw8r.jpg" style={{ width: "100%", height: "auto", border: "none", borderRadius: "70%" }} />
+            <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1685627659/ugzsl8zelozm54dwrw8r.jpg" alt="" style={{ width: "100%", height: "auto", border: "none", borderRadius: "70%" }} />
           </div>
         </div>
       </div> <Footer />

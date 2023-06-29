@@ -4,6 +4,8 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 import { useNavigate } from 'react-router-dom';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 function AdminControl() {
     const [userCount, setUserCount] = useState(0);
     const [adCount, setAdCount] = useState(0);
@@ -240,7 +242,7 @@ function AdminControl() {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             })
             const data = await response.json();
-            if (data.success == true) {
+            if (data.success === true) {
                 fetchUsers();
                 setMessage("Utilisateur banni avec succès ! ...")
             } else {
@@ -625,6 +627,7 @@ function AdminControl() {
                                     </tbody>
                                 </Table>
 
+                                {/* Show Subcategory Modal */}
                                 {showSubcategories && selectedCategory && (
                                     <Modal show={showSubcategories} onHide={() => setShowSubcategories(false)} backdrop="static" centered>
                                         <Modal.Header closeButton>
@@ -726,7 +729,7 @@ function AdminControl() {
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
-                                        Annuler
+                                            Annuler
                                         </Button>
                                         <Button variant="primary" onClick={() => handleAddCategory(addCategoryName, addCategoryPictureFile)}>
                                             Ajputer
@@ -760,7 +763,7 @@ function AdminControl() {
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={() => setShowEditCategoryModal(false)}>
-                                        Annuler
+                                            Annuler
                                         </Button>
                                         <Button
                                             variant="primary"
@@ -819,7 +822,6 @@ function AdminControl() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* Map over your reclamations data and render each row */}
                                         {reclamations.map((reclamation, index) => (
                                             <tr key={reclamation._id}>
                                                 <td style={{ width: '40px' }}>{index + 1}</td>
