@@ -192,7 +192,7 @@ function Header() {
           <>
             <button
               variant="primary"
-              className="btn btn-primary login-btn"
+              className="btn login-btn"
               onClick={handleLoginClick}
             ><span>Login</span>
               <div className="no-variants">
@@ -202,7 +202,7 @@ function Header() {
             </button>
             <button
               variant="primary"
-              className="btn btn-primary login-btn"
+              className="btn login-btn"
               onClick={() => navigate("/create-account")}
             ><span>Sign Up</span>
               <div className="no-variants">

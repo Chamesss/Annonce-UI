@@ -250,7 +250,7 @@ header {
 .login-btn {
   width: auto;
   margin-top: 10px;
-  background-color: transparent;
+  background-color: transparent !important;
   color: #2b6474 !important;
   font-weight: 500 !important;
   border-color: #2b6474 !important;
