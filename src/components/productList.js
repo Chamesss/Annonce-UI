@@ -42,21 +42,21 @@ function ProductList({ products }) {
     slidesToScroll: 5,
     responsive: [
       {
-        breakpoint: 1200,
+        breakpoint: 1500,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 4,
         },
       },
       {
-        breakpoint: 992,
+        breakpoint: 1100,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 850,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
@@ -67,6 +67,7 @@ function ProductList({ products }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          dots: false,
         },
       },
     ],

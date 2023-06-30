@@ -12,6 +12,8 @@ header {
 }
 
 .header-transition {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 30px;
   background-color: white;
@@ -19,6 +21,14 @@ header {
   border-radius: 30px;
   margin-top: 20px;
   width: 80%;
+}
+
+.alignement-items{
+  width: auto;
+}
+
+.no-variants{
+  display:none;
 }
 
 .logo-container {
@@ -53,27 +63,17 @@ header {
 }
 
 .create-ad-button {
+  margin: 10px;
   border-color: #D85A60 !important;
   border-width: 2px !important;
   background-color: transparent !important;
   color: #D85A60 !important;
-  margin: 10px;
   font-weight: 550 !important;
 }
 
 .search {
   margin-right: 30px !important;
   margin: 10px;
-}
-
-.selected-location {
-  font-size: 14px;
-  color: #666;
-  margin-left: 5px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 90px;
 }
 
 .ms-4 .vertical-line {
@@ -101,7 +101,7 @@ header {
 
 .profile-section {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -136,8 +136,7 @@ header {
 }
 
 .button-icon {
-  margin-bottom: 5px;
-  margin-right: 5px;
+  display: inline-flex;
 }
 
 .my-ad-button {
@@ -249,13 +248,13 @@ header {
 }
 
 .login-btn {
-  margin: 10px;
-  width: auto !important;
-  background-color: #FCFEFB !important;
+  width: auto;
+  margin-top: 10px;
+  background-color: transparent;
   color: #2b6474 !important;
   font-weight: 500 !important;
-  border-color: #2b6474 !important; 
-  border: 10px !important; 
+  border-color: #2b6474 !important;
+  border: 10px !important;
 }
 
 .notification-navbar {
@@ -301,78 +300,42 @@ header {
   display: grid;
 }
 
-/* Responsive Changes */
 @media (max-width: 768px) {
+
   .header-transition {
-    width: 90%;
-  }
-
-  .dropdown-container {
-    margin-left: 5px;
-  }
-
-  .searchbar {
-    margin-right: 10px;
-  }
-
-  .selected-location {
-    display: none;
-  }
-
-  .ms-4 .vertical-line {
-    display: none;
-  }
-
-  .create-ad-button {
-    margin: 5px;
-  }
-
-  .profile-picture-container {
-    margin-left: 10px;
-  }
-
-  .small-navbar {
-    width: 120px;
-  }
-
-  .my-ad-button {
-    width: 120px;
-    height: 30px;
-  }
-
-  .location-icon,
-  .heart-icon,
-  .bell-icon,
-  .bell-icon-unseen {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  header {
     padding: 10px;
-  }
-
-  .header-transition {
-    padding: 15px;
     height: 50px;
+    width: auto;
+    left: 1%;
+    right: 1%;
   }
 
   .logo {
-    width: 80px;
+    font-size: 20px;
   }
 
   .buttons-container {
-    justify-content: center !important;
+    justify-content: center;
   }
 
   .create-ad-button {
-    margin: 5px;
-    font-size: 12px;
+    width: 98px; 
+    height: 30px;
   }
 
-  .searchbar {
-    margin-right: 5px;
+  .create-ad-button span {
+    font-size: 11px;
+    font-weight: 650;
+  }
+  
+
+  .search {
+    margin-top: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 9999;
   }
 
   .my-ad-button {
@@ -396,5 +359,23 @@ header {
   .notification-navbar {
     width: 250px;
     max-height: 300px !important;
+  }
+
+  .login-btn span{
+    font-size: 0;
+    flex-direction: row;
+  }
+
+  .no-variants{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .no-variants p{
+    display: flex;
+    font-size: 10px;
+    font-weight: 650;
   }
 }

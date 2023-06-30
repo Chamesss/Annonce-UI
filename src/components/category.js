@@ -49,7 +49,7 @@ function Categories() {
                 <img src={category.picture} alt={category.name} />
               </div>
               <h3>{category.name}</h3>
-              <span className="dropdown-arrow"></span>
+              <span className="dropdown-arrow" />
             </a>
             {activeCategory === category && (
               <ul className="subcategory-list">

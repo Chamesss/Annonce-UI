@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './css/SearchBar.css';
 
-function SearchBar({ selectedCategoryId, selectedSubCategoryId, selectedLocationId }) {
+function SearchBar({ selectedCategoryId, selectedSubCategoryId }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

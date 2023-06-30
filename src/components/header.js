@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen } from "react-icons/fa";
+import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen, FaDoorOpen, FaUserPlus } from "react-icons/fa";
 import { VscBellDot, VscBell } from "react-icons/vsc";
 import { TiPlus } from "react-icons/ti";
 import "./css/Header.css";
@@ -132,14 +132,17 @@ function Header() {
         />
       </div>
       <div className="buttons-container">
-        <Button
-          variant="primary"
-          className="btn btn-primary create-ad-button"
-          onClick={handleCreateAdClick}
-        >
-          <TiPlus className="button-icon" />
-          <span>Publier Annonce</span>
-        </Button>
+        <div className="alignement-items">
+          <Button
+            variant="primary"
+            className="create-ad-button"
+            onClick={handleCreateAdClick}
+          > <div className="profile-section">
+              <TiPlus className="button-icon" />
+              <span>Create Ad</span>
+            </div>
+          </Button>
+        </div>
         {isAuthenticated ? (
           <>
             <div className="logos">
@@ -191,15 +194,21 @@ function Header() {
               variant="primary"
               className="login-btn"
               onClick={handleLoginClick}
-            >
-              Connexion
+            ><span>Login</span>
+              <div className="no-variants">
+                <FaDoorOpen />
+                <p>Login</p>
+              </div>
             </Button>
             <Button
               variant="primary"
               className="login-btn"
               onClick={() => navigate("/create-account")}
-            >
-              S'inscrire
+            ><span>Sign Up</span>
+              <div className="no-variants">
+                <FaUserPlus />
+                <p>Sign Up</p>
+              </div>
             </Button>
           </>
         )}
@@ -220,7 +229,7 @@ function Header() {
                   </div>
                 )}
               </div>
-            </div> 
+            </div>
             {showNavbar && (
               <div>
                 <nav className="small-navbar">

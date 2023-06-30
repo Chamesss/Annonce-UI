@@ -7,12 +7,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  height: 40px;
   width: auto ;
   background-color: #fff;
   border: 0px solid rgb(255, 255, 255);
   border-radius: 20px;
-  overflow: hidden;
   transition: width 0.3s ease;
 }
 
@@ -56,8 +55,22 @@
 
 
 
+
 .spacing{
   display: flex;
   margin-left: 20px;
   margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    flex: 0 1 auto;
+    width: 100%;
+    background-color: #ffffffb0;
+  }
+
+  .search-button {
+    margin-left: 0;
+    width: 100%;
+  }
 }
