@@ -190,26 +190,26 @@ function Header() {
           </>
         ) : (
           <>
-            <Button
+            <button
               variant="primary"
-              className="login-btn"
+              className="btn btn-primary login-btn"
               onClick={handleLoginClick}
             ><span>Login</span>
               <div className="no-variants">
                 <FaDoorOpen />
                 <p>Login</p>
               </div>
-            </Button>
-            <Button
+            </button>
+            <button
               variant="primary"
-              className="login-btn"
+              className="btn btn-primary login-btn"
               onClick={() => navigate("/create-account")}
             ><span>Sign Up</span>
               <div className="no-variants">
                 <FaUserPlus />
                 <p>Sign Up</p>
               </div>
-            </Button>
+            </button>
           </>
         )}
         {isAuthenticated && (
