@@ -241,18 +241,18 @@ function Header() {
                       <FaToolbox /> Administration
                     </a>
                   )}
-                  <a href="#" onClick={handleMyAds}>
+                  <p onClick={handleMyAds}>
                     <FaFolderOpen /> Mes Annonces
-                  </a>
-                  <a href="#" onClick={handleLinkClick}>
+                  </p>
+                  <p onClick={handleLinkClick}>
                     <FaHeart /> Favoris
-                  </a>
+                  </p>
                   <a href="/help">
                     <FaQuestionCircle /> FAQs
                   </a>
-                  <a href="#" style={{ color: "red" }} onClick={handleLogout}>
+                  <p style={{ color: "red" }} onClick={handleLogout}>
                     <FaSignOutAlt /> Se déconnecter
-                  </a>
+                  </p>
                 </nav>
               </div>
             )}

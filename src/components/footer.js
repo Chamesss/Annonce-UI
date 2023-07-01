@@ -9,25 +9,25 @@ function Footer() {
           <div className="col-lg-3 col-lg-4">
             <h4>Annonce</h4>
             <ul className="list-unstyled">
-              <li><a href="#">À propos de nous</a></li>
-              <li><a href="#">Carrières</a></li>
-              <li><a href="#">Press</a></li>
+              <li><p>À propos de nous</p></li>
+              <li><p>Carrières</p></li>
+              <li><p>Press</p></li>
             </ul>
           </div>
           <div className="col-lg-3 col-lg-4">
             <h4>Customer Service</h4>
             <ul className="list-unstyled">
-              <li><a href="#">Aide &amp; FAQs</a></li>
-              <li><a href="#">Expédition &amp; Retours</a></li>
-              <li><a href="#">Contactez-nous</a></li>
+              <li><p>Aide &amp; FAQs</p></li>
+              <li><p>Expédition &amp; Retours</p></li>
+              <li><p>Contactez-nous</p></li>
             </ul>
           </div>
           <div className="col-lg-3 col-lg-4">
             <h4>Connectez avec nous</h4>
             <ul className="list-unstyled">
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Instagram</a></li>
+              <li><p>Facebook</p></li>
+              <li><p>Twitter</p></li>
+              <li><p>Instagram</p></li>
             </ul>
           </div>
         </div>
@@ -40,8 +40,8 @@ function Footer() {
             </div>
             <div className="col-sm-6">
               <ul className="list-inline">
-                <li className="list-inline-item"><a href="#">Politique de confidentialité</a></li>
-                <li className="list-inline-item"><a href="#">Conditions d'utilisation</a></li>
+                <li className="list-inline-item"><p>Politique de confidentialité</p></li>
+                <li className="list-inline-item"><p>Conditions d'utilisation</p></li>
               </ul>
             </div>
           </div>

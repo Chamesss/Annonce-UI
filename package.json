@@ -34,6 +34,7 @@
     "react-slick": "^0.29.0",
     "react-spinners": "^0.13.8",
     "reactstrap": "^9.1.9",
+    "serve": "^14.2.0",
     "slick-carousel": "^1.8.1",
     "swiper": "^9.4.1",
     "web-vitals": "^2.1.4"
@@ -42,7 +43,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "serve -s build"
   },
   "eslintConfig": {
     "extends": [
