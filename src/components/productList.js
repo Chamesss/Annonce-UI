@@ -56,17 +56,17 @@ function ProductList({ products }) {
         },
       },
       {
-        breakpoint: 850,
+        breakpoint: 676,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 3,
+          slidesToScroll: 3,
         },
       },
       {
         breakpoint: 576,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
           dots: false,
         },
       },
@@ -76,7 +76,7 @@ function ProductList({ products }) {
   };
 
   return (
-    <div className="p-5">
+    <div className="card-slider">
       <Slider {...settings}>
         {products.map((product) => (
           <div

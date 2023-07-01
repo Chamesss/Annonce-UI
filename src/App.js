@@ -33,7 +33,6 @@ const App = () => {
           <Route path="/annonce/:productId" element={<AdDetails /> } />
           <Route path="/user/:userId" element={<UserDetailsPage /> } />
           <Route path="search" element={<SearchPage /> } />
-          {/* Add more routes for other pages/components as needed */}
         </Routes>
       </div>
     </Router>

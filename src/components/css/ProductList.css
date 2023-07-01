@@ -1,20 +1,30 @@
-
+.card-slider {
+  padding: 50px;
+}
 
 .carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.prev-arrow {
+  left: 0px;
+}
+
+.next-arrow {
+  right: 0px;
+}
+
+@media screen and (max-width: 896px){
+
+  .card-slider {
+    padding: 5px;
   }
   
-  .prev-arrow {
-    left: 10px;
-  }
-  
-  .next-arrow {
-    right: 10px;
-  }
+}

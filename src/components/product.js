@@ -71,7 +71,9 @@ function Product({ product }) {
 
   return (
     <div className="card">
-      <img className="card-img-top" src={product.pictures[0]} alt=""/>
+      <div class="card-img-container">
+        <img className="card-img-top" src={product.pictures[0]} alt="" />
+      </div>
       <div className="position-absolute top-0 end-0 mt-3 me-3">
         {favoritetrue ? (
           <div className="icontrue" style={{ zIndex: 1 }} onClick={handleButtonClick}>
@@ -90,24 +92,22 @@ function Product({ product }) {
         <h6 className="card-title">{product.title}</h6>
         <p className="card-text text-start " style={{ color: "grey" }}><FaMapMarkerAlt /> {product.country}, {product.city}
           {distance !== null ? (
-            <span className="small text-black"> ({distance.toString().slice(0, -3)} km)</span>
+            <span className="small-font text-black"> ({distance.toString().slice(0, -3)} km)</span>
           ) : (null)}
         </p>
-        <p className="small">{calculateTimeAgo(product.createdAt)}</p>
+        <p className="small-font">{calculateTimeAgo(product.createdAt)}</p>
         <p className="product-price my-2 text-danger text-end">{product.price} DT</p>
-
-
-        {product.vocal && (
-          <div className="card-footer md-5 align-items-center justify-content-center">
+        
+      </div>
+      {product.vocal ? (
+          <div className="card-footer">
             <ReactAudioPlayer
               src={product.vocal}
               controls
               className="custom-audio-player"
             />
           </div>
-        )}
-
-      </div>
+        ):(<div className="spacing-footer"></div>)}
     </div>
   );
 }
