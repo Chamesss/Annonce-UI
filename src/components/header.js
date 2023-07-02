@@ -211,7 +211,7 @@ function Header() {
                         <div>
                           <nav className="small-navbar">
                             <div className="head-nav-section">
-                              <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile}/>
+                              <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
                               <p onClick={handleNavigateProfile}>{user.firstname}</p>
                             </div>
                             <div className="body-nav-section">
