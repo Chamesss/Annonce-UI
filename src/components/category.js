@@ -32,6 +32,14 @@ function Categories() {
     setActiveCategory(null);
   };
 
+  const handleCategoryShow = (category) => {
+    if (activeCategory !== null ) {
+      setActiveCategory(null);
+      return
+    }
+    setActiveCategory(category)
+  }
+
   return (
     <div>
     <div className="categories">
@@ -43,6 +51,7 @@ function Categories() {
             key={index}
             onMouseEnter={() => handleCategoryMouseEnter(category)}
             onMouseLeave={handleCategoryMouseLeave}
+            onClick={() => handleCategoryShow(category)}
           >
             <a href={category.link}>
               <div className="category-icon">
