@@ -63,7 +63,7 @@ const LoginPage = () => {
       <div className="header">
         <Header />
       </div>
-      <div class="container">
+      <div className="container">
         <div className="d-flex justify-content-end align-items-center">
           <div className="mt-5" style={{ width: "400px", height: " 400px" }}>
             <h2 className="text-center mb-4">Connexion</h2>
@@ -111,7 +111,7 @@ const LoginPage = () => {
               </a>
             </p>
           </div>
-          <div class="col-lg-6 mx-5" style={{ overflow: "hidden" }}>
+          <div className="col-lg-6 mx-5" style={{ overflow: "hidden" }}>
             <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1685627659/ugzsl8zelozm54dwrw8r.jpg" alt="" style={{ width: "100%", height: "auto", border: "none", borderRadius: "70%" }} />
           </div>
         </div>

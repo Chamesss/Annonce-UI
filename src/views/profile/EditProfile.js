@@ -340,10 +340,10 @@ function EditProfile({ userinfo }) {
                     </div>
                     {error && <div className="text-danger mb-3">{error}</div>}
                     <div className="d-flex justify-content-between">
-                        <button class="btn btn-primary" type="primary" variant="primary" onClick={handleSubmit}>
+                        <button className="btn btn-primary" type="primary" variant="primary" onClick={handleSubmit}>
                             Enregistrer le profil
                         </button>
-                        <button class="btn btn-danger" type="delete" variant="danger" onClick={handleShowModal}>
+                        <button className="btn btn-danger" type="delete" variant="danger" onClick={handleShowModal}>
                             Supprimer le profil
                         </button>
                     </div>

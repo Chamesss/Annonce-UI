@@ -21,6 +21,12 @@
   right: 0px;
 }
 
+@media screen and (min-width: 897px) and (max-width: 1024px) {
+  .card-slider {
+    padding: 25px;
+  }
+}
+
 @media screen and (max-width: 896px){
 
   .card-slider {

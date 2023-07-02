@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen, FaDoorOpen, FaUserPlus } from "react-icons/fa";
-import { VscBellDot, VscBell } from "react-icons/vsc";
+import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen, FaDoorOpen, FaUserPlus, FaBell } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import "./css/Header.css";
 import SearchBar from "./searchBar";
@@ -11,6 +10,7 @@ import SearchBar from "./searchBar";
 
 function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isNotAuthenticated, setIsNotAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [showNavbar, setShowNavbar] = useState(false);
   const [showNotfbar, setShowNotfBar] = useState(false);
@@ -38,10 +38,11 @@ function Header() {
           fetchNotifications(token);
           setIsAuthenticated(true);
         } else {
-          setIsAuthenticated(false);
+          setIsNotAuthenticated(true);
         }
       }
     } catch (error) {
+      setIsNotAuthenticated(true);
       console.error("Error fetching user:", error);
     }
   };
@@ -137,127 +138,120 @@ function Header() {
             variant="primary"
             className="create-ad-button"
             onClick={handleCreateAdClick}
-          > <div className="profile-section">
-              <TiPlus className="button-icon" />
-              <span>Create Ad</span>
-            </div>
+            title="Create ad"
+          >
+            <TiPlus />
+            Create Ad
           </Button>
         </div>
-        {isAuthenticated ? (
-          <>
-            <div className="logos">
-              <div className="heart-icon" onClick={handleLinkClick}>
-                <FaHeart />
-              </div>
-            </div>
-            <div className="logos">
-              <div className="location-icon" onClick={handleMyAds}>
-                <FaFolderOpen />
-              </div>
-            </div>
-            <div className="orginize">
-              {seen ? (
-                <div className="logos">
-                  <div className="bell-icon" onClick={handleMyNotfs}>
-                    <VscBell />
+        <div className="profile-items">
+          {isAuthenticated && (
+            <>
+              <div className="logos">
+                <div className="heart-icon" title="My favorites" onClick={handleLinkClick}>
+                  <FaHeart />
+                </div>
+                <div className="location-icon" title="My ads" onClick={handleMyAds}>
+                  <FaFolderOpen />
+                </div>
+                {seen ? (
+                  <div className="bell-icon" title="Notifications" onClick={handleMyNotfs}>
+                    <FaBell />
                   </div>
-                </div>
-              ) : (
-                <div className="logos">
-                  <div className="bell-icon-unseen" onClick={handleMyNotfs}>
-                    <VscBellDot />
-                  </div>
-                </div>
-              )}
-
-              {showNotfbar && (
-                <div>
-                  <nav className="notification-navbar">
-                    <div>
-                      {notifications.map((notification) => (
-                        <div className="notification-container"
-                          key={notification._id}
-                        >
-                          {notification.message}
-                        </div>
-                      ))}
-                    </div>
-                  </nav>
-                </div>
-              )}
-            </div>
-
-          </>
-        ) : (
-          <>
-            <button
-              variant="primary"
-              className="btn login-btn"
-              onClick={handleLoginClick}
-            ><span>Login</span>
-              <div className="no-variants">
-                <FaDoorOpen />
-                <p>Login</p>
-              </div>
-            </button>
-            <button
-              variant="primary"
-              className="btn login-btn"
-              onClick={() => navigate("/create-account")}
-            ><span>Sign Up</span>
-              <div className="no-variants">
-                <FaUserPlus />
-                <p>Sign Up</p>
-              </div>
-            </button>
-          </>
-        )}
-        {isAuthenticated && (
-          <div
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="profile-section">
-              <div className="ms-3">
-                {user.picture && (
-                  <div className="profile-picture-container">
-                    <img
-                      src={user.picture}
-                      alt={user.firstname}
-                      className="profile-picture"
-                    />
+                ) : (
+                  <div className="bell-icon bell-icon-unseen" title="Notifications" onClick={handleMyNotfs}>
+                    <FaBell />
                   </div>
                 )}
+                {showNotfbar && (
+                  <div>
+                    <nav className="notification-navbar">
+                      <div className="notification-dropdown active">
+                        {notifications.map((notification) => (
+                          <div className="notification-container"
+                            key={notification._id}
+                          >
+                            {notification.message}
+                          </div>
+                        ))}
+                      </div>
+                    </nav>
+                  </div>
+                )}
+                <div
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="profile-section">
+                    <div>
+                      {user.picture && (
+                        <div className="profile-picture-container">
+                          <img
+                            src={user.picture}
+                            alt={user.firstname}
+                            className="profile-picture"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      {showNavbar && (
+                        <div>
+                          <nav className="small-navbar">
+                            <a href="/profile">
+                              <FaUser /> Mon Profile
+                            </a>
+                            {isAdmin && (
+                              <a href="/adminpanel">
+                                <FaToolbox /> Administration
+                              </a>
+                            )}
+                            <p onClick={handleMyAds}>
+                              <FaFolderOpen /><b> Mes Annonces </b>
+                            </p>
+                            <p onClick={handleLinkClick}>
+                              <FaHeart /> Favoris
+                            </p>
+                            <a href="/help">
+                              <FaQuestionCircle /> FAQs
+                            </a>
+                            <p style={{ color: "red" }} onClick={handleLogout}>
+                              <FaSignOutAlt /> Se déconnecter
+                            </p>
+                          </nav>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            {showNavbar && (
-              <div>
-                <nav className="small-navbar">
-                  <a href="/profile">
-                    <FaUser /> Mon Profile
-                  </a>
-                  {isAdmin && (
-                    <a href="/adminpanel">
-                      <FaToolbox /> Administration
-                    </a>
-                  )}
-                  <p onClick={handleMyAds}>
-                    <FaFolderOpen /> Mes Annonces
-                  </p>
-                  <p onClick={handleLinkClick}>
-                    <FaHeart /> Favoris
-                  </p>
-                  <a href="/help">
-                    <FaQuestionCircle /> FAQs
-                  </a>
-                  <p style={{ color: "red" }} onClick={handleLogout}>
-                    <FaSignOutAlt /> Se déconnecter
-                  </p>
-                </nav>
-              </div>
-            )}
-          </div>
-        )}
+            </>
+          )}
+          {isNotAuthenticated && (
+            <>
+              <button
+                variant="primary"
+                className="btn login-btn"
+                onClick={handleLoginClick}
+              ><span>Login</span>
+                <div className="no-variants">
+                  <FaDoorOpen />
+                  <p>Login</p>
+                </div>
+              </button>
+              <button
+                variant="primary"
+                className="btn login-btn"
+                onClick={() => navigate("/create-account")}
+              ><span>Sign Up</span>
+                <div className="no-variants">
+                  <FaUserPlus />
+                  <p>Sign Up</p>
+                </div>
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </header >
   );

@@ -11,6 +11,7 @@ import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import './search.css';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -227,9 +228,9 @@ function SearchPage() {
 
     if (markerRef.current && mapRef.current) {
       const { lat, lng } = markerRef.current.getLatLng();
-      mapRef.current.removeLayer(markerRef.current); 
+      mapRef.current.removeLayer(markerRef.current);
       markerRef.current = L.circle([lat, lng], {
-        radius: markerRadius * 1000, 
+        radius: markerRadius * 1000,
         color: 'blue',
         fillOpacity: 0.2,
       }).addTo(mapRef.current);
@@ -257,106 +258,92 @@ function SearchPage() {
         <Category />
       </div>
 
-      <div className='d-flex justify-content-start  flex-wrap'>
-        <div className="container border border-3" style={{ borderRadius: "10px", maxWidth: "20%" }}>
-          <div className="container d-grid justify-content-center align-items-center p-4">
-            <div className="row">
-              <div className="col">
-                <h2 className='d-flex justify-content-center align-items-center'>Filtrage</h2>
-                <div>
-                  <div className="mb-3 position-relative">
-                    <label htmlFor="location" className="form-label ">Location:</label>
-                    <Select
-                      options={options}
-                      value={location}
-                      onChange={handleLocationSelect}
-                      onInputChange={handleInputChange}
-                      placeholder="Enter an address"
-                      blurInputOnSelect={false}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Category:</label>
-                    <select
-                      value={categoryId}
-                      className="form-select"
-                      onChange={(e) => setCategoryId(e.target.value)}
-                      required
-                    >
-                      <option value=''>Select category</option>
-                      {categories.map((category) => (
-                        <option key={category._id} value={category._id}>
-                          {category.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Subcategory:</label>
-                    <select
-                      className="form-select"
-                      value={subcatgeoryId}
-                      onChange={(e) => setSubCategoryid(e.target.value)}
-                    >
-                      <option value=''>Select subcategory</option>
-                      {categories.find((category) => category._id === categoryId)?.subcategories.map(
-                        (subcategory) => (
-                          <option key={subcategory._id} value={subcategory._id}>
-                            <span className="subcategory-icon">
-                            </span>
-                            {subcategory.name}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="distance" className="form-label">Distance:</label>
-                  <input
-                    id="distance"
-                    type="range"
-                    className="form-range"
-                    min="6"
-                    max="10"
-                    value={radius}
-                    onChange={handleDistanceChange}
-                  />
-                  <span>{markerRadius} km</span>
-                </div>
-
-              </div>
-              <div className="col">
-                <div className="map-container" ref={mapContainerRef} style={{ height: '300px', width: '300px' }} />
-              </div>
+      <div className="cards-container">
+        <div className="filter-container">
+          <div className="filter-content">
+            <h2 className="filter-title">Filtrage</h2>
+            <div className="filter-section">
+              <label htmlFor="location" className="filter-label">Location:</label>
+              <Select
+                options={options}
+                value={location}
+                onChange={handleLocationSelect}
+                onInputChange={handleInputChange}
+                placeholder="Enter an address"
+                blurInputOnSelect={false}
+                className="filter-select"
+              />
             </div>
-            <div className="row mt-3">
-              <div className="col">
-                <button className="btn btn-primary" onClick={handleApplyFilters}>
-                  Appliquer
-                </button>
-              </div>
+            <div className="filter-section">
+              <label htmlFor="category" className="filter-label">Category:</label>
+              <select
+                value={categoryId}
+                className="filter-select"
+                onChange={(e) => setCategoryId(e.target.value)}
+                required
+              >
+                <option value=''>Select category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="filter-section">
+              <label htmlFor="subcategory" className="filter-label">Subcategory:</label>
+              <select
+                className="filter-select"
+                value={subcatgeoryId}
+                onChange={(e) => setSubCategoryid(e.target.value)}
+              >
+                <option value=''>Select subcategory</option>
+                {categories.find((category) => category._id === categoryId)?.subcategories.map(
+                  (subcategory) => (
+                    <option key={subcategory._id} value={subcategory._id}>
+                      {subcategory.name}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+            <div className="filter-section">
+              <label htmlFor="distance" className="filter-label">Distance:</label>
+              <input
+                id="distance"
+                type="range"
+                className="filter-range"
+                min="6"
+                max="10"
+                value={radius}
+                onChange={handleDistanceChange}
+              />
+              <span className="filter-range-value">{markerRadius} km</span>
+            </div>
+            <div className="filter-section">
+              <button className="filter-button" onClick={handleApplyFilters}>
+                Appliquer
+              </button>
             </div>
           </div>
+          <div className="map-container" ref={mapContainerRef}></div>
         </div>
-        <div class="vr"></div>
-        <div className="container">
+
+        <div className="cards-section">
           {keyword && (
-            <div>
-              <h1 className='d-flex justify-content-center align-items-center flex-wrap mb-5'>
+            <div className="search-query">
+              <h1 className="search-query-text">
                 Votre requête de recherche : "{keyword}"
               </h1>
             </div>
           )}
-          <h3 className='d-flex justify-content-center align-items-center flex-wrap mb-5'>
-            Résultats de recherche:
-          </h3>
+          <h3 className="results-heading">Résultats de recherche:</h3>
           {products.length > 0 && products[0] !== 'empty' ? (
-            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+            <div className="card-grid">
               {products.map((product) => (
                 <div
                   key={product._id}
-                  className="col mb-4"
+                  className="card-item"
                   onClick={() => handleProductClick(product)}
                 >
                   <Product product={product} />
@@ -364,16 +351,16 @@ function SearchPage() {
               ))}
             </div>
           ) : products[0] === 'empty' ? (
-            <div>Aucun produit à afficher.</div>
+            <div className="empty-results">Aucun produit à afficher.</div>
           ) : (
-            <div><Spinner /></div>
+            <div className="spinner-container"><Spinner /></div>
           )}
-          <div className="pagination d-flex justify-content-center mt-4">
+          <div className="pagination">
             {totalPages > 1 && (
               Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
                 <button
                   key={page}
-                  className={`btn btn-sm ${currentPage === page ? 'btn-primary' : 'btn-outline-primary'}`}
+                  className={`pagination-button ${currentPage === page ? 'active' : ''}`}
                   onClick={() => handlePageChange(page)}
                 >
                   {page}

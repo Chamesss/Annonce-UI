@@ -90,7 +90,7 @@ function FavoritePage(user) {
             ) : (
                 <div>
                     {favorites && (
-                        <div class="mt-5">
+                        <div className="mt-5">
                             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 ">
                                 {favorites.map((favorite) => (
                                     <div key={favorite.id} sm="6" md="3" className="mb-4" >

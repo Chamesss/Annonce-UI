@@ -63,21 +63,21 @@ const ResetCodeForm = () => {
       <div className="header h-100">
         <Header />
       </div>
-      <div class="d-flex justify-content-center align-items-center my-5 h-100">
-        <div class="container-fluid" >
-          <div class="row justify-content-center">
-            <div class="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
+      <div className="d-flex justify-content-center align-items-center my-5 h-100">
+        <div className="container-fluid" >
+          <div className="row justify-content-center">
+            <div className="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
               <form onSubmit={handleSubmit}>
-              <h2 class="my-4 d-block" style={{margin:"10px"}}>Code de réinitialisation</h2>
+              <h2 className="my-4 d-block" style={{margin:"10px"}}>Code de réinitialisation</h2>
               <p>Le code de confirmation a été envoyé à votre adresse e-mail:</p>
                 <input
                   type="text"
                   placeholder="Reset Code"
                   value={code}
                   onChange={(e) => setResetCode(e.target.value)}
-                  class="form-control my-3"
+                  className="form-control my-3"
                 />
-                <button type="submit" class="btn btn-primary my-3">
+                <button type="submit" className="btn btn-primary my-3">
                   Valider
                 </button>
               </form>
@@ -87,7 +87,7 @@ const ResetCodeForm = () => {
           </div>
         </div>
       </div>
-      <div class="my-5 container"><span class="d-block" style={{height:"50px"}}></span></div>
+      <div className="my-5 container"><span className="d-block" style={{height:"50px"}}></span></div>
       <div>
         <Footer />
       </div>

@@ -155,7 +155,7 @@ function Main() {
           </div>
         )}
       </div>
-      <div class="position-relative z-index-2">
+      <div className="position-relative z-index-2">
         <Footer />
       </div>
     </div>

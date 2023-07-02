@@ -65,7 +65,7 @@ function MyAds({ user }) {
             {message && <p className="d-flex justify-content-center align-items-center mt-5">{message}</p>}
             {isLoading && <div><Spinner /></div>}
             {ads && !editAd ? (
-                <div class="mt-5">
+                <div className="mt-5">
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 ">
                         {ads.map((ad) => (
                             <div className="col mb-4 d-flex flex-column justify-content-center align-items-center">

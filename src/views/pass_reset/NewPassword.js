@@ -84,12 +84,12 @@ const NewPasswordPage = () => {
       <div className="header h-100">
         <Header />
       </div>
-      <div class="d-flex justify-content-center align-items-center">
-        <div class="container-fluid mb-5" >
-          <div class="row justify-content-center">
-            <div class="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
+      <div className="d-flex justify-content-center align-items-center">
+        <div className="container-fluid mb-5" >
+          <div className="row justify-content-center">
+            <div className="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
               <form onSubmit={handleSubmit}>
-                <h2 class="my-4 d-block" style={{ margin: "10px" }}>Réinitialiser le mot de passe</h2>
+                <h2 className="my-4 d-block" style={{ margin: "10px" }}>Réinitialiser le mot de passe</h2>
                 <div>
                   <label htmlFor="password">Nouveau mot de passe:</label>
                   <input
@@ -98,7 +98,7 @@ const NewPasswordPage = () => {
                     placeholder="Enter new password"
                     value={password}
                     onChange={handlePasswordChange}
-                    class="form-control my-3"
+                    className="form-control my-3"
                   />
                 </div>
                 <div>
@@ -109,13 +109,13 @@ const NewPasswordPage = () => {
                     placeholder="Confirm new password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
-                    class="form-control my-3"
+                    className="form-control my-3"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={password !== confirmPassword}
-                  class="btn btn-primary my-3"
+                  className="btn btn-primary my-3"
                 >
                   Valider
                 </button>
@@ -125,7 +125,7 @@ const NewPasswordPage = () => {
             </div>
           </div>
         </div>
-        <div class="my-5 container"><span class="d-block" style={{ height: "50px" }}></span></div>
+        <div className="my-5 container"><span className="d-block" style={{ height: "50px" }}></span></div>
       </div>
 
       <div>

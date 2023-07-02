@@ -71,7 +71,7 @@ function Product({ product }) {
 
   return (
     <div className="card">
-      <div class="card-img-container">
+      <div className="card-img-container">
         <img className="card-img-top" src={product.pictures[0]} alt="" />
       </div>
       <div className="position-absolute top-0 end-0 mt-3 me-3">

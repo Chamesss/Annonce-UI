@@ -81,7 +81,6 @@ function ProductList({ products }) {
         {products.map((product) => (
           <div
           key={product._id}
-          className="col mb-4"
           onClick={() => handleProductClick(product)}
         >
           <Product product={product} />

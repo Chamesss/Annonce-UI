@@ -167,70 +167,70 @@ function AdDetails() {
       <div className="p-3" onClick={handleGoBack} style={{ transform: "translateY(50%)" }}>
         <FaChevronLeft className="carousel-arrow" />
       </div>
-      {!product ? (<div><Spinner /></div>) : (<div class="container p-5">
-        <div class="row ">
-          <div class="col-lg ratio ratio-4x3 " >
-            <div id="carouselExampleIndicators" class=" carousel carousel-fade d-flex align-items-center justify-content-center " data-ride="carousel">
-              <ol class="carousel-indicators ">
+      {!product ? (<div><Spinner /></div>) : (<div className="container p-5">
+        <div className="row ">
+          <div className="col-lg ratio ratio-4x3 " >
+            <div id="carouselExampleIndicators" className=" carousel carousel-fade d-flex align-items-center justify-content-center " data-ride="carousel">
+              <ol className="carousel-indicators ">
                 {product.pictures.map((_, index) => (
-                  <li data-target="#carouselExampleIndicators" data-slide-to={index} class={index === currentImageIndex ? 'active' : ''} key={index}></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to={index} className={index === currentImageIndex ? 'active' : ''} key={index}></li>
                 ))}
               </ol>
-              <div class="carousel-inner border rounded custom-resizing p-10">
+              <div className="carousel-inner border rounded custom-resizing p-10">
                 {product.pictures.map((picture, index) => (
-                  <div class={`custom-resizing carousel-item ${index === currentImageIndex ? 'active' : ''} d-flex `} key={index}>
-                    <img class="rounded" src={picture} alt={product.title} />
+                  <div className={`custom-resizing carousel-item ${index === currentImageIndex ? 'active' : ''} d-flex `} key={index}>
+                    <img className="rounded" src={picture} alt={product.title} />
                   </div>
                 ))}
               </div>
-              <button class="carousel-control-prev custom-carousel-button" type="button" data-target="#carouselExampleIndicators" data-slide="prev" onClick={() => handlePrevImage()}>
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Précédent</span>
+              <button className="carousel-control-prev custom-carousel-button" type="button" data-target="#carouselExampleIndicators" data-slide="prev" onClick={() => handlePrevImage()}>
+                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span className="sr-only">Précédent</span>
               </button>
-              <button class="carousel-control-next custom-carousel-button" type="button" data-target="#carouselExampleIndicators" data-slide="next" onClick={() => handleNextImage()}>
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Suivant</span>
+              <button className="carousel-control-next custom-carousel-button" type="button" data-target="#carouselExampleIndicators" data-slide="next" onClick={() => handleNextImage()}>
+                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span className="sr-only">Suivant</span>
               </button>
-              <ol class="carousel-indicators">
+              <ol className="carousel-indicators">
                 {product.pictures.map((_, index) => (
-                  <li data-target="#carouselExampleIndicators" data-slide-to={index} class={index === currentImageIndex ? 'active' : ''} key={index}></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to={index} className={index === currentImageIndex ? 'active' : ''} key={index}></li>
                 ))}
               </ol>
             </div>
           </div>
-          <div class="col-lg-6 px-5">
+          <div className="col-lg-6 px-5">
             {user !== null ? (
               <div>
-                <div class="d-flex align-items-center">
-                  <img src={user.picture} alt="" class="rounded-circle me-2 " style={{ width: "55px", height: "auto", cursor: "pointer" }} onClick={() => handleOwnerPage(user._id)} />
-                  <div class="px-5 ">
-                    <div class="d-flex align-items-center "><FaUser />
-                      <p class="mb-2 px-2" style={{ color: "red", fontSize: "20px", cursor: "pointer" }} onClick={() => handleOwnerPage(user._id)}>  {user.firstname} {user.lastname}</p></div>
+                <div className="d-flex align-items-center">
+                  <img src={user.picture} alt="" className="rounded-circle me-2 " style={{ width: "55px", height: "auto", cursor: "pointer" }} onClick={() => handleOwnerPage(user._id)} />
+                  <div className="px-5 ">
+                    <div className="d-flex align-items-center "><FaUser />
+                      <p className="mb-2 px-2" style={{ color: "red", fontSize: "20px", cursor: "pointer" }} onClick={() => handleOwnerPage(user._id)}>  {user.firstname} {user.lastname}</p></div>
                     {user.type === "individual" ? (
-                      <div class="d-flex align-items-center "><FaHome />
-                        <p class="mb-2 px-2 text-primary">  Individuelle</p></div>
-                    ) : (<div class="d-flex align-items-center "><FaBuilding />
-                      <p class="mb-2 px-2 text-primary">  Entreprise</p></div>)}
-                    <p class="mb-2"><FaMapMarkerAlt /> {user.country}, {user.city}</p>
-                    <p class="mb-2"><FaPhoneAlt /> +216 {user.tel}</p>
-                    <p class="mb-2"><FaRegCalendarAlt />  Rejoint: {user.createdAt.split('T')[0]}</p>
+                      <div className="d-flex align-items-center "><FaHome />
+                        <p className="mb-2 px-2 text-primary">  Individuelle</p></div>
+                    ) : (<div className="d-flex align-items-center "><FaBuilding />
+                      <p className="mb-2 px-2 text-primary">  Entreprise</p></div>)}
+                    <p className="mb-2"><FaMapMarkerAlt /> {user.country}, {user.city}</p>
+                    <p className="mb-2"><FaPhoneAlt /> +216 {user.tel}</p>
+                    <p className="mb-2"><FaRegCalendarAlt />  Rejoint: {user.createdAt.split('T')[0]}</p>
                   </div>
                 </div>
               </div>
             ) : null}
-            <hr class="my-4"></hr>
-            <h2 class="text-black">{product.title}</h2>
-            <p class="text-black">{product.description}</p>
+            <hr className="my-4"></hr>
+            <h2 className="text-black">{product.title}</h2>
+            <p className="text-black">{product.description}</p>
 
             <ReactAudioPlayer src={product.vocal} controls />
-            <div class="d-flex align-items-center">
-              <h3 class="text-danger me-2">{product.price}</h3>
-              <h6 class="text-danger me-2">DT</h6>
+            <div className="d-flex align-items-center">
+              <h3 className="text-danger me-2">{product.price}</h3>
+              <h6 className="text-danger me-2">DT</h6>
             </div>
-            <p class="text-black">{calculateTimeAgo(product.date)}</p>
+            <p className="text-black">{calculateTimeAgo(product.date)}</p>
             <div className="d-flex justify-content-between">
-              <button class="btn btn-primary py-2 my-2" onClick={() => handleFavoritesAd()}>Ajouter aux favoris</button>
-              <button class="btn btn-danger py-2 my-2" onClick={() => handleShowModal()}>Signaler l'annonce</button>
+              <button className="btn btn-primary py-2 my-2" onClick={() => handleFavoritesAd()}>Ajouter aux favoris</button>
+              <button className="btn btn-danger py-2 my-2" onClick={() => handleShowModal()}>Signaler l'annonce</button>
             </div>
             {message && <div className="text-success mb-3">{message}</div>}
             {error && <div className="text-danger mb-3">{error}</div>}
@@ -253,12 +253,12 @@ function AdDetails() {
               <Modal.Footer>
                 <button
                   type="button"
-                  class="btn btn-danger"
+                  className="btn btn-danger"
                   onClick={() => setShowModal(false)}
                 >Annuler</button>
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={() => handleRapportAd()}
                 >Valider</button>
 
@@ -269,10 +269,10 @@ function AdDetails() {
 
         </div>
       </div>)}
-      <div class="d-flex justify-content-center align-items-center">
-        <hr class="my-4" style={{ width: '90%', borderWidth: '4px', fontWeight: 'bold' }} />
+      <div className="d-flex justify-content-center align-items-center">
+        <hr className="my-4" style={{ width: '90%', borderWidth: '4px', fontWeight: 'bold' }} />
       </div>
-      <div class="container pb-5">
+      <div className="container pb-5">
         <h3 style={{ color: "#D85A60" }}>Autre Annonces de même category: </h3>
       </div>
       <div >

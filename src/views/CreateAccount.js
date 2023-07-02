@@ -204,14 +204,14 @@ const CreateAccountPage = () => {
                       value="+216"
                       readOnly
                       style={{ width: '70px' }}
-                      class="form-control"
+                      className="form-control"
                     />
                     <input
                       type="tel"
                       id="tel"
                       name="tel"
                       onChange={handleChange}
-                      class="form-control"
+                      className="form-control"
                       required
                     />
                   </div>
@@ -272,7 +272,7 @@ const CreateAccountPage = () => {
           </div>
         </div>
       </div>
-      <div class="mt-5">
+      <div className="mt-5">
         <Footer />
       </div>
     </div>

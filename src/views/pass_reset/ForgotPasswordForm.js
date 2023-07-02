@@ -61,12 +61,12 @@ const ForgotPasswordForm = () => {
       <div className="header h-100">
         <Header />
       </div>
-      <div class="d-flex justify-content-center align-items-center my-5">
-        <div class="container-fluid" >
-          <div class="row justify-content-center">
-            <div class="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
+      <div className="d-flex justify-content-center align-items-center my-5">
+        <div className="container-fluid" >
+          <div className="row justify-content-center">
+            <div className="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
               <form onSubmit={handleSubmit}>
-                <h2 class="my-4 d-block" style={{ margin: "10px" }}>Mot de passe oublié:</h2>
+                <h2 className="my-4 d-block" style={{ margin: "10px" }}>Mot de passe oublié:</h2>
                 <p>Entrer votre E-mail:</p>
                 <input
                   type="email"
@@ -76,7 +76,7 @@ const ForgotPasswordForm = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   className="form-control my-3"
                 />
-                <button type="submit" class="btn btn-primary my-3">
+                <button type="submit" className="btn btn-primary my-3">
                   Valider
                 </button>
               </form>
@@ -85,7 +85,7 @@ const ForgotPasswordForm = () => {
           </div>
         </div>
       </div>
-      <div class="my-5 container"><span class="d-block" style={{ height: "50px" }}></span></div>
+      <div className="my-5 container"><span className="d-block" style={{ height: "50px" }}></span></div>
       <div>
         <Footer />
       </div>

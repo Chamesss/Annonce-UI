@@ -258,13 +258,13 @@ const CreateAdPage = () => {
 
     return (
         <div>
-            <div class="header"><Header />
+            <div className="header"><Header />
                 <ProgressBar now={progress} label={`${progress}%`} className="my-4" />
                 <Tabs activeKey={activeTab} onSelect={handleTabSelect} id="createAdTabs" className="my-4">
                     <Tab eventKey={0}>
                         <Form>
                             <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center ">
+                                <div className="container d-flex justify-content-center ">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Choisir une catégorie:</h2>
                                         <div className="mb-3">
@@ -332,7 +332,7 @@ const CreateAdPage = () => {
                     <Tab eventKey={1}>
                         <Form>
                             <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                                <div className="container d-flex justify-content-center">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Infos générales:</h2>
                                         <Form.Group controlId="title">
@@ -395,7 +395,7 @@ const CreateAdPage = () => {
                     <Tab eventKey={2}>
                         <Form>
                             <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                                <div className="container d-flex justify-content-center">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Photos:</h2>
                                         <Form.Group controlId="pictures">
@@ -424,7 +424,7 @@ const CreateAdPage = () => {
                     <Tab eventKey={3}>
                         <Form>
                             <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                                <div className="container d-flex justify-content-center">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Enregistrement audio: </h2>
                                         <Form.Group controlId="audio">
@@ -458,7 +458,7 @@ const CreateAdPage = () => {
                     <Tab eventKey={4}>
                         <Form>
                             <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                                <div className="container d-flex justify-content-center">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Location select: </h2>
                                         <Form.Group controlId="location">
