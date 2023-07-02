@@ -92,7 +92,7 @@ function Header() {
   };
 
   const handleMyAds = () => {
-    navigate('/profile/?section=' + encodeURIComponent('ads'), { replace: true });
+    navigate('/profile/?section='+encodeURIComponent('ads'), { replace: true });
     window.location.reload();
   };
 
