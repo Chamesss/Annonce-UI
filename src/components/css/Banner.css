@@ -88,7 +88,7 @@
 
 @media screen and (max-width: 400px) {
   .banner {
-    width:100%;
+    width:auto;
     display: flex;
     overflow: hidden;
     justify-content: flex-start;

@@ -60,60 +60,64 @@ const LoginPage = () => {
 
   return (
     <div>
-      <div className="header">
+      <div>
         <Header />
       </div>
-      <div class="container">
-        <div className="d-flex justify-content-end align-items-center">
-          <div className="mt-5" style={{ width: "400px", height: " 400px" }}>
-            <h2 className="text-center mb-4">Connexion</h2>
-            <Form>
-              <FormGroup>
-                <Label for="email">Email:</Label>
-                <Input
-                  type="email"
-                  id="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="password">Password:</Label>
-                <Input
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </FormGroup>
-              {error && <div className="text-danger mb-3">{error}</div>}
-              {welcome && <div className="text-success mb-3">Bienvenue, rediriger..</div>}
-              <Button
-                color="primary"
-                onClick={handleLogin}
-                style={{ width: '100%' }}
-                type="submit"
-              >
-                Login
-              </Button>
-            </Form>
-            <p style={{ textAlign: 'center', marginTop: '10px' }}>
-              Mot de passe oublié? <a href="/forgot-password" style={{ color: 'blue' }}>
+      <div class="container-form-login">
+        <div className="login-form">
+          <h5>Login to your account</h5>
+          <p>Don't have an account? <span className="sign-up">Sign Up Now!</span></p>
+          <div className="picture-logo-container">
+            <img src="https://seeklogo.com/images/F/facebook-icon-circle-logo-09F32F61FF-seeklogo.com.png" className="picture-logo"/>
+            <img src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png" className="picture-logo" />
+          </div>
+          <div className="hr-line">
+            <hr className="hr-line-main" />
+            <div className="hr-cut">
+              <span>OR</span>
+            </div>
+          </div>
+          <form>
+            <formgroup>
+              <label for="email"></label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-control email-input"
+                required
+              />
+            </formgroup>
+            <formgroup>
+              <label for="password"></label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-control email-input"
+                required
+              />
+            </formgroup>
+            {error && <div className="text-danger mb-3">{error}</div>}
+            {welcome && <div className="text-success mb-3">Bienvenue, rediriger..</div>}
+          </form>
+          <button
+            color="primary"
+            onClick={handleLogin}
+            type="submit"
+            className="btn btn-primary login-button-submit"
+          >
+            Login
+          </button>
+          <p>
+            Mot de passe oublié? <span className="sign-up">
               Cliquez ici
-              </a>
-            </p>
-            <p style={{ textAlign: 'center', marginTop: '10px' }}>
-              <a href="/create-account" style={{ color: 'blue' }}>
-              Créer un compte
-              </a>
-            </p>
-          </div>
-          <div class="col-lg-6 mx-5" style={{ overflow: "hidden" }}>
-            <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1685627659/ugzsl8zelozm54dwrw8r.jpg" alt="" style={{ width: "100%", height: "auto", border: "none", borderRadius: "70%" }} />
-          </div>
+            </span>
+          </p>
         </div>
       </div> <Footer />
     </div >

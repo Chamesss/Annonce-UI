@@ -1,18 +1,36 @@
 .search-bar-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  position: absolute;
+  top:10%;
+  left: 30%;
+  background-color: white;
+  border: 0px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
 }
 
+.toggle-search-button button {
+  display: none;
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+/* CSS for search bar */
 .search-bar {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40px;
-  width: auto ;
+  width: 250px;
   background-color: #fff;
-  border: 0px solid rgb(255, 255, 255);
-  border-radius: 20px;
   transition: width 0.3s ease;
+  border-radius: 20px;
 }
 
 .search-bar input {
@@ -22,55 +40,44 @@
   outline: none;
   font-size: 16px;
   color: rgb(126, 126, 126);
-  background-color: transparent;
-}
-
-.search-bar input::placeholder {
-  color: rgb(126, 126, 126);
-  opacity: 0.7;
-}
-
-.search-bar .search-button {
-  height: auto;
-  width: auto;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
+  background-color: white;
   align-items: center;
-  transition: transform 0.3s ease;
 }
 
-.search-bar .search-button:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-}
-
-.search-bar .search-button svg {
-  height: 20px;
-  width: 20px;
-  color: rgb(152, 152, 152);
-}
-
-
-
-
-.spacing{
-  display: flex;
-  margin-left: 20px;
-  margin-bottom: 5px;
-}
-
-@media (max-width: 768px) {
-  .search-bar {
-    flex: 0 1 auto;
-    width: 100%;
-    background-color: #ffffffb0;
+@media (max-width: 650px) {
+  .search-bar.closed .search-bar-inner input {
+    display: none;
   }
 
-  .search-button {
-    margin-left: 0;
-    width: 100%;
+  .search-bar {
+    width: 0;
+    overflow: hidden;
+  }
+
+  .search-bar.open {
+    width: 200px;
+  }
+
+  .search-bar.open .search-bar-inner input {
+    display: block;
+  }
+  .search-bar input {
+    font-size: 12px;
+  }
+
+  .toggle-search-button button {
+    display: block;
+  
+  }
+}
+
+@media (max-width: 450px) {
+  .search-bar.open {
+    width: 150px;
+    height: auto;
+  }
+
+  .search-bar.open .search-bar-inner input {
+    width: 100px;
   }
 }

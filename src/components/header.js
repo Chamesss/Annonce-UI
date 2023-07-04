@@ -152,7 +152,7 @@ function Header() {
             title="Create ad"
           >
             <TiPlus />
-            Create Ad
+            <span>Create Ad</span>
           </Button>
         </div>
         <div className="profile-items">

@@ -131,7 +131,7 @@
 @media (max-width: 800px) {
   .categories {
     padding-top: 50px;
-    height:175px ;
+    height:125px ;
   }
 
   .categories-container {
@@ -154,7 +154,7 @@
 @media (max-width: 768px) {
   .categories {
     padding-top: 50px;
-    height:175px ;
+    height:115px ;
   }
 
   .categories-container {
