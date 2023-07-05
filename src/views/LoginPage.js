@@ -4,6 +4,7 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './css/LoginPage.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import photo from '../images/welcome-sign.svg';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -66,9 +67,9 @@ const LoginPage = () => {
       <div class="container-form-login">
         <div className="login-form">
           <h5>Login to your account</h5>
-          <p>Don't have an account? <span className="sign-up">Sign Up Now!</span></p>
+          <p>Don't have an account? &nbsp; <span className="sign-up"> Sign Up Now!</span></p>
           <div className="picture-logo-container">
-            <img src="https://seeklogo.com/images/F/facebook-icon-circle-logo-09F32F61FF-seeklogo.com.png" className="picture-logo"/>
+            <img src="https://seeklogo.com/images/F/facebook-icon-circle-logo-09F32F61FF-seeklogo.com.png" className="picture-logo" />
             <img src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png" className="picture-logo" />
           </div>
           <div className="hr-line">
@@ -77,34 +78,26 @@ const LoginPage = () => {
               <span>OR</span>
             </div>
           </div>
-          <form>
-            <formgroup>
-              <label for="email"></label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="form-control email-input"
-                required
-              />
-            </formgroup>
-            <formgroup>
-              <label for="password"></label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-control email-input"
-                required
-              />
-            </formgroup>
-            {error && <div className="text-danger mb-3">{error}</div>}
-            {welcome && <div className="text-success mb-3">Bienvenue, rediriger..</div>}
-          </form>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="form-control email-input"
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="form-control email-input mt-3"
+            required
+          />
+          {error && <div className="text-danger mb-3">{error}</div>}
+          {welcome && <div className="text-success mb-3">Bienvenue, rediriger..</div>}
           <button
             color="primary"
             onClick={handleLogin}
@@ -114,10 +107,11 @@ const LoginPage = () => {
             Login
           </button>
           <p>
-            Mot de passe oublié? <span className="sign-up">
-              Cliquez ici
-            </span>
+            Forgot your password?&nbsp;<span className="sign-up">Click here</span>
           </p>
+        </div>
+        <div className="login-banner-container">
+          <img src={photo} alt="login-banner" className="login-banner" />
         </div>
       </div> <Footer />
     </div >
