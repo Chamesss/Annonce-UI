@@ -12,8 +12,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [welcome, setWelcome] = useState(false);
-
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (welcome) {
       const timeout = setTimeout(() => {
@@ -58,6 +58,14 @@ const LoginPage = () => {
     }
   };
 
+  const handleForgetPasswordNav = () => {
+    navigate('/forgot-password');
+  }
+
+  const handleCreateAccountNav = () => {
+    navigate('/create-account');
+  }
+
   return (
     <div>
       <div>
@@ -66,7 +74,7 @@ const LoginPage = () => {
       <div class="container-form-login">
         <div className="login-form">
           <h5>Login to your account</h5>
-          <p>Don't have an account? &nbsp; <span className="sign-up"> Sign Up Now!</span></p>
+          <p>Don't have an account? &nbsp; <span onClick={handleCreateAccountNav} className="sign-up"> Sign Up Now!</span></p>
           <div className="picture-logo-container">
             <img src="https://seeklogo.com/images/F/facebook-icon-circle-logo-09F32F61FF-seeklogo.com.png" alt="facebook logo" className="picture-logo" />
             <img src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png" alt="google logo" className="picture-logo" />
@@ -106,7 +114,7 @@ const LoginPage = () => {
             Login
           </button>
           <p>
-            Forgot your password?&nbsp;<span className="sign-up">Click here</span>
+            Forgot your password?&nbsp;<span onClick={handleForgetPasswordNav} className="sign-up">Click here</span>
           </p>
         </div>
         <div className="login-banner-container">
