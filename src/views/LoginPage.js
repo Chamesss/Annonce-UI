@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import './css/LoginPage.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
@@ -69,8 +68,8 @@ const LoginPage = () => {
           <h5>Login to your account</h5>
           <p>Don't have an account? &nbsp; <span className="sign-up"> Sign Up Now!</span></p>
           <div className="picture-logo-container">
-            <img src="https://seeklogo.com/images/F/facebook-icon-circle-logo-09F32F61FF-seeklogo.com.png" className="picture-logo" />
-            <img src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png" className="picture-logo" />
+            <img src="https://seeklogo.com/images/F/facebook-icon-circle-logo-09F32F61FF-seeklogo.com.png" alt="facebook logo" className="picture-logo" />
+            <img src="https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png" alt="google logo" className="picture-logo" />
           </div>
           <div className="hr-line">
             <hr className="hr-line-main" />
