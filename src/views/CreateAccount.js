@@ -3,9 +3,9 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import { Spinner } from 'react-bootstrap';
 import './css/CreateAccountPage.css';
-import Select from 'react-select';
 import { FaUpload } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+import ResponsiveSelect from '../utils/select';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -19,13 +19,14 @@ const CreateAccountPage = () => {
   const [location, setLocation] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [passwordconfirm, setPasswordConfirm] = useState('');
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
     tel: '',
     email: '',
     password: '',
-    type: 'individual',
+    type: 'Individual',
   });
   const navigate = useNavigate();
 
@@ -104,6 +105,7 @@ const CreateAccountPage = () => {
   const handleImageChange = (e) => {
     setFile(e.target.files[0]);
     const file = e.target.files[0];
+    console.log("asba");
     if (file) {
       const reader = new FileReader();
 
@@ -121,11 +123,32 @@ const CreateAccountPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.firstname.length < 3) {
+      setError('Firstname must be longer than 3 characters');
+      return
+    }
+    if (formData.lastname.length < 3) {
+      setError('Lastname must be longer than 3 characters');
+      return
+    }
+    if (!(/^\d{8}$/.test(formData.tel))) {
+      setError('Tel must be 8 digits');
+      return
+    }
+    if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))) {
+      setError('Email must be in valid email format');
+      return
+    }
+    if (formData.password !== passwordconfirm || formData.password.length < 5) {
+      setError("Passwords doesnt match");
+      return
+    }
     if (!selectedLocationId) {
       setError("Please select a valid location");
       return
     }
     setIsLoading(true);
+    setError('');
     try {
       const data = new FormData();
       data.append('firstname', formData.firstname);
@@ -156,125 +179,95 @@ const CreateAccountPage = () => {
 
   return (
     <div>
-      <div className="header">
+      <div>
         <Header />
       </div>
-      <div className="container">
-        <div className="row justify-content-center align-items-center">
-          <div className="col-lg-6 mt-1">
-            <h2 className="mb-4">Créer un compte:</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <div className="profile-picture border border-2 rounded-circle shadow-lg p-3 mb-1 bg-white rounded" style={{ width: '150px', height: '150px', position: 'relative', overflow: 'hidden' }}>
-                    {selectedImage ? (
-                      <img src={selectedImage} alt="Profile" className="rounded-circle" style={{ width: '100%', height: '100%' }} />
-                    ) : (
-                      <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile" className="rounded-circle" style={{ width: '100%', height: '100%' }} />
-                    )}
-                    <input type="file" id="picture" name="picture" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
-                    <label htmlFor="picture" className="upload-button container" style={{ backgroundColor: 'grey', width: '100%', height: '30px', position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)' }}>
-                      <FaUpload style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-                    </label>
-                  </div>
+      <div className="create-account-container">
+        <div className="create-account-form">
+          <div className="create-account">
+            <h3>Create Account:</h3>
+            <div>
+              <div>
+                <div className="picture-container">
+                  {selectedImage ? (
+                    <img src={selectedImage} alt="Profile" onClick={() => {document.getElementById('picture').click()}} className="inner-picture"/>
+                  ) : (
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile" onClick={() => {document.getElementById('picture').click()}} className="inner-picture"/>
+                  )}
+                  <input type="file" id="picture" name="picture" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
+                  <FaUpload onClick={() => {document.getElementById('picture').click()}} className="upload-icon-create-account"/>
                 </div>
               </div>
-
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label htmlFor="firstname" className="form-label">Prénom:</label>
-                  <input type="text" id="firstname" name="firstname" className="form-control" value={formData.firstname} onChange={handleChange} required />
-                  <div className="invalid-feedback">Entrez votre prénom s'il vous plait.</div>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="lastname" className="form-label">Nom:</label>
-                  <input type="text" id="lastname" name="lastname" className="form-control" value={formData.lastname} onChange={handleChange} required />
-                  <div className="invalid-feedback">Entrez votre nom s'il vous plait.</div>
+            </div>
+            <div>
+              <div>
+                <div className="single-row">
+                  <input type="text" id="firstname" placeholder="Enter your firstname" name="firstname" className="form-control input-design fisrtname-input" value={formData.firstname} onChange={handleChange} required />
+                  <input type="text" id="lastname" placeholder="Enter your lastname" name="lastname" className="form-control input-design lastname-input" value={formData.lastname} onChange={handleChange} required />
                 </div>
               </div>
-
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label htmlFor="tel" className="form-label">Telephone:</label>
-                  <div className="d-flex align-items-center">
-                    <input
-                      type="text"
-                      id="telPrefix"
-                      name="telPrefix"
-                      value="+216"
-                      readOnly
-                      style={{ width: '70px' }}
-                      class="form-control"
-                    />
-                    <input
-                      type="tel"
-                      id="tel"
-                      name="tel"
-                      onChange={handleChange}
-                      class="form-control"
-                      required
-                    />
-                  </div>
-                  <div className="invalid-feedback">Veuillez saisir un numéro de téléphone valide.</div>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="email" className="form-label">Email:</label>
-                  <input type="email" id="email" name="email" className="form-control" value={formData.email} onChange={handleChange} required />
-                  <div className="invalid-feedback">Veuillez saisir une address email valide.</div>
-                </div>
+              <div className="phone-number">
+                <input
+                  type="text"
+                  id="telPrefix"
+                  name="telPrefix"
+                  value="+216"
+                  readOnly
+                  className="form-control phone-prefix"
+                />
+                <input
+                  type="tel"
+                  id="tel"
+                  name="tel"
+                  onChange={handleChange}
+                  className="form-control phone-input"
+                  placeholder="Phone number"
+                  required
+                />
               </div>
-
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label htmlFor="password" className="form-label">Mot de passe:</label>
-                  <input type="password" id="password" name="password" className="form-control" value={formData.password} onChange={handleChange} required />
-                  <div className="invalid-feedback">Veuillez entrer un mot de passe.</div>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="type" className="form-label">Type de compte:</label>
-                  <select id="type" name="type" className="form-select" value={formData.type} onChange={handleChange} required>
-                    <option value="">Sélectionnez le type de compte</option>
-                    <option value="individual">Individuelle</option>
-                    <option value="entreprise">Entreprise</option>
-                  </select>
-                  <div className="invalid-feedback">Veuillez sélectionner le type de compte.</div>
-                </div>
+              <div>
+                <input type="email" id="email" placeholder="Email" name="email" className="form-control input-design" value={formData.email} onChange={handleChange} required />
               </div>
-
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label htmlFor="location" className="form-label">Location:</label>
-                  {error && <div className="text-danger mb-3">{error}</div>}
-                  <Select
+              <div className="single-row">
+                <input type="password" id="password" placeholder="Password" name="password" className="form-control input-design password-input" value={formData.password} onChange={handleChange} required />
+                <input type="password" id="passwordConfirm" placeholder="Confirm password" name="passwordConfirm" className="form-control input-design confirm-password-input" value={passwordconfirm} onChange={(e) => setPasswordConfirm(e.target.value)} required />
+              </div>
+              <div>
+                <select id="type" name="type" className="form-select input-design" value={formData.type} onChange={handleChange} required>
+                  <option value="">Account type</option>
+                  <option value="Individual">Individual</option>
+                  <option value="Entreprise">Entreprise</option>
+                </select>
+              </div>
+              <div>
+                <div>
+                  <ResponsiveSelect
                     options={options}
                     value={location}
                     onChange={handleLocationSelect}
                     onInputChange={handleInputChange}
                     placeholder="Enter an address"
                     blurInputOnSelect={false}
+                    classNamePrefix="react-select"
                   />
                 </div>
               </div>
-              {message && <div className="text-success mb-3">{message}</div>}
-              {isLoading && (
-                <div className="loading-block">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              )}
-              <div id="errorMessageContainer" className="text-danger my-3"></div>
-              <button type="submit" className="btn btn-primary">Créer un compte</button>
-            </form>
-          </div>
-          <div className="col-lg-6">
-            <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1685622911/igo8dhxcvtsfbc1ofpfd.jpg" alt="" style={{ width: "100%", height: "auto" }} />
+            </div>
+            {message && <div className="text-success mb-3">{message}</div>}
+            {error && <div className="text-danger mb-3">{error}</div>}
+            {isLoading && (
+              <div>
+                <Spinner animation="border" role="status">
+                  <span>Loading...</span>
+                </Spinner>
+              </div>
+            )}
+            <div id="errorMessageContainer" className="text-danger my-3"></div>
+            <button type="submit" onClick={handleSubmit} className="btn btn-primary create-account-button">Create</button>
           </div>
         </div>
       </div>
-      <div class="mt-5">
         <Footer />
-      </div>
     </div>
   );
 };
