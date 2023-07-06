@@ -2,13 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    padding: 10px 10px;
 }
 
 .create-account-form {
     display: flex;
     width: 100%;
     justify-content: center;
-    padding: 100px 25px;
 }
 
 .create-account {
@@ -19,14 +21,13 @@
     align-items: center;
 }
 
-.create-account h3 {
+.create-account h5 {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #D85A60;
     font-weight: 550;
-    letter-spacing: 1.5px;
 }
 
 .single-row {
@@ -61,7 +62,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
     margin-top: 5px;
     margin-bottom: 10px;
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid rgb(202, 202, 202) !important;
 }
 
 .phone-input {
@@ -69,8 +70,9 @@
     border-top-right-radius: 25px !important;
     border-bottom-left-radius: 0px !important;
     border-top-left-radius: 0px !important;
+    border-left: none !important;
     margin-bottom: 5px;
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid rgb(202, 202, 202) !important;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 }
 
@@ -79,9 +81,8 @@
     border-top-left-radius: 25px !important;
     border-bottom-right-radius: 0px !important;
     border-top-right-radius: 0px !important;
-    border-right: none !important;
     margin-bottom: 5px;
-    border: 1px solid rgb(214, 214, 214);
+    border: 1px solid rgb(202, 202, 202) !important;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
     width: 65px !important;
 }
@@ -102,7 +103,7 @@
     height: 150px;
     position: relative;
     overflow: hidden;
-    border: 1px solid rgb(223, 223, 223);
+    border: 1px solid rgb(202, 202, 202);
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 12px;

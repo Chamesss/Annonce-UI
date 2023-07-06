@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap';
 import './css/CreateAccountPage.css';
 import { FaUpload } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import ResponsiveSelect from '../utils/select';
+import Select from 'react-select';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -185,17 +185,17 @@ const CreateAccountPage = () => {
       <div className="create-account-container">
         <div className="create-account-form">
           <div className="create-account">
-            <h3>Create Account:</h3>
+            <h5>Create Account:</h5>
             <div>
               <div>
                 <div className="picture-container">
                   {selectedImage ? (
-                    <img src={selectedImage} alt="Profile" onClick={() => {document.getElementById('picture').click()}} className="inner-picture"/>
+                    <img src={selectedImage} alt="Profile" onClick={() => { document.getElementById('picture').click() }} className="inner-picture" />
                   ) : (
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile" onClick={() => {document.getElementById('picture').click()}} className="inner-picture"/>
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile" onClick={() => { document.getElementById('picture').click() }} className="inner-picture" />
                   )}
                   <input type="file" id="picture" name="picture" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
-                  <FaUpload onClick={() => {document.getElementById('picture').click()}} className="upload-icon-create-account"/>
+                  <FaUpload onClick={() => { document.getElementById('picture').click() }} className="upload-icon-create-account" />
                 </div>
               </div>
             </div>
@@ -241,7 +241,7 @@ const CreateAccountPage = () => {
               </div>
               <div>
                 <div>
-                  <ResponsiveSelect
+                  <Select
                     options={options}
                     value={location}
                     onChange={handleLocationSelect}
@@ -249,6 +249,22 @@ const CreateAccountPage = () => {
                     placeholder="Enter an address"
                     blurInputOnSelect={false}
                     classNamePrefix="react-select"
+                    styles={{
+                      control: (provided) => ({
+                        ...provided,
+                        borderRadius: "25px",
+                        boxShadow: " 0 0 5px rgba(0, 0, 0, 0.25)",
+                        border: "1px solid rgb(202, 202, 202)",
+                        marginTop: " 15px",
+                      }),
+                      '@media (max-width: 768px)': {
+                        control: (provided) => ({
+                          ...provided,
+                          fontSize: "0.89rem",
+                          height: " 30px",
+                        }),
+                      },
+                    }}
                   />
                 </div>
               </div>
@@ -267,7 +283,7 @@ const CreateAccountPage = () => {
           </div>
         </div>
       </div>
-        <Footer />
+      <Footer />
     </div>
   );
 };

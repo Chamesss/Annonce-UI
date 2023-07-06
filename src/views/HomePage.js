@@ -72,7 +72,7 @@ function HomePage() {
 
   return (
     <div>
-      <div className="header">
+      <div>
         <Header />
       </div>
       <Category />
