@@ -202,8 +202,8 @@ const CreateAccountPage = () => {
             <div>
               <div>
                 <div className="single-row">
-                  <input type="text" id="firstname" placeholder="Enter your firstname" name="firstname" className="form-control input-design fisrtname-input" value={formData.firstname} onChange={handleChange} required />
-                  <input type="text" id="lastname" placeholder="Enter your lastname" name="lastname" className="form-control input-design lastname-input" value={formData.lastname} onChange={handleChange} required />
+                  <input type="text" id="firstname" placeholder="Firstname" name="firstname" className="form-control input-design fisrtname-input" value={formData.firstname} onChange={handleChange} required />
+                  <input type="text" id="lastname" placeholder="Lastname" name="lastname" className="form-control input-design lastname-input" value={formData.lastname} onChange={handleChange} required />
                 </div>
               </div>
               <div className="phone-number">
@@ -281,6 +281,9 @@ const CreateAccountPage = () => {
             <div id="errorMessageContainer" className="text-danger my-3"></div>
             <button type="submit" onClick={handleSubmit} className="btn btn-primary create-account-button">Create</button>
           </div>
+        </div>
+        <div className="create-account-banner-container">
+          <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1688674159/o4jzvclhvb09qfzxyso2.png" alt="create-account-banner" className="create-account-banner" />
         </div>
       </div>
       <Footer />

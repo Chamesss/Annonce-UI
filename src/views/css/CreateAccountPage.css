@@ -120,14 +120,22 @@
 }
 
 .create-account-banner-container {
-    border: none;
-    width: 600px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .create-account-banner {
     display: flex;
-    width: 100%;
+    justify-content: flex-start !important;
+    width: 90%;
     height: auto;
+}
+
+@media (max-width:1000px) {
+    .create-account-banner-container {
+        display:none;
+    }
 }
 
 @media (max-width:555px) {
