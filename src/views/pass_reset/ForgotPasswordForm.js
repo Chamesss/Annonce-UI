@@ -46,14 +46,14 @@ const ForgotPasswordForm = () => {
       });
       const data = await response.json()
       if (data.success === true) {
-        setMessage('Lien de réinitialisation du mot de passe envoyé à votre adresse e-mail.');
+        setMessage('Password reset link sent to your email address.');
         navigate('/reset-code', { state: { email } });
       } else {
         setMessage(data.error);
       }
     } catch (error) {
       console.error(error.error);
-      setMessage('Échec de le envoi du lien de réinitialisation du mot de passe. ' + error);
+      setMessage('Failed to send password reset link.' + error);
     }
   };
 
