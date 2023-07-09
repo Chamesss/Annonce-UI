@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import "./css/forgotpasswordform.css";
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -58,34 +59,36 @@ const ForgotPasswordForm = () => {
 
   return (
     <div>
-      <div className="header h-100">
+      <div>
         <Header />
       </div>
-      <div class="d-flex justify-content-center align-items-center my-5">
-        <div class="container-fluid" >
-          <div class="row justify-content-center">
-            <div class="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
-              <form onSubmit={handleSubmit}>
-                <h2 class="my-4 d-block" style={{ margin: "10px" }}>Mot de passe oublié:</h2>
-                <p>Entrer votre E-mail:</p>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  style={{ marginBottom: '10px', width: '100%' }}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="form-control my-3"
-                />
-                <button type="submit" class="btn btn-primary my-3">
-                  Valider
-                </button>
-              </form>
-              <p style={{ color: 'red' }}>{message}</p>
+      <div className="forgotpasswordform">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <div className="forgotpasswordform-image-container">
+              <img src="https://img.freepik.com/premium-vector/bronze-lock-icon-white-background-flat-design-illustration-stock-vector-graphics_668389-92.jpg" alt="forgot-banner" className="forgotpasswordform-image" />
+            </div>
+            <h3>Trouble logging in?</h3>
+            <span>Enter you email and we'll send</span>
+            <span>you a link to get back your account.</span>
+            <div className="forgotpasswordform-input-container">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-control forgotpasswordform-input"
+              />
+            </div>
+            <div className="forgotpasswordform-button-container">
+              <button type="submit" className="btn btn-primary forgotpasswordform-button">
+                Validate
+              </button>
+              <p style={{ color: 'red', marginTop:'5px' }}>{message}</p>
             </div>
           </div>
-        </div>
+        </form>
       </div>
-      <div class="my-5 container"><span class="d-block" style={{ height: "50px" }}></span></div>
       <div>
         <Footer />
       </div>
