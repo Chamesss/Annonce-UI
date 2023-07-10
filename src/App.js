@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './views/HomePage';
 import LoginPage from './views/LoginPage';
 import ForgotPasswordForm from './views/pass_reset/ForgotPasswordForm';
-import ResetCodeForm from './views/pass_reset/ResetPassword';
 import NewPasswordPage from './views/pass_reset/NewPassword';
 import CreateAccountPage from './views/CreateAccount';
 import MainProfile from './views/profile/Main';
@@ -23,7 +22,6 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-          <Route path="/reset-code" element={<ResetCodeForm />} />
           <Route path="/new-password" element={<NewPasswordPage />} />
           <Route path="/create-account" element={<CreateAccountPage />} />
           <Route path="/profile" element={<MainProfile  />} />

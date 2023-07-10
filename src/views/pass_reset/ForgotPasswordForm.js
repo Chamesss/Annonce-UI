@@ -135,7 +135,7 @@ const ForgotPasswordForm = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <div className="forgotpasswordform-image-container">
-              <img src="https://img.freepik.com/premium-vector/bronze-lock-icon-white-background-flat-design-illustration-stock-vector-graphics_668389-92.jpg" alt="forgot-banner" className="forgotpasswordform-image" />
+              <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1688978975/mmpcxubplgf43paw0tus.jpg" alt="forgot-banner" className="forgotpasswordform-image" />
             </div>
             <h3>Trouble logging in?</h3>
             {waitsubmit ? (
@@ -185,7 +185,7 @@ const ForgotPasswordForm = () => {
                     {isLoadingsubmit ? (
                       <div className="spinner-border spinner-border-sm"></div>
                     ) : sent ? (
-                      <span className="resend-code-msg-sent">Sent ✓</span>
+                      <span className="resend-code-msg-sent">&nbsp; Sent ✓</span>
                     ) : (
                       <div><RxReload /></div>
                     )}
@@ -203,8 +203,8 @@ const ForgotPasswordForm = () => {
               </div>
             )}
             <div className="forgotpasswordform-input-container">
-              <p style={{ color: 'red', marginTop: '8px' }}>{error}</p>
-              <p style={{ color: 'green', marginTop: '8px' }}>{message}</p>
+              <span style={{ color: 'red', marginTop: '8px' }}>{error}</span>
+              <span style={{ color: 'green', marginTop: '8px' }}>{message}</span>
             </div>
           </div>
         </form>

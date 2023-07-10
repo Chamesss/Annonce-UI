@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Footer from '../../components/footer';
-import Header from '../../components/header';
+import Footer from '../footer';
+import Header from '../header';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 

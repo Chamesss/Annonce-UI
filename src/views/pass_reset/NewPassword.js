@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
+import Spinner from '../../components/Spinner';
+import './css/newpassword.css';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -10,9 +12,26 @@ const NewPasswordPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmed, setConfirmed] = useState('');
+  const [email, setEmail] = useState('');
+  const [noemail, setNoEmail] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingValid, setloadingValid] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const email = location.state.email;
+
+  const checkEmail = () => {
+    if (!location.state || !location.state.email) {
+      setTimeout(() => {
+        setLoading(false);
+        setNoEmail(true);
+      }, 500);
+    } else {
+      setTimeout(() => {
+        setEmail(location.state.email);
+        setLoading(false);
+      }, 500);
+    }
+  }
 
   const handlelogin = async () => {
     try {
@@ -31,6 +50,7 @@ const NewPasswordPage = () => {
   }
 
   useEffect(() => {
+    checkEmail();
     handlelogin();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -49,7 +69,17 @@ const NewPasswordPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setloadingValid(true);
+    if (password.length < 6) {
+      setErrorMessage('Length must be greater then 6.');
+      setloadingValid(false);
+      return
+    }
+    if (password !== confirmPassword) {
+      setErrorMessage('Password doesnt match.');
+      setloadingValid(false);
+      return
+    }
     try {
       const response = await fetch(`https://annonce-backend.azurewebsites.net/user/edituser/null/null`, {
         method: 'PATCH',
@@ -61,13 +91,16 @@ const NewPasswordPage = () => {
       const data = await response.json();
       if (data.success) {
         setErrorMessage('');
-        setConfirmed('Le mot de passe a été changé.. redirection vers la page de connexion..')
+        setloadingValid(false);
+        setConfirmed('Success. Redirection to login page..')
       } else {
-        setErrorMessage('Échec de la réinitialisation du mot de passe.');
+        setloadingValid(false);
+        setErrorMessage('Failed.');
       }
     } catch (error) {
+      setloadingValid(false);
       console.error(error);
-      setErrorMessage('Échec de la réinitialisation du mot de passe. ' + error);
+      setErrorMessage('Failed ' + error);
     }
   };
 
@@ -81,53 +114,68 @@ const NewPasswordPage = () => {
 
   return (
     <div>
-      <div className="header h-100">
+      <div>
         <Header />
       </div>
-      <div class="d-flex justify-content-center align-items-center">
-        <div class="container-fluid mb-5" >
-          <div class="row justify-content-center">
-            <div class="col-lg-4 border border-4" style={{ borderRadius: "20px" }}>
+      {loading ? (
+        <div>
+          <Spinner />
+        </div>
+      ) : (
+        <div>
+          {noemail ? (
+            <div className="newpassword-unauthorized">
+              <p>Unauthorized Access.</p>
+              <p className="newpassword-unauthorized-fallback" onClick={() => navigate('/')}>Go to home page</p>
+            </div>
+          ) : (
+            <div className="newpassword">
               <form onSubmit={handleSubmit}>
-                <h2 class="my-4 d-block" style={{ margin: "10px" }}>Réinitialiser le mot de passe</h2>
-                <div>
-                  <label htmlFor="password">Nouveau mot de passe:</label>
+                <div className="newpassword-image-container">
+                  <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1688977530/prxma9o809jluiw3fndy.jpg" alt="open-lock" className="newpassword-image" />
+                </div>
+                <h2>Password reset. </h2>
+                <span>Enter your new password:</span>
+                <div className="newpassword-submit-container">
                   <input
                     id="password"
                     type="password"
                     placeholder="Enter new password"
                     value={password}
                     onChange={handlePasswordChange}
-                    class="form-control my-3"
+                    class="form-control newpassword-input"
                   />
-                </div>
-                <div>
-                  <label htmlFor="confirmPassword">Confirmer le nouveau mot de passe:</label>
                   <input
                     id="confirmPassword"
                     type="password"
                     placeholder="Confirm new password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
-                    class="form-control my-3"
+                    class="form-control newpassword-input"
                   />
                 </div>
-                <button
-                  type="submit"
-                  disabled={password !== confirmPassword}
-                  class="btn btn-primary my-3"
-                >
-                  Valider
-                </button>
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                {confirmed && <p style={{ color: 'green' }}>{confirmed}</p>}
+                <div className="newpassword-submit-container">
+                  <button
+                    type="submit"
+                    disabled={(password !== confirmPassword) || (password.length === 0)}
+                    className="btn btn-primary newpassword-submit"
+                  >{loadingValid ? (
+                    <div className="spinner-border spinner-border-sm">
+                    </div>
+                  ) : (
+                    <div>
+                      Validate
+                    </div>
+                  )}
+                  </button>
+                  {errorMessage && <span style={{ color: 'red', marginTop: '8px' }}>{errorMessage}</span>}
+                  {confirmed && <span style={{ color: 'green', marginTop: '8px' }}>{confirmed}</span>}
+                </div>
               </form>
             </div>
-          </div>
+          )}
         </div>
-        <div class="my-5 container"><span class="d-block" style={{ height: "50px" }}></span></div>
-      </div>
-
+      )}
       <div>
         <Footer />
       </div>
