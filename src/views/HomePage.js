@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/header';
 import Banner from '../components/banner';
-import Category from '../components/category';
 import ProductList from '../components/productList';
 import Footer from '../components/footer';
 import './css/homepage.css';
