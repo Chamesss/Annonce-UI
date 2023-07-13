@@ -3,13 +3,11 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  border: 1px solid green;
   padding: 10px 0px;
   width: 90vw;
 }
 
 .categories-mapping {
-  border: 1px solid red;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
