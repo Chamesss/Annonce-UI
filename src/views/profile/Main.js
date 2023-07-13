@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import './css/Profile.css';
+import './css/main.css';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import Favorites from "./favorites";
@@ -132,28 +132,34 @@ function Main() {
 
   return (
     <div>
-      <Header />
-      <div className="header">
-        <Category />
+
+      <div>
+
       </div>
-      <div className="profile-page">
-        <div className="sidebar position-fixed " style={{ color: "black", backgroundColor: "rgba(180, 180, 180, 0.5)", height: "150%", top: "20vh" }}>
-          <ul >
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("profile")}>Mon Profile</li>
+      <div className="main-page-container">
+        <div className="header-container-main">
+          <Header />
+          <Category />
+        </div>
+        <div className="main-sidebar">
+          <ul>
+            <li className="" onClick={() => setSelectedOption("profile")}>Mon Profile</li>
             <hr style={{ width: "90%" }}></hr>
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("ads")}>Mes Annonces</li>
+            <li className="" onClick={() => setSelectedOption("ads")}>Mes Annonces</li>
             <hr style={{ width: "90%" }}></hr>
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={() => setSelectedOption("favorites")}>Mes Favoris</li>
+            <li className="" onClick={() => setSelectedOption("favorites")}>Mes Favoris</li>
             <hr style={{ width: "90%" }}></hr>
-            <li className="nav-item" style={{ backgroundColor: "rgba(128, 128, 128, 0)" }} onClick={handleLogout}>Se déconnecter</li>
+            <li className="" onClick={handleLogout}>Se déconnecter</li>
           </ul>
         </div>
-        {isLoading && (<div className="content"><Spinner /></div>)}
-        {user && selectedOption && (
-          <div className="content" style={{ display: "flex", minHeight: "350px" }}>
-            {renderContent()}
-          </div>
-        )}
+        <div className="page-container">
+          {isLoading && (<div className="content"><Spinner /></div>)}
+          {user && selectedOption && (
+            <div className="content">
+              {renderContent()}
+            </div>
+          )}
+        </div>
       </div>
       <div class="position-relative z-index-2">
         <Footer />

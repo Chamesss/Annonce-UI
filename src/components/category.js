@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaAngleDown } from "react-icons/fa";
 import './css/Category.css';
 
 function Categories() {
@@ -33,7 +34,7 @@ function Categories() {
   };
 
   const handleCategoryShow = (category) => {
-    if (activeCategory !== null ) {
+    if (activeCategory !== null) {
       setActiveCategory(null);
       return
     }
@@ -42,37 +43,37 @@ function Categories() {
 
   return (
     <div>
-    <div className="categories">
       <div className="categories-container">
-        {categories.map((category, index) => (
-          <div
-            className="category-item"
-            style={{cursor:"pointer"}}
-            key={index}
-            onMouseEnter={() => handleCategoryMouseEnter(category)}
-            onMouseLeave={handleCategoryMouseLeave}
-            onClick={() => handleCategoryShow(category)}
-          >
-            <a href={category.link}>
-              <div className="category-icon">
-                <img src={category.picture} alt={category.name} />
-              </div>
-              <h3>{category.name}</h3>
-              <span className="dropdown-arrow" />
-            </a>
-            {activeCategory === category && (
-              <ul className="subcategory-list">
-                {category.subcategories.map((subcategory, subIndex) => (
-                  <li className="subcategory-item" key={subIndex}>
-                    <span onClick={() => handleSubmit(activeCategory._id, subcategory._id)} style={{cursor:"pointer"}} >{subcategory.name}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
+        <div className="categories-mapping">
+          {categories.map((category, index) => (
+            <div
+              className="category-item"
+              style={{ cursor: "pointer" }}
+              key={index}
+              onMouseEnter={() => handleCategoryMouseEnter(category)}
+              onMouseLeave={handleCategoryMouseLeave}
+              onClick={() => handleCategoryShow(category)}
+            >
+              <a href={category.link}>
+                <div className="category-single-slot">
+                  <p>{category.name}</p>
+                  <FaAngleDown/>
+                </div>
+
+              </a>
+              {activeCategory === category && (
+                <ul className="subcategory-list">
+                  {category.subcategories.map((subcategory, subIndex) => (
+                    <li className="subcategory-item" key={subIndex}>
+                      <span onClick={() => handleSubmit(activeCategory._id, subcategory._id)} style={{ cursor: "pointer" }} >{subcategory.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

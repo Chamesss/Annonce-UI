@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen, FaDoorOpen, FaUserPlus, FaBell } from "react-icons/fa";
+import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen, FaBell } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import "./css/Header.css";
 import SearchBar from "./searchBar";
+import Category from "./category";
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -130,148 +131,149 @@ function Header() {
   }
 
   return (
-    <header className="header-transition">
-      <div className="logo-container">
-        <h1
-          className="logo"
-          onClick={navigatehome}
-        >
-          Annonce
-        </h1>
-      </div>
-      <div className="search">
-        <SearchBar
-        />
-      </div>
-      <div className="buttons-container">
-        <div className="alignement-items">
-          <Button
-            variant="primary"
-            className="create-ad-button"
-            onClick={handleCreateAdClick}
-            title="Create ad"
-          >
-            <TiPlus />
-            <span>Create Ad</span>
-          </Button>
-        </div>
-        <div className="profile-items">
-          {isAuthenticated && (
-            <>
-              <div className="logos">
-                <div className="heart-icon" title="My favorites" onClick={handleLinkClick}>
-                  <FaHeart />
-                </div>
-                <div className="location-icon" title="My ads" onClick={handleMyAds}>
-                  <FaFolderOpen />
-                </div>
-                {seen ? (
-                  <div className="bell-icon" title="Notifications" onClick={handleMyNotfs}>
-                    <FaBell />
-                  </div>
-                ) : (
-                  <div className="bell-icon bell-icon-unseen" title="Notifications" onClick={handleMyNotfs}>
-                    <FaBell />
-                  </div>
-                )}
-                {showNotfbar && (
-                  <div>
-                    <nav className="notification-navbar">
-                      <div className="notification-dropdown active">
-                        {notifications.map((notification) => (
-                          <div className="notification-container"
-                            key={notification._id}
-                          >
-                            {notification.message}
-                          </div>
-                        ))}
-                      </div>
-                    </nav>
-                  </div>
-                )}
-                <div
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <div className="profile-section">
-                    <div>
-                      {user.picture && (
-                        <div className="profile-picture-container">
-                          <img
-                            src={user.picture}
-                            alt={user.firstname}
-                            className="profile-picture"
-                            onClick={handleOpenAndClose}
-                          />
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      {showNavbar && (
-                        <div>
-                          <nav className="small-navbar">
-                            <div className="head-nav-section">
-                              <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
-                              <p onClick={handleNavigateProfile}>{user.firstname}</p>
-                            </div>
-                            <div className="body-nav-section">
-                              <p onClick={handleNavigateProfile}>
-                                <FaUser /> My Profile
-                              </p>
-                              {isAdmin && (
-                                <p href="/adminpanel">
-                                  <FaToolbox /> Administration
-                                </p>
-                              )}
-                              <p onClick={handleMyAds}>
-                                <FaFolderOpen /> My Ads
-                              </p>
-                              <p onClick={handleLinkClick}>
-                                <FaHeart /> Favorites
-                              </p>
-                              <p href="/help">
-                                <FaQuestionCircle /> FAQs
-                              </p>
-                              <p style={{ color: "red" }} onClick={handleLogout}>
-                                <FaSignOutAlt /> Log Out
-                              </p>
-                            </div>
-                          </nav>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
+    <div>
+      <header className="header-section">
+        <div className="header-container">
+          <div className="header-logo-container">
+            <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1689206621/vxetssx12gs7bkaumvbe.png" alt="logo" className="header-logo-logo" />
+            <h1
+              className="header-logo"
+              onClick={navigatehome}
+            >
+              Annonce
+            </h1>
+          </div>
+          <div className="header-search">
+            <SearchBar />
+          </div>
+          <div className="header-alignement-items">
+            <Button
+              variant="primary"
+              className="create-ad-button"
+              onClick={handleCreateAdClick}
+              title="Create ad"
+            >
+              <div className="header-create-ad-inner">
+                <TiPlus />
+                <span>&nbsp;Create Ad</span>
               </div>
-            </>
-          )}
-          {isNotAuthenticated && (
-            <>
-              <button
-                variant="primary"
-                className="btn login-btn"
-                onClick={handleLoginClick}
-              ><span>Login</span>
-                <div className="no-variants">
-                  <FaDoorOpen />
-                  <p>Login</p>
-                </div>
-              </button>
-              <button
-                variant="primary"
-                className="btn login-btn"
-                onClick={() => navigate("/create-account")}
-              ><span>Sign Up</span>
-                <div className="no-variants">
-                  <FaUserPlus />
-                  <p>Sign Up</p>
-                </div>
-              </button>
-            </>
-          )}
+            </Button>
+          </div>
+          <div className="buttons-container">
+            <div className="profile-items">
+              {isAuthenticated && (
+                <>
+                  <div className="logos">
+                    <div className="heart-icon" title="My favorites" onClick={handleLinkClick}>
+                      <FaHeart />
+                    </div>
+                    <div className="location-icon" title="My ads" onClick={handleMyAds}>
+                      <FaFolderOpen />
+                    </div>
+                    {seen ? (
+                      <div className="bell-icon" title="Notifications" onClick={handleMyNotfs}>
+                        <FaBell />
+                      </div>
+                    ) : (
+                      <div className="bell-icon bell-icon-unseen" title="Notifications" onClick={handleMyNotfs}>
+                        <FaBell />
+                      </div>
+                    )}
+                    {showNotfbar && (
+                      <div>
+                        <nav className="notification-navbar">
+                          <div className="notification-dropdown active">
+                            {notifications.map((notification) => (
+                              <div className="notification-container"
+                                key={notification._id}
+                              >
+                                {notification.message}
+                              </div>
+                            ))}
+                          </div>
+                        </nav>
+                      </div>
+                    )}
+                    <div
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="profile-section">
+                        <div>
+                          {user.picture && (
+                            <div className="profile-picture-container">
+                              <img
+                                src={user.picture}
+                                alt={user.firstname}
+                                className="profile-picture"
+                                onClick={handleOpenAndClose}
+                              />
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          {showNavbar && (
+                            <div>
+                              <nav className="small-navbar">
+                                <div className="head-nav-section">
+                                  <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
+                                  <p onClick={handleNavigateProfile}>{user.firstname}</p>
+                                </div>
+                                <div className="body-nav-section">
+                                  <p onClick={handleNavigateProfile}>
+                                    <FaUser /> My Profile
+                                  </p>
+                                  {isAdmin && (
+                                    <p href="/adminpanel">
+                                      <FaToolbox /> Administration
+                                    </p>
+                                  )}
+                                  <p onClick={handleMyAds}>
+                                    <FaFolderOpen /> My Ads
+                                  </p>
+                                  <p onClick={handleLinkClick}>
+                                    <FaHeart /> Favorites
+                                  </p>
+                                  <p href="/help">
+                                    <FaQuestionCircle /> FAQs
+                                  </p>
+                                  <p style={{ color: "red" }} onClick={handleLogout}>
+                                    <FaSignOutAlt /> Log Out
+                                  </p>
+                                </div>
+                              </nav>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+              {isNotAuthenticated && (
+                <>
+                  <button
+                    variant="primary"
+                    className="login-btn"
+                    onClick={handleLoginClick}
+                  >Login
+                  </button>
+                  <button
+                    variant="primary"
+                    className="login-btn"
+                    onClick={() => navigate("/create-account")}
+                  >Sign Up
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </header >
+        <div className="category-position">
+          <Category />
+        </div>
+      </header >
+    </div>
   );
 }
 

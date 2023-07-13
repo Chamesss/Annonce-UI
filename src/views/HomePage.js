@@ -75,7 +75,6 @@ function HomePage() {
       <div>
         <Header />
       </div>
-      <Category />
       <Banner />
       {loading ? (
         <div><Spinner /></div>
