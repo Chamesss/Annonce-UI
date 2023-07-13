@@ -87,6 +87,7 @@
   font-weight: var(--ws-x);
   cursor: pointer;
   transition: transform 0.3s ease;
+  background-color: transparent;
 }
 
 .login-btn:hover {
@@ -100,6 +101,7 @@
   font-weight: var(--ws-x);
   cursor: pointer;
   transition: transform 0.3s ease;
+  background-color: transparent;
 }
 
 .signup-btn:hover {
@@ -192,11 +194,10 @@
   .header-logo-logo {
     width: var(--fs-l);
     height: var(--fs-l);
-    margin-top: 2px;
+    margin-top: 7px;
   }
   
   .header-logo {
-    font-size: var(--fs-m);
   }
 
   .login-btn {
