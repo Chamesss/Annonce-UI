@@ -23,6 +23,7 @@
   display: flex;
   gap: 0.2rem;
   cursor: pointer;
+  padding: 0.5em 1em;
 }
 
 .header-logo-logo {
@@ -43,8 +44,9 @@
 
 .header-search {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   box-sizing: border-box;
+  align-items: center;
 }
 
 .header-alignement-items {
@@ -91,8 +93,126 @@
   transform: translateY(-3px);
 }
 
+.signup-btn {
+  padding: 0.5em 1em;
+  border: none;
+  color: var(--clr-bright-red);
+  font-weight: var(--ws-x);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.signup-btn:hover {
+  transform: translateY(-3px);
+}
+
 .category-position {
   display: flex;
   justify-self: center;
   align-self: flex-end;
+}
+
+@media (max-width: 1050px) {
+  .header-logo-logo {
+    width: var(--fs-xxl);
+    height: var(--fs-xxl);
+  }
+  
+  .header-logo {
+    font-size: var(--fs-x);
+  }
+
+  .login-btn {
+    font-size: var(--fs-s);
+  }
+
+  .signup-btn {
+    font-size: var(--fs-s);
+  }
+
+  .create-ad-button {
+    font-size: var(--fs-s);
+  }
+}
+
+@media (max-width: 900px) {
+  .header-logo-logo {
+    width: var(--fs-x);
+    height: var(--fs-x);
+  }
+  
+  .header-logo {
+    font-size: 1.625rem;
+  }
+
+  .login-btn {
+    font-size: var(--fs-xs);
+  }
+
+  .signup-btn {
+    font-size: var(--fs-xs);
+  }
+
+  .create-ad-button {
+    font-size: var(--fs-xs);
+  }
+}
+
+@media (max-width: 800px) {
+  .create-ad-button {
+    display: none;
+  }
+}
+
+@media (max-width:544px) {
+  .header-logo-container {
+    padding: 0.25em 0.5em;;
+  }
+
+  .header-logo-logo {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 2px;
+  }
+  
+  .header-logo {
+    font-size: var(--fs-l);
+  }
+
+  .login-btn {
+    font-size: var(--fs-xs);
+  }
+
+  .signup-btn {
+    font-size: var(--fs-xs);
+  }
+}
+
+@media (max-width: 500px) {
+  .header-logo-container {
+    padding: 0.25em 0.5em;;
+  }
+
+  .header-logo-logo {
+    width: var(--fs-l);
+    height: var(--fs-l);
+    margin-top: 2px;
+  }
+  
+  .header-logo {
+    font-size: var(--fs-m);
+  }
+
+  .login-btn {
+    font-size: var(--fs-xs);
+    margin-right: 5px;
+  }
+
+  .signup-btn {
+    display: none;
+  }
+
+  .create-ad-button {
+    font-size: var(--fs-xs);
+  }
 }

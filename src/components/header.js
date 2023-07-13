@@ -260,7 +260,7 @@ function Header() {
                   </button>
                   <button
                     variant="primary"
-                    className="login-btn"
+                    className="signup-btn"
                     onClick={() => navigate("/create-account")}
                   >Sign Up
                   </button>
