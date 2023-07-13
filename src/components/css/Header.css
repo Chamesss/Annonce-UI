@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   background-color: var(--clr-white);
-  padding:1em 1em 0.25em 1em;
+  padding:0em 1em 0.25em 1em;
   height: auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
@@ -207,8 +207,4 @@
   .create-ad-button {
     font-size: var(--fs-xs);
   }
-}
-
-@media (max-width: 345px) {
-
 }
