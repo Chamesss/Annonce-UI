@@ -174,7 +174,7 @@
   }
   
   .header-logo {
-    font-size: var(--fs-l);
+    font-size: 1.5rem;
   }
 
   .login-btn {
@@ -192,12 +192,7 @@
   }
 
   .header-logo-logo {
-    width: var(--fs-l);
-    height: var(--fs-l);
-    margin-top: 7px;
-  }
-  
-  .header-logo {
+    display: none;
   }
 
   .login-btn {
@@ -212,4 +207,8 @@
   .create-ad-button {
     font-size: var(--fs-xs);
   }
+}
+
+@media (max-width: 345px) {
+
 }
