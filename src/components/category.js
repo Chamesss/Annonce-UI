@@ -56,6 +56,7 @@ function Categories() {
             >
               <a href={category.link}>
                 <div className="category-single-slot">
+                  <img src={category.picture} alt={index} className="category-hidden"/>
                   <p>{category.name}</p>
                   <FaAngleDown/>
                 </div>

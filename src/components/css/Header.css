@@ -106,11 +106,7 @@
   transform: translateY(-3px);
 }
 
-.category-position {
-  display: flex;
-  justify-self: center;
-  align-self: flex-end;
-}
+
 
 @media (max-width: 1050px) {
   .header-logo-logo {
