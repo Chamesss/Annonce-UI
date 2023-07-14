@@ -171,18 +171,18 @@ function Header() {
               {isAuthenticated && (
                 <>
                   <div className="logos">
-                    <div className="heart-icon" title="My favorites" onClick={handleLinkClick}>
+                    <div className="profile-icons heart-icon" title="My favorites" onClick={handleLinkClick}>
                       <FaHeart />
                     </div>
-                    <div className="location-icon" title="My ads" onClick={handleMyAds}>
+                    <div className="profile-icons location-icon" title="My ads" onClick={handleMyAds}>
                       <FaFolderOpen />
                     </div>
                     {seen ? (
-                      <div className="bell-icon" title="Notifications" onClick={handleMyNotfs}>
+                      <div className="profile-icons bell-icon" title="Notifications" onClick={handleMyNotfs}>
                         <FaBell />
                       </div>
                     ) : (
-                      <div className="bell-icon bell-icon-unseen" title="Notifications" onClick={handleMyNotfs}>
+                      <div className="profile-icons bell-icon bell-icon-unseen" title="Notifications" onClick={handleMyNotfs}>
                         <FaBell />
                       </div>
                     )}
