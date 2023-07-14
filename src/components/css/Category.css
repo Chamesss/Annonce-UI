@@ -100,7 +100,11 @@
   width: 1rem;
 }
 
-
+@media (max-width: 900px) {
+  .category-single-slot p {
+    font-size: var(--fs-xxs);
+  }
+}
 
 
 @media (max-width: 800px) {

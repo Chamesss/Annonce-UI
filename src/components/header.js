@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { FaUser, FaHeart, FaQuestionCircle, FaSignOutAlt, FaToolbox, FaFolderOpen, FaBell } from "react-icons/fa";
+import { FaUser, FaHeart, FaQuestionCircle, FaBars, FaSignOutAlt, FaToolbox, FaFolderOpen, FaBell, FaTimes } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import "./css/Header.css";
 import SearchBar from "./searchBar";
@@ -18,6 +18,9 @@ function Header() {
   const [isAdmin, setisAdmin] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [seen, setSeen] = useState(true);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -129,6 +132,10 @@ function Header() {
     setIsNotAuthenticated(true);
     navigate('/login');
   }
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
 
   return (
     <div>
@@ -252,17 +259,36 @@ function Header() {
               )}
               {isNotAuthenticated && (
                 <>
+                  <button className="sidebar-bars" onClick={toggleSidebar}>
+                    <FaBars />
+                  </button>
+                  {sidebarVisible && <div><div className="overlay" onClick={toggleSidebar}></div>
+                    <div className={`sidebar ${sidebarVisible ? '' : 'visible'}`}>
+                      <div className="sidebar-menu">
+                        <h2>Menu</h2>
+                        <div onClick={toggleSidebar} className="sidebar-icon"><FaTimes /></div>
+                      </div>
+                      <ul >
+                        <li>Login</li>
+                        <li>Sign Up</li>
+                        <li>Contact</li>
+                      </ul>
+                    </div>
+                  </div>
+                  }
                   <button
                     variant="primary"
                     className="login-btn"
                     onClick={handleLoginClick}
-                  >Login
+                  >
+                    Login
                   </button>
                   <button
                     variant="primary"
                     className="signup-btn"
                     onClick={() => navigate("/create-account")}
-                  >Sign Up
+                  >
+                    Sign Up
                   </button>
                 </>
               )}
