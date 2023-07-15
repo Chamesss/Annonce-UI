@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { FaUser, FaHeart, FaQuestionCircle, FaBars, FaSignOutAlt, FaToolbox, FaFolderOpen, FaTimes } from "react-icons/fa";
+import { FaUser, FaQuestionCircle, FaBars, FaSignOutAlt, FaToolbox, FaFolderOpen, FaTimes } from "react-icons/fa";
 import { AiFillHeart } from 'react-icons/ai';
 import { TiPlus } from "react-icons/ti";
 import { IoNotifications } from "react-icons/io5"
@@ -89,14 +89,6 @@ function Header() {
   const navigatehome = () => {
     navigate("/");
   }
-
-  const handleMouseEnter = () => {
-    setShowNavbar(true);
-  };
-
-  const handleMouseLeave = () => {
-    setShowNavbar(false);
-  };
 
   const handleOpenAndClose = () => {
     setShowNavbar(!showNavbar);
@@ -267,7 +259,7 @@ function Header() {
                             <h2>Menu</h2>
                             <div onClick={toggleSidebarAuth} className="sidebar-icon"><FaTimes /></div>
                           </div>
-                          <ul >
+                          <ul>
                             <li>Create Ad</li>
                             <li>My Profile</li>
                             <li>My Ads</li>

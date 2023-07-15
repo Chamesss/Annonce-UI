@@ -207,11 +207,23 @@
 
 .heart-icon, .bell-icon {
   margin-top: 15px !important;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.heart-icon:hover, .bell-icon:hover {
+  transform: translateY(-3px) ;
 }
 
 .profile-icons {
-  font-size: 1.5rem;
-  margin: 5px;
+  font-size: 1.75rem;
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 10px !important;
+}
+
+.sidebar li {
+  background-color: transparent !important;
 }
 
 .profile-picture-container {
