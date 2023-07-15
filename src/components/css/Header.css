@@ -44,6 +44,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 500px;
 }
 
 .header-alignement-items {
@@ -218,22 +219,9 @@
 
 .profile-section {
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
-
-.small-navbar {
-  position: absolute;
-  backdrop-filter: blur(10px);
-  background-color: transparent;
-  text-align: left;
-  width: 160px;
-  height: auto;
-  line-height: 2.5;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0);
-  border: 0px solid #ccc;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .header-isAuth-bars {
@@ -253,20 +241,17 @@
 }
 
 .notification-navbar {
-  position: relative;
-  margin-top: 40px;
-}
-
-.notification-navbar .notification-dropdown {
   position: absolute;
-  right: 0;
-  padding: 7px;
-  width: 300px;
+  width: 250px;
+  background-color: var(--clr-white);
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%);
+  row-gap: 0.5em;
+  padding: 0.25em 0.5em;
+  margin-top: 2px;
+  border-radius: 5px;
   max-height: 400px;
   overflow-y: auto;
-  background-color: #e0e0e0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
 }
 
 .notification-navbar .notification-container {
@@ -289,18 +274,52 @@
 
 .small-navbar {
   position: absolute;
-  top: 100%;
-  right: 0;
-  left: 0;
   width: 150px;
-  background-color: #e0e0e0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: none;
+  background-color: var(--clr-white);
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%);
+  row-gap: 0.5em;
+  padding: 0.25em 0.5em;
+  margin-top: 2px;
+  border-radius: 5px;
 }
 
 .profile-section:hover .small-navbar {
   display: block;
 }
+
+.head-nav-section {
+  display: flex;
+  align-items: center;
+  padding: 0.5em 1em;
+  gap: 0.5em;
+}
+
+.head-nav-section p {
+  font-size: var(--fs-s);
+
+}
+
+.body-nav-section {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 0em;
+  row-gap: 0.5em;
+}
+
+.body-nav-section p {
+  font-size: var(--fs-s);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.body-nav-section p:hover {
+  transform: translateX(4px);
+}
+
 
 
 @media (max-width: 1050px) {
@@ -374,6 +393,10 @@
     margin-top: 7px;
   }
 
+  .notification-container {
+    font-size: 0.75rem;
+  }
+
   .sidebar-bars {
     display: inline-block ;
     background-color: transparent;
@@ -394,8 +417,13 @@
   }
 
 
-  .profile-icons {
+  .heart-icon {
     display: none;
+  }
+
+  .bell-icon {
+    font-size: 1.38rem;
+    margin-top: 10px;
   }
 
 }
@@ -403,6 +431,10 @@
 @media (max-width: 470px) {
   .header-logo-container {
     padding: 0.75em 0.2em;
+  }
+
+  .header-search {
+    width: 100px; 
   }
 
   .header-logo-logo {

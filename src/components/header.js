@@ -182,36 +182,34 @@ function Header() {
                     <div className="profile-icons heart-icon" title="My favorites" onClick={handleLinkClick}>
                       <AiFillHeart />
                     </div>
-                    {seen ? (
-                      <div className="profile-icons bell-icon" title="Notifications" onClick={handleMyNotfs}>
-                        <IoNotifications />
-                      </div>
-                    ) : (
-                      <div className="profile-icons bell-icon bell-icon-unseen" title="Notifications" onClick={handleMyNotfs}>
-                        <IoNotifications />
-                      </div>
-                    )}
-                  </div>
-                  {showNotfbar && (
-                    <div>
-                      <nav className="notification-navbar">
-                        <div className="notification-dropdown active">
-                          {notifications.map((notification) => (
-                            <div className="notification-container"
-                              key={notification._id}
-                            >
-                              {notification.message}
-                            </div>
-                          ))}
+                    <div className="profile-section">
+                      {seen ? (
+                        <div className="profile-icons bell-icon" title="Notifications" onClick={handleMyNotfs}>
+                          <IoNotifications />
                         </div>
-                      </nav>
+                      ) : (
+                        <div className="profile-icons bell-icon bell-icon-unseen" title="Notifications" onClick={handleMyNotfs}>
+                          <IoNotifications />
+                        </div>
+                      )}
+                      {showNotfbar && (
+                        <div>
+                          <nav className="notification-navbar">
+                            <div className="notification-dropdown active">
+                              {notifications.map((notification) => (
+                                <div className="notification-container"
+                                  key={notification._id}
+                                >
+                                  {notification.message}
+                                </div>
+                              ))}
+                            </div>
+                          </nav>
+                        </div>
+                      )}
                     </div>
-                  )}
-                  <div
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    className="header-isAuth-bars"
-                  >
+                  </div>
+                  <div className="header-isAuth-bars">
                     <div className="profile-section">
                       <div>
                         {user.picture && (
@@ -225,40 +223,39 @@ function Header() {
                           </div>
                         )}
                       </div>
-                      <div>
-                        {showNavbar && (
-                          <div>
-                            <nav className="small-navbar">
-                              <div className="head-nav-section">
-                                <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
-                                <p onClick={handleNavigateProfile}>{user.firstname}</p>
-                              </div>
-                              <div className="body-nav-section">
-                                <p onClick={handleNavigateProfile}>
-                                  <FaUser /> My Profile
+                      {showNavbar && (
+                        <div className="fade-in fade-out">
+                          <nav className="small-navbar fade-out">
+                            <div className="head-nav-section">
+                              <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
+                              <p onClick={handleNavigateProfile}>{user.firstname}</p>
+                            </div>
+                            <hr />
+                            <div className="body-nav-section">
+                              <p onClick={handleNavigateProfile}>
+                                <FaUser />&nbsp;My Profile
+                              </p>
+                              {isAdmin && (
+                                <p href="/adminpanel">
+                                  <FaToolbox />&nbsp;Administration
                                 </p>
-                                {isAdmin && (
-                                  <p href="/adminpanel">
-                                    <FaToolbox /> Administration
-                                  </p>
-                                )}
-                                <p onClick={handleMyAds}>
-                                  <FaFolderOpen /> My Ads
-                                </p>
-                                <p onClick={handleLinkClick}>
-                                  <FaHeart /> Favorites
-                                </p>
-                                <p href="/help">
-                                  <FaQuestionCircle /> FAQs
-                                </p>
-                                <p style={{ color: "red" }} onClick={handleLogout}>
-                                  <FaSignOutAlt /> Log Out
-                                </p>
-                              </div>
-                            </nav>
-                          </div>
-                        )}
-                      </div>
+                              )}
+                              <p onClick={handleMyAds}>
+                                <FaFolderOpen />&nbsp;My Ads
+                              </p>
+                              <p onClick={handleLinkClick}>
+                                <AiFillHeart />&nbsp;Favorites
+                              </p>
+                              <p href="/help">
+                                <FaQuestionCircle />&nbsp;FAQs
+                              </p>
+                              <p style={{ color: "red" }} onClick={handleLogout}>
+                                <FaSignOutAlt />&nbsp;Log Out
+                              </p>
+                            </div>
+                          </nav>
+                        </div>
+                      )}
                     </div>
                     <div>
                       <button className="sidebar-bars" onClick={toggleSidebarAuth}>
