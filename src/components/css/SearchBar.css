@@ -130,18 +130,18 @@
 
 @media (max-width: 470px) {
   .search-bar-input {
-    width: 190px;
-    height: 40px;
+    width: 150px;
+    height: 30px;
   }
 
   .search-bar-input:hover,
   .search-bar-input:focus {
     background-color: var(--clr-x-light-grey);
-    width: calc(190px + 10px);
+    width: calc(150px + 10px);
   }
 
   .search-bar-container {
-    width: 200px;
+    width: 160px;
     height: 40px;
   }
 

@@ -165,7 +165,10 @@
 }
 
 @media (max-width: 500px) {
+  .categories-container {
+    height: 37px;
+  }
   .category-hidden {
-    width: 0.875rem;
+    width: 0.8rem;
   }
 }
