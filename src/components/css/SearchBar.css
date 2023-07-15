@@ -60,7 +60,7 @@
 }
 
 
-@media (max-width: 1050px) {
+@media (max-width: 1150px) {
   .search-bar-input {
     width: 400px;
     height: 45px;
@@ -123,7 +123,7 @@
   }
 }
 
-@media (max-width: 470px) {
+@media (max-width: 570px) {
   .search-bar-input {
     width: 70px;
     height: 30px;
