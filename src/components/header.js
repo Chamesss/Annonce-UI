@@ -260,12 +260,12 @@ function Header() {
                             <div onClick={toggleSidebarAuth} className="sidebar-icon"><FaTimes /></div>
                           </div>
                           <ul>
-                            <li>Create Ad</li>
-                            <li>My Profile</li>
-                            <li>My Ads</li>
-                            <li>Favorites</li>
-                            <li>Contact Us</li>
-                            <li>Log out</li>
+                            <li onClick={() => navigate('/create-ad')}>Create Ad</li>
+                            <li onClick={() => navigate('/profile')}>My Profile</li>
+                            <li onClick={() => { window.location.href = '/profile/?section=' + encodeURIComponent('ads');}}>My Ads</li>
+                            <li onClick={() => { window.location.href = '/profile/?section=' + encodeURIComponent('favorites');}}>Favorites</li>
+                            <li onClick={() => navigate('/404')}>Contact Us</li>
+                            <li onClick={handleLogout}>Log out</li>
                           </ul>
                         </div>
                       </div>
@@ -286,9 +286,9 @@ function Header() {
                         <div onClick={toggleSidebar} className="sidebar-icon"><FaTimes /></div>
                       </div>
                       <ul >
-                        <li>Login</li>
-                        <li>Sign Up</li>
-                        <li>Contact</li>
+                        <li onClick={() => navigate("/login")}>Login</li>
+                        <li onClick={() => navigate("/create-account")}>Sign Up</li>
+                        <li onClick={() => navigate("/404")}>Contact</li>
                       </ul>
                     </div>
                   </div>
