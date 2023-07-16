@@ -93,9 +93,6 @@
     width: calc(300px + 10px);
   }
 
-  .search-bar-container {
-  }
-
   .searchbar-icon {
     font-size: var(--fs-m);
   }
@@ -113,9 +110,6 @@
   .search-bar-input:focus {
     background-color: var(--clr-x-light-grey);
     width: calc(240px + 10px);
-  }
-
-  .search-bar-container {
   }
 
   .searchbar-icon {
