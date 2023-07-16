@@ -97,6 +97,7 @@ const ForgotPasswordForm = () => {
     e.preventDefault();
     setIsLoadingVerif(true);
     const code = digits.join('');
+    console.log(code);
     try {
       const response = await fetch('https://annonce-backend.azurewebsites.net/user/verify', {
         method: 'POST',
@@ -152,11 +153,11 @@ const ForgotPasswordForm = () => {
                   />
                 </div>
                 <div className="forgotpasswordform-button-container">
-                  <button type="submit" onClick={() => handleSubmit()} className="btn btn-primary forgotpasswordform-button">
+                  <button type="submit" onClick={() => handleSubmit()} className="button">
                     {isLoadingsubmit ? (
-                      <div className="spinner-border spinner-border-sm"></div>
+                      <div className="spinner"></div>
                     ) : sent ? (
-                      <div className="spinner-border spinner-border-sm"></div>
+                      <div className="spinner"></div>
                     ) : (<div>Validate</div>)}</button>
                 </div>
               </div>) : (
@@ -183,7 +184,7 @@ const ForgotPasswordForm = () => {
                   ))}
                   <div className="forgotpasswordfrom-reload-icon-container" onClick={(e) => handleSubmit(e)}>
                     {isLoadingsubmit ? (
-                      <div className="spinner-border spinner-border-sm"></div>
+                      <div className="spinner"></div>
                     ) : sent ? (
                       <span className="resend-code-msg-sent">&nbsp; Sent ✓</span>
                     ) : (
@@ -195,8 +196,8 @@ const ForgotPasswordForm = () => {
                   </div>
                 </div>
                 <div className="forgotpasswordform-validate-code-container">
-                  <button onClick={(e) => handleVerify(e)} className='btn btn-primary forgotpasswordform-validate-code'>
-                    {isLoadingverif ? (<div className="spinner-border spinner-border-sm"></div>) : (<div>Validate</div>)}
+                  <button onClick={(e) => handleVerify(e)} className="button forgotpasswordform-validate-code">
+                    {isLoadingverif ? (<div className="spinner"></div>) : (<div>Validate</div>)}
                   </button>
                   <p className="forgotpasswordform-return" onClick={handleReturn}>Go back</p>
                 </div>

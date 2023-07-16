@@ -143,7 +143,7 @@ const NewPasswordPage = () => {
                     placeholder="Enter new password"
                     value={password}
                     onChange={handlePasswordChange}
-                    class="form-control newpassword-input"
+                    className="form-control newpassword-input"
                   />
                   <input
                     id="confirmPassword"
@@ -151,16 +151,16 @@ const NewPasswordPage = () => {
                     placeholder="Confirm new password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
-                    class="form-control newpassword-input"
+                    className="form-control newpassword-input"
                   />
                 </div>
                 <div className="newpassword-submit-container">
                   <button
                     type="submit"
                     disabled={(password !== confirmPassword) || (password.length === 0)}
-                    className="btn btn-primary newpassword-submit"
+                    className="button newpassword-submit"
                   >{loadingValid ? (
-                    <div className="spinner-border spinner-border-sm">
+                    <div className="spinner">
                     </div>
                   ) : (
                     <div>

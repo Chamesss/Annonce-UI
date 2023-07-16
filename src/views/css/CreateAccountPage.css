@@ -2,9 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
-    margin-bottom: 50px;
-    padding: 10px 10px;
+    padding: 150px 10px;
 }
 
 .create-account-form {
@@ -63,6 +61,8 @@
     margin-top: 5px;
     margin-bottom: 10px;
     border: 1px solid rgb(202, 202, 202) !important;
+    width: 100% !important;
+
 }
 
 .phone-input {
@@ -74,6 +74,7 @@
     margin-bottom: 5px;
     border: 1px solid rgb(202, 202, 202) !important;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    width: 100% !important;
 }
 
 .phone-prefix {
@@ -86,10 +87,16 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
     width: 65px !important;
 }
+.create-account-title {
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--clr-dark-blue);
+}
 
 .create-account-button {
     border-radius: 25px !important;
     width: 100%;
+    margin-top: 20px;
 }
 
 .inner-picture {
@@ -140,6 +147,10 @@
 
 @media (max-width:555px) {
 
+    .create-account-container {
+        padding: 100px 10px;
+    }
+
     .single-row {
         display: grid;
     }
@@ -176,5 +187,9 @@
     .picture-container {
         width: 125px;
         height: 125px;
+    }
+
+    .create-account-title {
+        font-size: 1rem;
     }
 }

@@ -12,8 +12,9 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [welcome, setWelcome] = useState(false);
+  const [Loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (welcome) {
       const timeout = setTimeout(() => {
@@ -32,8 +33,11 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (email === '' || password === '') {
       setError('Please enter both email and password');
+      setLoading(false);
+      return
     } else {
       try {
         const response = await fetch(`https://annonce-backend.azurewebsites.net/user/login`, {
@@ -46,12 +50,15 @@ const LoginPage = () => {
         const data = await response.json();
         if (data.success === true) {
           localStorage.setItem('token', data.token);
+          setLoading(false);
           setWelcome(true);
           setError('');
         } else {
           setError(data.message);
+          setLoading(false);
         }
       } catch (error) {
+        setLoading(false);
         console.error('Login failed:', error.message);
         setError('Failed to login. Please try again later.');
       }
@@ -73,7 +80,7 @@ const LoginPage = () => {
       </div>
       <div class="container-form-login">
         <div className="login-form">
-          <h5>Login to your account</h5>
+          <h2>Login to your account</h2>
           <p>Don't have an account? &nbsp; <span onClick={handleCreateAccountNav} className="sign-up"> Sign Up Now!</span></p>
           <div className="picture-logo-container">
             <img src="https://seeklogo.com/images/F/facebook-icon-circle-logo-09F32F61FF-seeklogo.com.png" alt="facebook logo" className="picture-logo" />
@@ -92,6 +99,7 @@ const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="form-control email-input"
+            style={{margin:"0.8rem"}}
             required
           />
           <input
@@ -100,18 +108,29 @@ const LoginPage = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="form-control email-input mt-3"
+            className="form-control email-input"
+            style={{margin:"0.8rem"}}
             required
           />
-          {error && <div className="text-danger mb-3">{error}</div>}
-          {welcome && <div className="text-success mb-3">Bienvenue, rediriger..</div>}
+          {error && <div className="text-danger">{error}</div>}
           <button
             color="primary"
             onClick={handleLogin}
             type="submit"
-            className="btn btn-primary login-button-submit"
-          >
-            Login
+            className="login-button-submit"
+          > {Loading ?
+            (
+              <div className="spinner"></div>
+            ) : welcome ? (
+              <>
+                Welcome, Redirecting..
+              </>
+            ) : (
+              <>
+                Login
+              </>
+            )
+            }
           </button>
           <p>
             Forgot your password?&nbsp;<span onClick={handleForgetPasswordNav} className="sign-up">Click here</span>

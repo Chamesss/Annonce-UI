@@ -185,7 +185,8 @@ const CreateAccountPage = () => {
       <div className="create-account-container">
         <div className="create-account-form">
           <div className="create-account">
-            <h5>Create Account:</h5>
+            <p className="create-account-title">Create an account and join </p>
+            <p className="create-account-title">our community  now!</p> 
             <div>
               <div>
                 <div className="picture-container">
@@ -233,7 +234,7 @@ const CreateAccountPage = () => {
                 <input type="password" id="passwordConfirm" placeholder="Confirm password" name="passwordConfirm" className="form-control input-design confirm-password-input" value={passwordconfirm} onChange={(e) => setPasswordConfirm(e.target.value)} required />
               </div>
               <div>
-                <select id="type" name="type" className="form-select input-design" value={formData.type} onChange={handleChange} required>
+                <select id="type" name="type" className="form-control input-design" value={formData.type} onChange={handleChange} required>
                   <option value="">Account type</option>
                   <option value="Individual">Individual</option>
                   <option value="Entreprise">Entreprise</option>
@@ -278,8 +279,8 @@ const CreateAccountPage = () => {
                 </Spinner>
               </div>
             )}
-            <div id="errorMessageContainer" className="text-danger my-3"></div>
-            <button type="submit" onClick={handleSubmit} className="btn btn-primary create-account-button">Create</button>
+            <div id="errorMessageContainer" className="text-danger"></div>
+            <button type="submit" onClick={handleSubmit} className="button create-account-button">Create</button>
           </div>
         </div>
         <div className="create-account-banner-container">
