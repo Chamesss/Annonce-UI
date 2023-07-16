@@ -80,22 +80,22 @@ function HomePage() {
       ) : (
         <div>
           {error && <p style={{ color: 'red' }}>{error}</p>}
-          <div>
-            <h2 className="titleCat mt-5">Nouveauté</h2>
-            <div className="horizontal-bar"> </div>
+          <div className="ads-container">
+            <h2 className="titleCat">Latest ads :</h2>
             <div>
               <ProductList products={products[0]} />
             </div>
-          </div>
-          {categories.map((category, index) => (
-            <div key={category._id}>
-              <h2 className='titleCat mt-5'>{category.name}</h2>
-              <div className="horizontal-bar"></div>
-              <div>
-                <ProductList products={products[index + 1]} />
+            {categories.map((category, index) => (
+              <div key={category._id}>
+                <h2 className='titleCat'>{category.name}:</h2>
+                <div className="horizontal-bar"></div>
+                <div>
+                  <ProductList products={products[index + 1]} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
       )}
       <Footer />
