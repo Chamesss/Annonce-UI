@@ -39,8 +39,7 @@
 
 .subcategory-list {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 93%;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -98,6 +97,10 @@
 .category-hidden {
   display:none;
   width: 1rem;
+}
+
+.subcategory-item span {
+  font-size: 0.8rem;
 }
 
 @media (max-width: 900px) {
@@ -170,5 +173,8 @@
   }
   .category-hidden {
     width: 0.8rem;
+  }
+  .subcategory-item span {
+    font-size: 0.7rem;
   }
 }

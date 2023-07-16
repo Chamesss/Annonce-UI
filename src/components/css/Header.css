@@ -224,6 +224,7 @@
 
 .sidebar li {
   background-color: transparent !important;
+  font-size: 0.8rem;
 }
 
 .profile-picture-container {
@@ -449,7 +450,8 @@
 
   .bell-icon {
     font-size: 1.38rem;
-    margin-bottom: 5px !important;
+    margin-bottom: 1px !important;
+    margin-right: 10px;
   }
 
 }

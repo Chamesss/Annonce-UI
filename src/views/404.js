@@ -8,7 +8,13 @@ const NotFoundPage = () => {
       <div>
         <Header />
       </div>
-      <div style={{ padding: "200px 50px 100px 50px" }}>
+      <div style={{ 
+        padding: "200px 50px 100px 50px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column"
+        }}>
         <h1>404 - Page not found</h1>
         <a href='/' style={{padding:"20px 0px 0px 0px"}}>Return to home page</a>
       </div>

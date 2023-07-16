@@ -60,9 +60,9 @@ function Categories() {
                   <p>{category.name}</p>
                   <FaAngleDown/>
                 </div>
-
               </a>
               {activeCategory === category && (
+                <div className="subcategory-container">
                 <ul className="subcategory-list">
                   {category.subcategories.map((subcategory, subIndex) => (
                     <li className="subcategory-item" key={subIndex}>
@@ -70,6 +70,7 @@ function Categories() {
                     </li>
                   ))}
                 </ul>
+                </div>
               )}
             </div>
           ))}
