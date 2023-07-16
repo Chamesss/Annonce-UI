@@ -54,22 +54,20 @@ function Categories() {
               onMouseLeave={handleCategoryMouseLeave}
               onClick={() => handleCategoryShow(category)}
             >
-              <a href={category.link}>
-                <div className="category-single-slot">
-                  <img src={category.picture} alt={index} className="category-hidden"/>
-                  <p>{category.name}</p>
-                  <FaAngleDown/>
-                </div>
-              </a>
+              <div className="category-single-slot">
+                <img src={category.picture} alt={index} className="category-hidden" />
+                <p>{category.name}</p>
+                <FaAngleDown />
+              </div>
               {activeCategory === category && (
                 <div className="subcategory-container">
-                <ul className="subcategory-list">
-                  {category.subcategories.map((subcategory, subIndex) => (
-                    <li className="subcategory-item" key={subIndex}>
-                      <span onClick={() => handleSubmit(activeCategory._id, subcategory._id)} style={{ cursor: "pointer" }} >{subcategory.name}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="subcategory-list">
+                    {category.subcategories.map((subcategory, subIndex) => (
+                      <li className="subcategory-item" key={subIndex}>
+                        <span onClick={() => handleSubmit(activeCategory._id, subcategory._id)} style={{ cursor: "pointer" }} >{subcategory.name}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>

@@ -16,7 +16,7 @@ const NotFoundPage = () => {
         flexDirection: "column"
         }}>
         <h1>404 - Page not found</h1>
-        <a href='/' style={{padding:"20px 0px 0px 0px"}}>Return to home page</a>
+        <a href='/' style={{paddingTop:"20px"}}>Return to home page</a>
       </div>
       <Footer />
     </div>
