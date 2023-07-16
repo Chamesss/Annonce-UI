@@ -204,11 +204,20 @@ function Header() {
                   <div className="header-isAuth-bars">
                     <div className="profile-section">
                       <div>
-                        {user.picture && (
+                        {user.picture ? (
                           <div className="profile-picture-container">
                             <img
                               src={user.picture}
                               alt={user.firstname}
+                              className="profile-picture"
+                              onClick={handleOpenAndClose}
+                            />
+                          </div>
+                        ) : (
+                          <div className="profile-picture-container">
+                            <img
+                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                              alt="blank"
                               className="profile-picture"
                               onClick={handleOpenAndClose}
                             />
@@ -219,7 +228,11 @@ function Header() {
                         <div className="fade-in fade-out">
                           <nav className="small-navbar fade-out">
                             <div className="head-nav-section">
+                            {user.picture ? (
                               <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
+                            ) : (
+                              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="blank-pic" className="profile-picture-container" onClick={handleNavigateProfile} />
+                            )}
                               <p onClick={handleNavigateProfile}>{user.firstname}</p>
                             </div>
                             <hr />
@@ -272,51 +285,51 @@ function Header() {
                       }
                     </div>
                   </div>
-                </div>
-              )}
-              {isNotAuthenticated && (
-                <>
-                  <button className="sidebar-bars" onClick={toggleSidebar}>
-                    <FaBars />
-                  </button>
-                  {sidebarVisible && <div><div className="overlay" onClick={toggleSidebar}></div>
-                    <div className={`sidebar ${sidebarVisible ? '' : 'visible'}`}>
-                      <div className="sidebar-menu">
-                        <h2>Menu</h2>
-                        <div onClick={toggleSidebar} className="sidebar-icon"><FaTimes /></div>
-                      </div>
-                      <ul >
-                        <li onClick={() => navigate("/login")}>Login</li>
-                        <li onClick={() => navigate("/create-account")}>Sign Up</li>
-                        <li onClick={() => navigate("/404")}>Contact</li>
-                      </ul>
-                    </div>
-                  </div>
-                  }
-                  <button
-                    variant="primary"
-                    className="login-btn"
-                    onClick={handleLoginClick}
-                  >
-                    Login
-                  </button>
-                  <button
-                    variant="primary"
-                    className="signup-btn"
-                    onClick={() => navigate("/create-account")}
-                  >
-                    Sign Up
-                  </button>
-                </>
-              )}
-            </div>
           </div>
+              )}
+          {isNotAuthenticated && (
+            <>
+              <button className="sidebar-bars" onClick={toggleSidebar}>
+                <FaBars />
+              </button>
+              {sidebarVisible && <div><div className="overlay" onClick={toggleSidebar}></div>
+                <div className={`sidebar ${sidebarVisible ? '' : 'visible'}`}>
+                  <div className="sidebar-menu">
+                    <h2>Menu</h2>
+                    <div onClick={toggleSidebar} className="sidebar-icon"><FaTimes /></div>
+                  </div>
+                  <ul >
+                    <li onClick={() => navigate("/login")}>Login</li>
+                    <li onClick={() => navigate("/create-account")}>Sign Up</li>
+                    <li onClick={() => navigate("/404")}>Contact</li>
+                  </ul>
+                </div>
+              </div>
+              }
+              <button
+                variant="primary"
+                className="login-btn"
+                onClick={handleLoginClick}
+              >
+                Login
+              </button>
+              <button
+                variant="primary"
+                className="signup-btn"
+                onClick={() => navigate("/create-account")}
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
-        <div className="category-position">
-          <Category />
-        </div>
-      </header >
     </div>
+        </div >
+    <div className="category-position">
+      <Category />
+    </div>
+      </header >
+    </div >
   );
 }
 
