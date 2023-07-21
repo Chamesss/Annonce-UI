@@ -449,9 +449,9 @@ function AdminControl() {
                                         type="text"
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="form-control"
+                                        className="input-form"
                                         placeholder="Recherche par nom ou email" />
-                                    <button onClick={handleSearchUsers} className="btn btn-primary mt-2">
+                                    <button onClick={handleSearchUsers} className="button mt-2">
                                         Search
                                     </button>
                                 </div>
@@ -516,9 +516,9 @@ function AdminControl() {
                                         type="text"
                                         value={searchAdQuery}
                                         onChange={(e) => setSearchAdQuery(e.target.value)}
-                                        className="form-control"
+                                        className="input-form"
                                         placeholder="Recherche par titre ou description..." />
-                                    <button onClick={handleSearchAds} className="btn btn-primary mt-2">
+                                    <button onClick={handleSearchAds} className="button mt-2">
                                         Search
                                     </button>
                                 </div>

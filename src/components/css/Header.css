@@ -13,21 +13,23 @@
 }
 
 .header-container {
+  display: flex;
   width: 100vw;
   align-items: center;
   justify-content: space-evenly;
-  display: flex;
+  padding: 0 0.5em 0 0.5em;
 }
 
 .header-logo-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 0.2rem;
   cursor: pointer;
   padding: 0.5em 0.2em;
 }
 
 .header-logo-logo {
-  display: inline-block;
   width: var(--fs-xxl);
   height: var(--fs-xxl);
   padding: 2px 2px;
@@ -44,6 +46,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  height: 60px;
   width: 500px;
 }
 
@@ -203,10 +207,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 5px;
 }
 
 .heart-icon, .bell-icon {
-  margin-top: 15px !important;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -219,7 +223,6 @@
   font-size: 1.75rem;
   margin-left: 4px;
   margin-right: 4px;
-  margin-top: 10px !important;
 }
 
 .sidebar li {
@@ -348,12 +351,12 @@
 
 @media (max-width: 1050px) {
   .header-logo-logo {
-    width: var(--fs-xxl);
-    height: var(--fs-xxl);
+    width: var(--fs-xl);
+    height: var(--fs-xl);
   }
 
   .header-logo {
-    font-size: var(--fs-x);
+    font-size: var(--fs-l);
   }
 
   .login-btn {
@@ -398,6 +401,10 @@
   .header-isAuth {
     gap: 20px;
   }
+
+  .header-search {
+    width: 310px;
+  }
 }
 
 @media (max-width: 800px) {
@@ -408,13 +415,22 @@
   .header-logo {
     font-size: 1.5rem;
   }
+
+  .header-search {
+    width: 350px;
+  }
+}
+
+@media (max-width:620px) {
+  .header-search {
+    width: 270px;
+  }
 }
 
 @media (max-width:550px) {
   .header-logo-logo {
     width: 1.5rem;
     height: 1.5rem;
-    margin-top: 7px;
   }
 
   .notification-container {
@@ -426,10 +442,9 @@
   }
 
   .sidebar-bars {
-    display: inline-block ;
+    display: flex ;
     background-color: transparent;
     padding: 0.5em 0.5em;
-    margin-top: 3px;
   }
 
   .header-logo {
@@ -446,12 +461,12 @@
 
 
   .heart-icon {
-    display: none;
+    font-size: 1.38rem;
+    margin-right: 0px;  
   }
 
   .bell-icon {
     font-size: 1.38rem;
-    margin-bottom: 1px !important;
     margin-right: 10px;
   }
 
@@ -464,13 +479,13 @@
   }
 
   .header-search {
-    width: 120px; 
+    width: 100%; 
   }
 
   .header-logo-logo {
     width: 1.25rem;
     height: 1.25rem;
-    margin-top: 4px;
+    margin-bottom: 3.75px;
   }
 
   .profile-picture-container {
@@ -483,6 +498,6 @@
   }
 
   .header-logo {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 }

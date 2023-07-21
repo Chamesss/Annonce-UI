@@ -60,14 +60,14 @@ function ProductList({ productsPerPage = 10, products }) {
       </div>
       <div className="d-flex justify-content-center mt-4">
         <button
-          className="btn btn-primary mr-2"
+          className="button mr-2"
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
         >
           Previous
         </button>
         <button
-          className="btn btn-primary"
+          className="button"
           onClick={handleNextPage}
           disabled={currentProducts.length < productsPerPage}
         >

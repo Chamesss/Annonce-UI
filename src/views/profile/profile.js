@@ -58,7 +58,7 @@ function Profile({ userinfo }) {
                     <p><FaUser /><strong> Status:</strong> Compte non activé</p>
                     <button
                       type="button"
-                      className="btn btn-primary"
+                      className="button"
                       onClick={() => handleSendVerification(user._id, user.email)}
                     >Demande de vérification</button>
                     {isLoading && (

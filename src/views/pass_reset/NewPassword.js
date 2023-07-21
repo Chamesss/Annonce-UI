@@ -143,7 +143,7 @@ const NewPasswordPage = () => {
                     placeholder="Enter new password"
                     value={password}
                     onChange={handlePasswordChange}
-                    className="form-control newpassword-input"
+                    className="input-form newpassword-input"
                   />
                   <input
                     id="confirmPassword"
@@ -151,7 +151,7 @@ const NewPasswordPage = () => {
                     placeholder="Confirm new password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
-                    className="form-control newpassword-input"
+                    className="input-form newpassword-input"
                   />
                 </div>
                 <div className="newpassword-submit-container">

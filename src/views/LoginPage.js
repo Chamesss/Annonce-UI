@@ -98,7 +98,7 @@ const LoginPage = () => {
             placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="form-control email-input"
+            className="input-form email-input"
             style={{margin:"0.8rem"}}
             required
           />
@@ -108,7 +108,7 @@ const LoginPage = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="form-control email-input"
+            className="input-form email-input"
             style={{margin:"0.8rem"}}
             required
           />

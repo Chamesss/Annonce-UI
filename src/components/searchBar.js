@@ -25,9 +25,9 @@ function SearchBar({ selectedCategoryId, selectedSubCategoryId }) {
           className="search-bar-input"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit" className="btn submit-button">
+        <button type="submit" className="submit-button">
           {isLoading ? (
-            <div className="spinner-grow spinner-grow-sm"></div>
+            <div className="spinner"></div>
           ) : (
             <div className="searchbar-icon">
               <FaSearch />

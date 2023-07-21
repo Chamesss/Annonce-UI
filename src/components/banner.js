@@ -12,7 +12,7 @@ function Banner() {
           <p>within our esteemed </p>
           <p>marketplace community.</p>
           <p>&nbsp;</p>
-          <button className="banner-create-ad" onClick={() => {window.location.href = '/create-ad';}}>Start creating your ads today!</button>
+          <button className="banner-create-ad" onClick={() => { window.location.href = '/create-ad'; }}>Start creating your ads today!</button>
         </div>
       </div>
       <div className="banner-img-container">

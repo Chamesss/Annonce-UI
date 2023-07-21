@@ -332,7 +332,7 @@ function SearchPage() {
             </div>
             <div className="row mt-3">
               <div className="col">
-                <button className="btn btn-primary" onClick={handleApplyFilters}>
+                <button className="button" onClick={handleApplyFilters}>
                   Appliquer
                 </button>
               </div>

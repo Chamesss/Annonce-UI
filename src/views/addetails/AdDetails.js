@@ -229,7 +229,7 @@ function AdDetails() {
             </div>
             <p class="text-black">{calculateTimeAgo(product.date)}</p>
             <div className="d-flex justify-content-between">
-              <button class="btn btn-primary py-2 my-2" onClick={() => handleFavoritesAd()}>Ajouter aux favoris</button>
+              <button class="button py-2 my-2" onClick={() => handleFavoritesAd()}>Ajouter aux favoris</button>
               <button class="btn btn-danger py-2 my-2" onClick={() => handleShowModal()}>Signaler l'annonce</button>
             </div>
             {message && <div className="text-success mb-3">{message}</div>}
@@ -244,7 +244,7 @@ function AdDetails() {
                 <p>Pourquoi signaler cette annonce ??</p>
                 <input
                   type="input"
-                  className="form-control"
+                  className="input-form"
                   id="repport"
                   value={info}
                   onChange={handleChange}
@@ -258,7 +258,7 @@ function AdDetails() {
                 >Annuler</button>
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="button"
                   onClick={() => handleRapportAd()}
                 >Valider</button>
 

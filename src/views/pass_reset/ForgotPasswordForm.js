@@ -149,7 +149,7 @@ const ForgotPasswordForm = () => {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="form-control forgotpasswordform-input"
+                    className="input-form forgotpasswordform-input"
                   />
                 </div>
                 <div className="forgotpasswordform-button-container">
@@ -179,7 +179,7 @@ const ForgotPasswordForm = () => {
                         const numericValue = value.replace(/\D/g, '');
                         handleInputChange({ target: { value: numericValue } }, index);
                       }}
-                      className="form-control forgotpasswordform-digit"
+                      className="input-form forgotpasswordform-digit"
                     />
                   ))}
                   <div className="forgotpasswordfrom-reload-icon-container" onClick={(e) => handleSubmit(e)}>

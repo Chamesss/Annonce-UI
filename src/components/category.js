@@ -56,8 +56,10 @@ function Categories() {
             >
               <div className="category-single-slot">
                 <img src={category.picture} alt={index} className="category-hidden" />
-                <p>{category.name}</p>
-                <FaAngleDown />
+                <span>{category.name}</span>
+                <span className="category-arrow">
+                  <FaAngleDown />
+                </span>
               </div>
               {activeCategory === category && (
                 <div className="subcategory-container">

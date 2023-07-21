@@ -75,9 +75,9 @@ const ResetCodeForm = () => {
                   placeholder="Reset Code"
                   value={code}
                   onChange={(e) => setResetCode(e.target.value)}
-                  class="form-control my-3"
+                  class="input-form my-3"
                 />
-                <button type="submit" class="btn btn-primary my-3">
+                <button type="submit" class="button my-3">
                   Valider
                 </button>
               </form>

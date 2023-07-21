@@ -340,7 +340,7 @@ function EditProfile({ userinfo }) {
                     </div>
                     {error && <div className="text-danger mb-3">{error}</div>}
                     <div className="d-flex justify-content-between">
-                        <button class="btn btn-primary" type="primary" variant="primary" onClick={handleSubmit}>
+                        <button class="button" type="primary" variant="primary" onClick={handleSubmit}>
                             Enregistrer le profil
                         </button>
                         <button class="btn btn-danger" type="delete" variant="danger" onClick={handleShowModal}>
@@ -363,7 +363,7 @@ function EditProfile({ userinfo }) {
                             type="password"
                             id="Password"
                             name="Password"
-                            className="form-control"
+                            className="input-form"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </Modal.Body>

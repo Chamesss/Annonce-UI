@@ -261,7 +261,7 @@ function Header({ onSearchData }) {
       <div className="buttons-container">
         <Button
           variant="primary"
-          className="btn btn-primary create-ad-button"
+          className="button create-ad-button"
           onClick={handleCreateAdClick}
         >
           <TiPlus className="button-icon" />
@@ -271,7 +271,7 @@ function Header({ onSearchData }) {
           <>
             <Button
               variant="primary"
-              className="btn btn-primary my-ad-button"
+              className="button my-ad-button"
               onClick={handleMyAds}
             >
               <span>My Ads</span>

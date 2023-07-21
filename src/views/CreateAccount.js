@@ -203,8 +203,8 @@ const CreateAccountPage = () => {
             <div>
               <div>
                 <div className="single-row">
-                  <input type="text" id="firstname" placeholder="Firstname" name="firstname" className="form-control input-design fisrtname-input" value={formData.firstname} onChange={handleChange} required />
-                  <input type="text" id="lastname" placeholder="Lastname" name="lastname" className="form-control input-design lastname-input" value={formData.lastname} onChange={handleChange} required />
+                  <input type="text" id="firstname" placeholder="Firstname" name="firstname" className="input-form input-design fisrtname-input" value={formData.firstname} onChange={handleChange} required />
+                  <input type="text" id="lastname" placeholder="Lastname" name="lastname" className="input-form input-design lastname-input" value={formData.lastname} onChange={handleChange} required />
                 </div>
               </div>
               <div className="phone-number">
@@ -214,27 +214,27 @@ const CreateAccountPage = () => {
                   name="telPrefix"
                   value="+216"
                   readOnly
-                  className="form-control phone-prefix"
+                  className="input-form phone-prefix"
                 />
                 <input
                   type="tel"
                   id="tel"
                   name="tel"
                   onChange={handleChange}
-                  className="form-control phone-input"
+                  className="input-form phone-input"
                   placeholder="Phone number"
                   required
                 />
               </div>
               <div>
-                <input type="email" id="email" placeholder="Email" name="email" className="form-control input-design" value={formData.email} onChange={handleChange} required />
+                <input type="email" id="email" placeholder="Email" name="email" className="input-form input-design" value={formData.email} onChange={handleChange} required />
               </div>
               <div className="single-row">
-                <input type="password" id="password" placeholder="Password" name="password" className="form-control input-design password-input" value={formData.password} onChange={handleChange} required />
-                <input type="password" id="passwordConfirm" placeholder="Confirm password" name="passwordConfirm" className="form-control input-design confirm-password-input" value={passwordconfirm} onChange={(e) => setPasswordConfirm(e.target.value)} required />
+                <input type="password" id="password" placeholder="Password" name="password" className="input-form input-design password-input" value={formData.password} onChange={handleChange} required />
+                <input type="password" id="passwordConfirm" placeholder="Confirm password" name="passwordConfirm" className="input-form input-design confirm-password-input" value={passwordconfirm} onChange={(e) => setPasswordConfirm(e.target.value)} required />
               </div>
               <div>
-                <select id="type" name="type" className="form-control input-design" value={formData.type} onChange={handleChange} required>
+                <select id="type" name="type" className="input-form input-design" value={formData.type} onChange={handleChange} required>
                   <option value="">Account type</option>
                   <option value="Individual">Individual</option>
                   <option value="Entreprise">Entreprise</option>

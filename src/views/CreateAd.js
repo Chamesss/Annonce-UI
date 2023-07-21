@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const CreateAdPage = () => {
+
     const [activeTab, setActiveTab] = useState(0);
     const [progress, setProgress] = useState(0);
     const [title, setTitle] = useState('');
@@ -30,10 +31,6 @@ const CreateAdPage = () => {
     const [token, setToken] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
     const [selectedLocationId, setSelectedLocationId] = useState('');
-    const mediaRecorderRef = useRef(null);
-    const audioPlayerRef = useRef(null);
-    const Navigate = useNavigate();
-
     const [errorcategory, setErrorCategory] = useState('');
     const [errorinfo, setInfoError] = useState('');
     const [errorpicture, setPicturesError] = useState('');
@@ -41,6 +38,11 @@ const CreateAdPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [errorsuccess, setErrorSuccess] = useState(false);
+
+    const mediaRecorderRef = useRef(null);
+    const audioPlayerRef = useRef(null);
+    const Navigate = useNavigate();
+
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -258,13 +260,14 @@ const CreateAdPage = () => {
 
     return (
         <div>
-            <div class="header"><Header />
-                <ProgressBar now={progress} label={`${progress}%`} className="my-4" />
+            <Header />
+            <div className="create-ad-section">
+                <ProgressBar now={progress} label={`${progress}%`} />
                 <Tabs activeKey={activeTab} onSelect={handleTabSelect} id="createAdTabs" className="my-4">
                     <Tab eventKey={0}>
                         <Form>
-                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center ">
+                            <div className="first-class">
+                                <div className="first-window">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Choisir une catégorie:</h2>
                                         <div className="mb-3">
@@ -331,8 +334,8 @@ const CreateAdPage = () => {
                     </Tab>
                     <Tab eventKey={1}>
                         <Form>
-                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                            <div className="first-class">
+                                <div className="second-window">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Infos générales:</h2>
                                         <Form.Group controlId="title">
@@ -380,7 +383,7 @@ const CreateAdPage = () => {
                                         <div className="d-flex justify-content-between">
                                             <div className="drop">
                                                 <Button variant="primary" onClick={() => handleTabSelect(0)}>
-                                                Retourner
+                                                    Retourner
                                                 </Button></div>
                                             <div className="drop">
                                                 <Button variant="primary" onClick={() => handleTabSelect(2)}>
@@ -394,8 +397,8 @@ const CreateAdPage = () => {
                     </Tab>
                     <Tab eventKey={2}>
                         <Form>
-                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                            <div className="first-class">
+                                <div className="third-window">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Photos:</h2>
                                         <Form.Group controlId="pictures">
@@ -423,8 +426,8 @@ const CreateAdPage = () => {
                     </Tab>
                     <Tab eventKey={3}>
                         <Form>
-                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                            <div className="first-class">
+                                <div className="forth-window">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Enregistrement audio: </h2>
                                         <Form.Group controlId="audio">
@@ -433,7 +436,7 @@ const CreateAdPage = () => {
                                                 <Button onClick={handleRecord}>{recording ? 'Stop Recording' : 'Start Recording'}</Button>
                                             </div>
                                             <div>
-                                                <input type="file" className="form-control" accept="audio/*" onChange={handleAudioChange} />
+                                                <input type="file" className="input-form" accept="audio/*" onChange={handleAudioChange} />
                                                 {audioBlob && (
                                                     <audio ref={audioPlayerRef} src={URL.createObjectURL(audioBlob)} controls />
                                                 )}
@@ -457,8 +460,8 @@ const CreateAdPage = () => {
                     </Tab>
                     <Tab eventKey={4}>
                         <Form>
-                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div class="container d-flex justify-content-center">
+                            <div className="first-class">
+                                <div className="fifth-window">
                                     <div className="col-lg-4 border border-4 p-4" style={{ borderRadius: "20px" }}>
                                         <h2 className="mb-5 mt-4">Location select: </h2>
                                         <Form.Group controlId="location">

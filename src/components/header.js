@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import { FaUser, FaQuestionCircle, FaBars, FaSignOutAlt, FaToolbox, FaFolderOpen, FaTimes } from "react-icons/fa";
 import { AiFillHeart } from 'react-icons/ai';
 import { TiPlus } from "react-icons/ti";
@@ -141,20 +140,20 @@ function Header() {
     <div>
       <header className="header-section">
         <div className="header-container">
-          <div className="header-logo-container">
+          <section className="header-logo-container">
             <img src="https://res.cloudinary.com/dncjxhygd/image/upload/v1689206621/vxetssx12gs7bkaumvbe.png" alt="logo" className="header-logo-logo" />
-            <h1
+            <span
               className="header-logo"
               onClick={navigatehome}
             >
               Annonce
-            </h1>
-          </div>
+            </span>
+          </section>
           <div className="header-search">
             <SearchBar />
           </div>
           <div className="header-alignement-items">
-            <Button
+            <button
               variant="primary"
               className="create-ad-button"
               onClick={handleCreateAdClick}
@@ -164,7 +163,7 @@ function Header() {
                 <TiPlus />
                 <span>&nbsp;Create Ad</span>
               </div>
-            </Button>
+            </button>
           </div>
           <div className="buttons-container">
             <div className="profile-items">
@@ -263,26 +262,6 @@ function Header() {
                       )}
                     </div>
                     <div>
-                      <button className="sidebar-bars" onClick={toggleSidebarAuth}>
-                        <FaBars />
-                      </button>
-                      {sidebarVisibleAuth && <div><div className="overlay" onClick={toggleSidebarAuth}></div>
-                        <div className={`sidebar ${sidebarVisible ? '' : 'visible'}`}>
-                          <div className="sidebar-menu">
-                            <h2>Menu</h2>
-                            <div onClick={toggleSidebarAuth} className="sidebar-icon"><FaTimes /></div>
-                          </div>
-                          <ul>
-                            <li onClick={() => navigate('/create-ad')}>Create Ad</li>
-                            <li onClick={() => navigate('/profile')}>My Profile</li>
-                            <li onClick={() => { window.location.href = '/profile/?section=' + encodeURIComponent('ads');}}>My Ads</li>
-                            <li onClick={() => { window.location.href = '/profile/?section=' + encodeURIComponent('favorites');}}>Favorites</li>
-                            <li onClick={() => navigate('/404')}>Contact Us</li>
-                            <li onClick={handleLogout}>Log out</li>
-                          </ul>
-                        </div>
-                      </div>
-                      }
                     </div>
                   </div>
           </div>
