@@ -20,7 +20,6 @@ function Header() {
   const [notifications, setNotifications] = useState([]);
   const [seen, setSeen] = useState(true);
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [sidebarVisibleAuth, setSidebarVisibleAuth] = useState(false);
 
 
 
@@ -132,9 +131,7 @@ function Header() {
     setSidebarVisible(!sidebarVisible);
   };
 
-  const toggleSidebarAuth = () => {
-    setSidebarVisibleAuth(!sidebarVisibleAuth);
-  };
+
 
   return (
     <div>
@@ -227,12 +224,14 @@ function Header() {
                         <div className="fade-in fade-out">
                           <nav className="small-navbar fade-out">
                             <div className="head-nav-section">
-                            {user.picture ? (
-                              <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
-                            ) : (
-                              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="blank-pic" className="profile-picture-container" onClick={handleNavigateProfile} />
-                            )}
-                              <p onClick={handleNavigateProfile}>{user.firstname}</p>
+                              <div>
+                                {user.picture ? (
+                                  <img src={user.picture} alt={user.firstname} className="profile-picture-container" onClick={handleNavigateProfile} />
+                                ) : (
+                                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="blank-pic" className="profile-picture-container" onClick={handleNavigateProfile} />
+                                )}
+                              </div>
+                              <span onClick={handleNavigateProfile}>{user.firstname}</span>
                             </div>
                             <hr />
                             <div className="body-nav-section">
@@ -240,7 +239,7 @@ function Header() {
                                 <FaUser />&nbsp;My Profile
                               </p>
                               {isAdmin && (
-                                <p href="/adminpanel">
+                                <p onClick={() => navigate("/adminpanel")}>
                                   <FaToolbox />&nbsp;Administration
                                 </p>
                               )}
@@ -264,49 +263,49 @@ function Header() {
                     <div>
                     </div>
                   </div>
-          </div>
-              )}
-          {isNotAuthenticated && (
-            <>
-              <button className="sidebar-bars" onClick={toggleSidebar}>
-                <FaBars />
-              </button>
-              {sidebarVisible && <div><div className="overlay" onClick={toggleSidebar}></div>
-                <div className={`sidebar ${sidebarVisible ? '' : 'visible'}`}>
-                  <div className="sidebar-menu">
-                    <h2>Menu</h2>
-                    <div onClick={toggleSidebar} className="sidebar-icon"><FaTimes /></div>
-                  </div>
-                  <ul >
-                    <li onClick={() => navigate("/login")}>Login</li>
-                    <li onClick={() => navigate("/create-account")}>Sign Up</li>
-                    <li onClick={() => navigate("/404")}>Contact</li>
-                  </ul>
                 </div>
-              </div>
-              }
-              <button
-                variant="primary"
-                className="login-btn"
-                onClick={handleLoginClick}
-              >
-                Login
-              </button>
-              <button
-                variant="primary"
-                className="signup-btn"
-                onClick={() => navigate("/create-account")}
-              >
-                Sign Up
-              </button>
-            </>
-          )}
-        </div>
-    </div>
+              )}
+              {isNotAuthenticated && (
+                <>
+                  <button className="sidebar-bars" onClick={toggleSidebar}>
+                    <FaBars />
+                  </button>
+                  {sidebarVisible && <div><div className="overlay" onClick={toggleSidebar}></div>
+                    <div className={`sidebar ${sidebarVisible ? '' : 'visible'}`}>
+                      <div className="sidebar-menu">
+                        <h2>Menu</h2>
+                        <div onClick={toggleSidebar} className="sidebar-icon"><FaTimes /></div>
+                      </div>
+                      <ul >
+                        <li onClick={() => navigate("/login")}>Login</li>
+                        <li onClick={() => navigate("/create-account")}>Sign Up</li>
+                        <li onClick={() => navigate("/404")}>Contact</li>
+                      </ul>
+                    </div>
+                  </div>
+                  }
+                  <button
+                    variant="primary"
+                    className="login-btn"
+                    onClick={handleLoginClick}
+                  >
+                    Login
+                  </button>
+                  <button
+                    variant="primary"
+                    className="signup-btn"
+                    onClick={() => navigate("/create-account")}
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div >
-    <div className="category-position">
-      <Category />
-    </div>
+        <div className="category-position">
+          <Category />
+        </div>
       </header >
     </div >
   );

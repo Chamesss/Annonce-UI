@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   background-color: var(--clr-white);
-  padding: 0em 1em 0.25em 1em;
+  padding: 0.5em 1em 0.25em 1em;
   height: auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
@@ -23,10 +23,10 @@
 .header-logo-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.2rem;
   cursor: pointer;
-  padding: 0.5em 0.2em;
+  padding: 0.5em 0.5em;
 }
 
 .header-logo-logo {
@@ -317,6 +317,7 @@
 
 .head-nav-section {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   padding: 0.5em 1em;
   gap: 0.5em;
@@ -331,7 +332,6 @@
   display: flex;
   flex-direction: column;
   padding: 0.5em 0em;
-  row-gap: 0.8em;
 }
 
 .body-nav-section p {
@@ -353,10 +353,6 @@
   .header-logo-logo {
     width: var(--fs-xl);
     height: var(--fs-xl);
-  }
-
-  .header-logo {
-    font-size: var(--fs-l);
   }
 
   .login-btn {
@@ -428,10 +424,7 @@
 }
 
 @media (max-width:550px) {
-  .header-logo-logo {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
+
 
   .notification-container {
     font-size: 0.75rem;
@@ -483,9 +476,9 @@
   }
 
   .header-logo-logo {
+    margin-top: 5px;
     width: 1.25rem;
     height: 1.25rem;
-    margin-bottom: 3.75px;
   }
 
   .profile-picture-container {
