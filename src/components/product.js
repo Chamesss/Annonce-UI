@@ -70,7 +70,7 @@ function Product({ product }) {
   };
 
   return (
-    <div className="card">
+    <div className="card-product">
       <div class="card-img-container">
         <img className="card-img-top" src={product.pictures[0]} alt="" />
       </div>
@@ -90,16 +90,16 @@ function Product({ product }) {
       </div>
       <div className="card-body ">
         <h6 className="card-title">{product.title}</h6>
-        <p className="card-text text-start " style={{ color: "grey" }}><FaMapMarkerAlt /> {product.country}, {product.city}
+        <span className="card-text text-start " style={{ color: "grey"}}><FaMapMarkerAlt />&nbsp;{product.country}, {product.city}
           {distance !== null ? (
-            <span className="small-font text-black"> ({distance.toString().slice(0, -3)} km)</span>
+            <span className="small-font text-black">&nbsp;({distance.toString().slice(0, -3)} km)</span>
           ) : (null)}
-        </p>
-        <p className="small-font">{calculateTimeAgo(product.createdAt)}</p>
-        <p className="product-price my-2 text-danger text-end">{product.price} DT</p>
-        
+        </span><br></br>
+        <span className="small-font">{calculateTimeAgo(product.createdAt)}</span><br></br>
+        <span className="product-price text-danger text-end">{product.price} DT</span>
       </div>
-      {product.vocal ? (
+      <div>
+        {product.vocal ? (
           <div className="card-footer">
             <ReactAudioPlayer
               src={product.vocal}
@@ -107,7 +107,8 @@ function Product({ product }) {
               className="custom-audio-player"
             />
           </div>
-        ):(<div className="spacing-footer"></div>)}
+        ) : (<div className="card-footer"></div>)}
+      </div>
     </div>
   );
 }
