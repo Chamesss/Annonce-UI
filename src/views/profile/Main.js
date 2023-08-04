@@ -132,38 +132,43 @@ function Main() {
 
   return (
     <div>
-
       <div>
-
+        <Header />
+        <Category />
       </div>
-      <div className="main-page-container">
-        <div className="header-container-main">
-          <Header />
-          <Category />
-        </div>
-        <div className="main-sidebar">
-          <ul>
-            <li className="" onClick={() => setSelectedOption("profile")}>Mon Profile</li>
-            <hr style={{ width: "90%" }}></hr>
-            <li className="" onClick={() => setSelectedOption("ads")}>Mes Annonces</li>
-            <hr style={{ width: "90%" }}></hr>
-            <li className="" onClick={() => setSelectedOption("favorites")}>Mes Favoris</li>
-            <hr style={{ width: "90%" }}></hr>
-            <li className="" onClick={handleLogout}>Se déconnecter</li>
-          </ul>
-        </div>
-        <div className="page-container">
-          {isLoading && (<div className="content"><Spinner /></div>)}
-          {user && selectedOption && (
-            <div className="content">
-              {renderContent()}
+      <div className="profile-main">
+        <div className="main-page-container">
+          <div className="main-sidebar">
+            <p>Settings</p>
+            <ul>
+              <ul>
+                <li className={`side-bar-selection ${selectedOption === "profile" ? "selected-option" : ""}`} onClick={() => setSelectedOption("profile")}>My Profile</li>
+                <li className={`side-bar-selection ${selectedOption === "ads" ? "selected-option" : ""}`} onClick={() => setSelectedOption("ads")}>My Ads</li>
+                <li className={`side-bar-selection ${selectedOption === "favorites" ? "selected-option" : ""}`} onClick={() => setSelectedOption("favorites")}>My Favorites</li>
+                <li className="side-bar-selection" onClick={handleLogout}>Log out</li>
+              </ul>
+            </ul>
+          </div>
+          <div className="main-detailed-page">
+            <p className="selected-option-title">
+              {selectedOption === "profile"
+                ? "Profile"
+                : selectedOption === "ads"
+                  ? "My Ads"
+                  : "My Favorites"}
+            </p>
+            <div className="page-container">
+              {isLoading && (<div><Spinner /></div>)}
+              {user && selectedOption && (
+                <div>
+                  {renderContent()}
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
-      <div class="position-relative z-index-2">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }

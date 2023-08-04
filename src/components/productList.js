@@ -76,18 +76,19 @@ function ProductList({ products }) {
   };
 
   return (
-    <div className="card-slider">
-      <Slider {...settings}>
-        {products.map((product) => (
-          <div
-          key={product._id}
-          className="col mb-4"
-          onClick={() => handleProductClick(product)}
-        >
-          <Product product={product} />
-        </div>
-        ))}
-      </Slider>
+    <div className="card-slider-container">
+      <div className="card-slider">
+        <Slider {...settings}>
+          {products.map((product) => (
+            <div
+              key={product._id}
+              onClick={() => handleProductClick(product)}
+            >
+              <Product product={product} />
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 }
