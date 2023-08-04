@@ -75,8 +75,7 @@ function FavoritePage(user) {
     };
 
     return (
-        <div className="container mx-4 mb-5">
-            <h2>Produits favoris</h2>
+        <div className="d-flex justify-content-center align-items-center">
             {isLoading && <div><Spinner /></div>}
             {message && (
                 <p className="success text-success p-1">

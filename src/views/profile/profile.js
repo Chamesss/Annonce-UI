@@ -29,8 +29,7 @@ function Profile({ userinfo }) {
   }
 
   return (
-    <div className="container mx-5">
-      <h2>Mon profile</h2>
+    <div className="d-flex justify-content-center align-items-center">
       {user !== null ? (
         <div className="container d-flex justify-content-center align-items-center py-5">
           <div className="row justify-content-center ">

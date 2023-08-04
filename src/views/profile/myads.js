@@ -60,8 +60,7 @@ function MyAds({ user }) {
     }
 
     return (
-        <div className="container mx-4 mb-5">
-            <h2>Mes Annonces</h2>
+        <div className="d-flex justify-content-center align-items-center">
             {message && <p className="d-flex justify-content-center align-items-center mt-5">{message}</p>}
             {isLoading && <div><Spinner /></div>}
             {ads && !editAd ? (
