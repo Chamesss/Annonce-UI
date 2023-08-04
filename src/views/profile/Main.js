@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import './css/main.css';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
@@ -10,6 +9,7 @@ import Profile from './profile';
 import EditProfile from "./EditProfile";
 import MyAds from "./myads";
 import Spinner from "../../components/Spinner";
+// import { AiFillEdit } from 'react-icons/ai';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -100,14 +100,17 @@ function Main() {
       case "profile":
       default:
         return (
-          <div className="container justify-content-center align-items-center">
+          <div className="justify-content-center align-items-center">
             {starteditprofile === false ? (
-              <div className="container justify-content-center align-items-center py-5">{user !== null ? (
+              <div className="justify-content-center align-items-center">{user !== null ? (
                 <div>
                   <Profile userinfo={user} />
+                  {/*
                   <div className="d-flex justify-content-center pl-5">
-                    <Button onClick={() => handleSwitchProfile()}>Editer le profil</Button>
+                    <div className="button edit-profile-button" onClick={() => handleSwitchProfile()}>Edit Profile <AiFillEdit /></div>
                   </div>
+                  */}
+
                 </div>
 
               ) : (null)}
@@ -117,7 +120,7 @@ function Main() {
               <div>
                 <EditProfile userinfo={user} />
                 <div className="d-flex justify-content-center pl-5">
-                  <Button onClick={() => handleSwitchProfile()}>Retourner</Button>
+                  <div className="button edit-profile-button" onClick={() => handleSwitchProfile()}>Go back</div>
                 </div>
               </div>
 
@@ -138,16 +141,18 @@ function Main() {
       </div>
       <div className="profile-main">
         <div className="main-page-container">
-          <div className="main-sidebar">
-            <p>Settings</p>
-            <ul>
+          <div>
+            <div className="main-sidebar">
+              <p>Settings</p>
               <ul>
-                <li className={`side-bar-selection ${selectedOption === "profile" ? "selected-option" : ""}`} onClick={() => setSelectedOption("profile")}>My Profile</li>
-                <li className={`side-bar-selection ${selectedOption === "ads" ? "selected-option" : ""}`} onClick={() => setSelectedOption("ads")}>My Ads</li>
-                <li className={`side-bar-selection ${selectedOption === "favorites" ? "selected-option" : ""}`} onClick={() => setSelectedOption("favorites")}>My Favorites</li>
-                <li className="side-bar-selection" onClick={handleLogout}>Log out</li>
+                <ul>
+                  <li className={`side-bar-selection ${selectedOption === "profile" ? "selected-option" : ""}`} onClick={() => setSelectedOption("profile")}>My Profile</li>
+                  <li className={`side-bar-selection ${selectedOption === "ads" ? "selected-option" : ""}`} onClick={() => setSelectedOption("ads")}>My Ads</li>
+                  <li className={`side-bar-selection ${selectedOption === "favorites" ? "selected-option" : ""}`} onClick={() => setSelectedOption("favorites")}>My Favorites</li>
+                  <li className="side-bar-selection" onClick={handleLogout}>Log out</li>
+                </ul>
               </ul>
-            </ul>
+            </div>
           </div>
           <div className="main-detailed-page">
             <p className="selected-option-title">
