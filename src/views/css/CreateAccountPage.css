@@ -74,7 +74,7 @@
     margin-bottom: 5px;
     border: 1px solid rgb(202, 202, 202) !important;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-    width: 100% !important;
+    width: 100% ;
 }
 
 .phone-prefix {
@@ -85,7 +85,7 @@
     margin-bottom: 5px;
     border: 1px solid rgb(202, 202, 202) !important;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-    width: 65px !important;
+    min-width: 65px;
 }
 .create-account-title {
     font-weight: 500;

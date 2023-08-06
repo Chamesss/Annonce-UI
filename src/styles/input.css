@@ -1,9 +1,8 @@
 .input-form {
     display: block;
     padding: 0.375rem 0.75rem;
-    border-radius: 25px !important;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3) !important;
-    width: 60% !important;
+    border-radius: 25px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;

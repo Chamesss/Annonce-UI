@@ -94,6 +94,14 @@
   margin-right: 250px;
 }
 
+.profile-input {
+  width: 80%;
+}
+
+.profile-phone-input {
+  width: 64%;
+}
+
 @media (max-width:768px){
   .profile-body-section-main {
     border: 2px solid rgb(200, 200, 200, 0.5);
@@ -124,6 +132,12 @@
   }
   .profile-row-section {
     width: 300px;
+  }
+  .profile-input {
+    width: 100%;
+  }
+  .profile-phone-input {
+    width: 84%;
   }
 }
 
