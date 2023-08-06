@@ -50,7 +50,7 @@
   width: 100%;
   margin-top: 50px;
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
 }
 
 .profile-section-title {
@@ -58,7 +58,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1rem;
-  gap: 10px;
+  gap:10px;
 }
 
 .profile-section-title span {
@@ -120,11 +120,15 @@
   .profile-name-section {
     flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
   }
   .profile-row-section {
-    width:200px;
+    width: 300px;
   }
-  .profile-section-title {
-    padding:10px 10px;
+}
+
+@media (max-width:375px) {
+  .profile-row-section {
+    width: 200px;
   }
 }

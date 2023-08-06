@@ -155,13 +155,13 @@ function Main() {
             </div>
           </div>
           <div className="main-detailed-page">
-            <p className="selected-option-title">
+            <span className="selected-option-title">
               {selectedOption === "profile"
                 ? "Profile"
                 : selectedOption === "ads"
                   ? "My Ads"
                   : "My Favorites"}
-            </p>
+            </span>
             <div className="page-container">
               {isLoading && (<div><Spinner /></div>)}
               {user && selectedOption && (

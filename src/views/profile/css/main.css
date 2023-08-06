@@ -20,8 +20,7 @@
     display: flex;
     font-size: 1.5rem;
     font-weight: var(--ws-m);
-    margin-bottom: 2rem;
-    margin-left: 25px;
+    justify-content: center;
 }
 
 .side-bar-selection {
@@ -82,11 +81,10 @@
 
 .selected-option-title {
     display: flex;
-    align-items: center;
     font-size: 1.5rem;
     font-weight: var(--ws-m);
-    margin-bottom: 2rem;
-    margin-left: 25px;
+    justify-content: center;
+    margin-bottom: -25px;
 }
 
 .edit-profile-button {
@@ -95,15 +93,16 @@
 }
 
 .page-container {
-display: flex;
+    display: flex;
 }
 
-@media (max-width:700px){
+@media (max-width:700px) {
     .main-page-container {
         flex-direction: column;
         align-items: center;
         padding: 10px 10px;
     }
+
     .page-container {
         display: flex;
         width: auto;
