@@ -35,11 +35,20 @@ function Profile({ userinfo }) {
   return (
     <div className="profile-section-main">
       {user !== null ? (
-        <div className="">
-          <div className="">
-            <div className="upper-section-profile">
-              <div className="upper-profile-section-info">
-                <div className="" style={{ maxWidth: '80px', maxHeight: '80px' }}>
+        <div>
+
+          <div className="profile-body-section-main">
+            <div className="profile-section-title">
+              <div>
+                <span>General info</span>
+              </div>
+              <div>
+                <div className="button profile-edit-button" onClick={() => null}><AiFillEdit /></div>
+              </div>
+            </div>
+            <div className="upper-profile-body-section pb-2">
+              <div className="upper-profile-body-section-info">
+                <div style={{ maxWidth: '80px', maxHeight: '80px' }}>
                   <img src={user.picture} alt="Profile" className="rounded-circle" style={{ width: '100%', height: '100%' }} />
                 </div>
                 <div className="upper-profile-section-details">
@@ -48,63 +57,76 @@ function Profile({ userinfo }) {
                   <span className="upper-profile-section-details-phone-adress"><FaMapMarkerAlt />&nbsp; {user.country}, {user.city}</span>
                 </div>
               </div>
+            </div>
+          </div>
+
+
+
+          <div className="profile-body-section-main">
+            <div className="profile-section-title">
+              <div>
+                <span>Personal information</span>
+              </div>
               <div>
                 <div className="button profile-edit-button" onClick={() => null}><AiFillEdit /></div>
               </div>
             </div>
-            <div className="profile-body-section-main">
-              <div className="profile-section-title">
-                <div>
-                  <span>Personal information</span>
-                </div>
-                <div>
-                  <div className="button profile-edit-button" onClick={() => null}><AiFillEdit /></div>
-                </div>
-              </div>
-              <div className="profile-body-section">
-                <div className="profile-body-section-info">
-                  <div className="col">
+            <div className="profile-body-section">
+              <div className="profile-body-section-info">
+                <div className="profile-name-section">
+                  <div className="profile-row-section">
                     <p className="upper-profile-section-details-phone-adress">First Name</p>
                     <p>{user.firstname}</p>
-                    <p className="upper-profile-section-details-phone-adress">Email address</p>
-                    <p>{user.email}</p>
-                    <p className="upper-profile-section-details-phone-adress">Type</p>
-                    <p>{user.type}</p>
                   </div>
-                  <div className="col col-lg-7">
+                  <div className="profile-row-section">
                     <p className="upper-profile-section-details-phone-adress">Last Name</p>
                     <p>{user.lastname}</p>
+                  </div>
+                </div>
+                <div className="profile-name-section">
+                  <div className="profile-row-section">
+                    <p className="upper-profile-section-details-phone-adress">Email address</p>
+                    <p>{user.email}</p>
+                  </div>
+                  <div className="profile-row-section">
                     <p className="upper-profile-section-details-phone-adress">Phone</p>
                     <p>+216 {user.tel}</p>
                   </div>
                 </div>
+                <div className="profile-type-section">
+                  <p className="upper-profile-section-details-phone-adress">Type</p>
+                  <p>{user.type}</p>
+                </div>
               </div>
             </div>
+          </div>
 
-            <div className="profile-body-section-main">
-              <div className="profile-section-title">
-                <div>
-                  <span>Address</span>
-                </div>
-                <div>
-                  <div className="button profile-edit-button" onClick={() => null}><AiFillEdit /></div>
-                </div>
+          <div className="profile-body-section-main">
+            <div className="profile-section-title">
+              <div>
+                <span>Address</span>
               </div>
-              <div className="profile-body-section">
-                <div className="profile-body-section-info">
-                  <div className="col">
+              <div>
+                <div className="button profile-edit-button" onClick={() => null}><AiFillEdit /></div>
+              </div>
+            </div>
+            <div className="profile-body-section">
+              <div className="profile-body-section-info">
+                <div className="profile-name-section">
+                  <div className="profile-row-section">
                     <p className="upper-profile-section-details-phone-adress">Country</p>
                     <p>{user.country}</p>
                   </div>
-                  <div className="col col-lg-7">
+                  <div className="profile-row-section">
                     <p className="upper-profile-section-details-phone-adress">City</p>
                     <p>{user.city}</p>
                   </div>
                 </div>
               </div>
             </div>
-            
-            {
+          </div>
+
+          {
             /*
              <div className="profile-body-section">
               <div className="col-lg-8">
@@ -139,9 +161,8 @@ function Profile({ userinfo }) {
               </div>
             </div>
             */
-            }
+          }
 
-          </div>
         </div>
       ) : (null)}
     </div>

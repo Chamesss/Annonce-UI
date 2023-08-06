@@ -435,406 +435,408 @@ function AdminControl() {
     return (
         <div>
             {isAdmin && (
-                <><div className="header"><Header />
-                    {message && <div className="text-success mb-3">{message}</div>}
-                    {error && <div className="text-danger mb-3">{error}</div>}
-                    <Tabs defaultActiveKey="user-control">
+                <><div><Header />
+                    <div style={{paddingTop:"130px"}}>
+                        {message && <div className="text-success mb-3">{message}</div>}
+                        {error && <div className="text-danger mb-3">{error}</div>}
+                        <Tabs defaultActiveKey="user-control">
 
 
-                        <Tab eventKey="user-control" title="User Control">
-                            <div className="m-2">
-                                <h2 style={{ color: 'black' }}>Contrôle des utilisateurs</h2>
-                                <div className="mb-3">
-                                    <input
-                                        type="text"
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="input-form"
-                                        placeholder="Recherche par nom ou email" />
-                                    <button onClick={handleSearchUsers} className="button mt-2">
-                                        Search
-                                    </button>
+                            <Tab eventKey="user-control" title="User Control">
+                                <div className="m-2">
+                                    <h2 style={{ color: 'black' }}>Contrôle des utilisateurs</h2>
+                                    <div className="mb-3">
+                                        <input
+                                            type="text"
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            className="input-form"
+                                            placeholder="Recherche par nom ou email" />
+                                        <button onClick={handleSearchUsers} className="button mt-2">
+                                            Search
+                                        </button>
+                                    </div>
+                                    <p>Nombre total d'utilisateurs: {userCount}</p>
+                                    <Table striped hover style={{ borderColor: 'lightgray' }}>
+                                        <thead className='bg-dark text-white'>
+                                            <tr>
+                                                <th>Prénom</th>
+                                                <th>Nom</th>
+                                                <th>Photo</th>
+                                                <th>Address</th>
+                                                <th>Telephone</th>
+                                                <th>Email</th>
+                                                <th>Date de création</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {filteredUsers.length > 0 ? (
+                                                filteredUsers.map(user => (
+                                                    <tr key={user.id}>
+                                                        <td>{user.firstname}</td>
+                                                        <td>{user.lastname}</td>
+                                                        <td style={{ maxWidth: '210px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.picture}</td>
+                                                        <td>{user.address}</td>
+                                                        <td>{user.tel}</td>
+                                                        <td>{user.email}</td>
+                                                        <td>{new Date(user.createdAt).toLocaleString()}</td>
+                                                        <td>{user.state ? "Active" : "Inactive"}</td>
+                                                        <td className="d-flex gap-2">
+                                                            <Button
+                                                                variant="danger"
+                                                                onClick={() => handleDeleteUser(user._id)}
+                                                            >
+                                                                Supprimer
+                                                            </Button>
+                                                            <Button
+                                                                variant="danger"
+                                                                onClick={() => handleBanUser(user._id)}
+                                                            >
+                                                                Bannir
+                                                            </Button>
+                                                        </td>
+
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="7">Aucun utilisateur trouvé.</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </Table>
                                 </div>
-                                <p>Nombre total d'utilisateurs: {userCount}</p>
-                                <Table striped hover style={{ borderColor: 'lightgray' }}>
-                                    <thead className='bg-dark text-white'>
-                                        <tr>
-                                            <th>Prénom</th>
-                                            <th>Nom</th>
-                                            <th>Photo</th>
-                                            <th>Address</th>
-                                            <th>Telephone</th>
-                                            <th>Email</th>
-                                            <th>Date de création</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {filteredUsers.length > 0 ? (
-                                            filteredUsers.map(user => (
-                                                <tr key={user.id}>
-                                                    <td>{user.firstname}</td>
-                                                    <td>{user.lastname}</td>
-                                                    <td style={{ maxWidth: '210px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.picture}</td>
-                                                    <td>{user.address}</td>
-                                                    <td>{user.tel}</td>
-                                                    <td>{user.email}</td>
-                                                    <td>{new Date(user.createdAt).toLocaleString()}</td>
-                                                    <td>{user.state ? "Active" : "Inactive"}</td>
+                            </Tab>
+                            <Tab eventKey="ad-control" title="Ad Control">
+                                <div className="m-2">
+                                    <h2 style={{ color: 'black' }}>Contrôle des annonces</h2>
+                                    <div className="mb-3">
+                                        <input
+                                            type="text"
+                                            value={searchAdQuery}
+                                            onChange={(e) => setSearchAdQuery(e.target.value)}
+                                            className="input-form"
+                                            placeholder="Recherche par titre ou description..." />
+                                        <button onClick={handleSearchAds} className="button mt-2">
+                                            Search
+                                        </button>
+                                    </div>
+                                    <p>Total Ads: {adCount}</p>
+                                    <Table striped bordered hover>
+                                        <thead className='bg-dark text-white'>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Price</th>
+                                                <th>Website</th>
+                                                <th>Description</th>
+                                                <th>Pictures</th>
+                                                <th>Vocal</th>
+                                                <th>Address</th>
+                                                <th>Added Date</th>
+                                                <th>State</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {filteredAds.length > 0 ? (
+                                                filteredAds.map(ad => (
+                                                    <tr key={ad.id}><td>{ad.title}</td>
+                                                        <td>{ad.price}</td>
+                                                        <td>{ad.website}</td>
+                                                        <td>{ad.description}</td>
+                                                        <td style={{ maxWidth: '210px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ad.pictures}</td>
+                                                        <td style={{ maxWidth: '210px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ad.vocal}</td>
+                                                        <td>{ad.address}</td>
+                                                        <td>{new Date(ad.createdAt).toLocaleString()}</td>
+                                                        <td>{ad.state ? "Active" : "Inactive"}</td>
+                                                        <td>
+                                                            <div className="d-flex gap-2">
+                                                                {ad.state === false && (
+                                                                    <Button
+                                                                        variant="success"
+                                                                        onClick={() => handleApproveAd(ad._id)}
+                                                                    >
+                                                                        Approve
+                                                                    </Button>)}
+                                                                <Button
+                                                                    variant="danger"
+                                                                    onClick={() => handleDeleteAd(ad._id)}
+                                                                >
+                                                                    Delete
+                                                                </Button>
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="8">Aucune annonce trouvée.</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </Table>
+                                </div>
+                            </Tab>
+                            <Tab eventKey="category-control" title="Category Control">
+                                <div className="m-2">
+                                    <h2 style={{ color: 'black' }}>Contrôle de catégories</h2>
+                                    <Button onClick={() => setShowAddCategoryModal(true)}>+ Ajouter</Button>
+                                    {/* Category Table */}
+                                    <Table striped bordered hover>
+                                        <thead className='bg-dark text-white'>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nom</th>
+                                                <th>Photo</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {category.map((category, index) => (
+                                                <tr key={category._id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{category.name}</td>
+                                                    <td>{category.picture}</td>
                                                     <td className="d-flex gap-2">
                                                         <Button
-                                                            variant="danger"
-                                                            onClick={() => handleDeleteUser(user._id)}
+                                                            onClick={() => {
+                                                                setShowEditCategoryModal(true);
+                                                                setEditCategoryId(category._id);
+                                                                setEditCategoryName(category.name);
+                                                            }}
                                                         >
+                                                            Modifier
+                                                        </Button>
+                                                        <Button onClick={() => handleDeleteCategory(category._id)}>
                                                             Supprimer
                                                         </Button>
                                                         <Button
-                                                            variant="danger"
-                                                            onClick={() => handleBanUser(user._id)}
+                                                            onClick={() => {
+                                                                setSelectedCategory(category);
+                                                                setShowSubcategories(true);
+                                                                setEditCategoryId(category._id);
+                                                            }}
                                                         >
-                                                            Bannir
+                                                            Subcategories
                                                         </Button>
                                                     </td>
-
                                                 </tr>
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td colSpan="7">Aucun utilisateur trouvé.</td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </Table>
-                            </div>
-                        </Tab>
-                        <Tab eventKey="ad-control" title="Ad Control">
-                            <div className="m-2">
-                                <h2 style={{ color: 'black' }}>Contrôle des annonces</h2>
-                                <div className="mb-3">
-                                    <input
-                                        type="text"
-                                        value={searchAdQuery}
-                                        onChange={(e) => setSearchAdQuery(e.target.value)}
-                                        className="input-form"
-                                        placeholder="Recherche par titre ou description..." />
-                                    <button onClick={handleSearchAds} className="button mt-2">
-                                        Search
-                                    </button>
-                                </div>
-                                <p>Total Ads: {adCount}</p>
-                                <Table striped bordered hover>
-                                    <thead className='bg-dark text-white'>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Price</th>
-                                            <th>Website</th>
-                                            <th>Description</th>
-                                            <th>Pictures</th>
-                                            <th>Vocal</th>
-                                            <th>Address</th>
-                                            <th>Added Date</th>
-                                            <th>State</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {filteredAds.length > 0 ? (
-                                            filteredAds.map(ad => (
-                                                <tr key={ad.id}><td>{ad.title}</td>
-                                                    <td>{ad.price}</td>
-                                                    <td>{ad.website}</td>
-                                                    <td>{ad.description}</td>
-                                                    <td style={{ maxWidth: '210px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ad.pictures}</td>
-                                                    <td style={{ maxWidth: '210px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ad.vocal}</td>
-                                                    <td>{ad.address}</td>
-                                                    <td>{new Date(ad.createdAt).toLocaleString()}</td>
-                                                    <td>{ad.state ? "Active" : "Inactive"}</td>
-                                                    <td>
-                                                        <div className="d-flex gap-2">
-                                                            {ad.state === false && (
-                                                                <Button
-                                                                    variant="success"
-                                                                    onClick={() => handleApproveAd(ad._id)}
-                                                                >
-                                                                    Approve
-                                                                </Button>)}
-                                                            <Button
-                                                                variant="danger"
-                                                                onClick={() => handleDeleteAd(ad._id)}
-                                                            >
-                                                                Delete
-                                                            </Button>
-                                                        </div>
+                                            ))}
+                                        </tbody>
+                                    </Table>
 
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td colSpan="8">Aucune annonce trouvée.</td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </Table>
-                            </div>
-                        </Tab>
-                        <Tab eventKey="category-control" title="Category Control">
-                            <div className="m-2">
-                                <h2 style={{ color: 'black' }}>Contrôle de catégories</h2>
-                                <Button onClick={() => setShowAddCategoryModal(true)}>+ Ajouter</Button>
-                                {/* Category Table */}
-                                <Table striped bordered hover>
-                                    <thead className='bg-dark text-white'>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nom</th>
-                                            <th>Photo</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {category.map((category, index) => (
-                                            <tr key={category._id}>
-                                                <td>{index + 1}</td>
-                                                <td>{category.name}</td>
-                                                <td>{category.picture}</td>
-                                                <td className="d-flex gap-2">
-                                                    <Button
-                                                        onClick={() => {
-                                                            setShowEditCategoryModal(true);
-                                                            setEditCategoryId(category._id);
-                                                            setEditCategoryName(category.name);
-                                                        }}
-                                                    >
-                                                        Modifier
-                                                    </Button>
-                                                    <Button onClick={() => handleDeleteCategory(category._id)}>
-                                                        Supprimer
-                                                    </Button>
-                                                    <Button
-                                                        onClick={() => {
-                                                            setSelectedCategory(category);
-                                                            setShowSubcategories(true);
-                                                            setEditCategoryId(category._id);
-                                                        }}
-                                                    >
-                                                        Subcategories
-                                                    </Button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </Table>
+                                    {/* Show Subcategory Modal */}
+                                    {showSubcategories && selectedCategory && (
+                                        <Modal show={showSubcategories} onHide={() => setShowSubcategories(false)} backdrop="static" centered>
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>Subcategories</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <Button onClick={() => setShowAddSubcategoryModal(true)}>+ Add</Button>
+                                                <Table striped bordered hover>
+                                                    <thead className="thead-dark">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nom</th>
+                                                            <th>Photos</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {selectedCategory.subcategories.map((subcategory, index) => (
+                                                            <tr key={subcategory._id}>
+                                                                <td>{index + 1}</td>
+                                                                <td>{subcategory.name}</td>
+                                                                <td style={{ maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{subcategory.picture}</td>
+                                                                <td className="d-flex gap-2">
+                                                                    <Button onClick={() => handleDeleteSubcategory(editCategoryId, subcategory._id)}>Supprimer</Button>
+                                                                    <Button onClick={() => {
+                                                                        handleEditSubcategoryPopup(subcategory._id);
+                                                                        setEditSubcategoryName(subcategory.name);
+                                                                    }}>Modifier</Button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </Table>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={() => setShowSubcategories(false)}>
+                                                    Fermer
+                                                </Button>
+                                            </Modal.Footer>
+                                        </Modal>
+                                    )}
 
-                                {/* Show Subcategory Modal */}
-                                {showSubcategories && selectedCategory && (
-                                    <Modal show={showSubcategories} onHide={() => setShowSubcategories(false)} backdrop="static" centered>
+                                    {/* Edit Subcategory Modal */}
+                                    <Modal show={showEditSubcategoryModal} onHide={() => setShowEditSubcategoryModal(false)} backdrop="static" centered>
                                         <Modal.Header closeButton>
-                                            <Modal.Title>Subcategories</Modal.Title>
+                                            <Modal.Title>Modifier Subcategory</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <Button onClick={() => setShowAddSubcategoryModal(true)}>+ Add</Button>
-                                            <Table striped bordered hover>
-                                                <thead className="thead-dark">
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Nom</th>
-                                                        <th>Photos</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {selectedCategory.subcategories.map((subcategory, index) => (
-                                                        <tr key={subcategory._id}>
-                                                            <td>{index + 1}</td>
-                                                            <td>{subcategory.name}</td>
-                                                            <td style={{ maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{subcategory.picture}</td>
-                                                            <td className="d-flex gap-2">
-                                                                <Button onClick={() => handleDeleteSubcategory(editCategoryId, subcategory._id)}>Supprimer</Button>
-                                                                <Button onClick={() => {
-                                                                    handleEditSubcategoryPopup(subcategory._id);
-                                                                    setEditSubcategoryName(subcategory.name);
-                                                                }}>Modifier</Button>
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </Table>
+                                            <Form>
+                                                <div style={{ marginBottom: '10px' }}>
+                                                    <Form.Group controlId="formEditSubcategoryName">
+                                                        <Form.Label>Nom</Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            value={editSubcategoryName}
+                                                            onChange={(e) => setEditSubcategoryName(e.target.value)} />
+                                                    </Form.Group>
+                                                </div>
+                                                <Form.Group controlId="formEditSubcategoryPicture">
+                                                    <Form.Label>Photo: </Form.Label>
+                                                    <input
+                                                        type="file"
+                                                        onChange={(e) => handleCategoryPictureChangeEdit(e.target.files[0])} />
+                                                </Form.Group>
+                                            </Form>
                                         </Modal.Body>
                                         <Modal.Footer>
-                                            <Button variant="secondary" onClick={() => setShowSubcategories(false)}>
-                                                Fermer
+                                            <Button variant="secondary" onClick={() => setShowEditSubcategoryModal(false)}>
+                                                Cancel
+                                            </Button>
+                                            <Button variant="primary" onClick={() => handleEditSubcategory(editCategoryId, editSubcategoryId, editSubcategoryName, editSubCategoryPictureFile)}>
+                                                Edit
                                             </Button>
                                         </Modal.Footer>
                                     </Modal>
-                                )}
 
-                                {/* Edit Subcategory Modal */}
-                                <Modal show={showEditSubcategoryModal} onHide={() => setShowEditSubcategoryModal(false)} backdrop="static" centered>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Modifier Subcategory</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <Form>
-                                            <div style={{ marginBottom: '10px' }}>
-                                                <Form.Group controlId="formEditSubcategoryName">
-                                                    <Form.Label>Nom</Form.Label>
-                                                    <Form.Control
-                                                        type="text"
-                                                        value={editSubcategoryName}
-                                                        onChange={(e) => setEditSubcategoryName(e.target.value)} />
+                                    {/* Add Category Modal */}
+                                    <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)} centered>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Ajouter Category</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Form>
+                                                <div style={{ marginBottom: '10px' }}>
+                                                    <Form.Group controlId="formCategoryName">
+                                                        <Form.Label>Nom</Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            value={addCategoryName}
+                                                            onChange={(e) => setAddCategoryName(e.target.value)} />
+                                                    </Form.Group> </div>
+                                                <Form.Group controlId="formCategoryPicture">
+                                                    <Form.Label>Photo: </Form.Label>
+                                                    <input
+                                                        type="file"
+                                                        onChange={(e) => handleCategoryPictureChange(e.target.files[0])} />
                                                 </Form.Group>
-                                            </div>
-                                            <Form.Group controlId="formEditSubcategoryPicture">
-                                                <Form.Label>Photo: </Form.Label>
-                                                <input
-                                                    type="file"
-                                                    onChange={(e) => handleCategoryPictureChangeEdit(e.target.files[0])} />
-                                            </Form.Group>
-                                        </Form>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={() => setShowEditSubcategoryModal(false)}>
-                                            Cancel
-                                        </Button>
-                                        <Button variant="primary" onClick={() => handleEditSubcategory(editCategoryId, editSubcategoryId, editSubcategoryName, editSubCategoryPictureFile)}>
-                                            Edit
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
+                                            </Form>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
+                                                Annuler
+                                            </Button>
+                                            <Button variant="primary" onClick={() => handleAddCategory(addCategoryName, addCategoryPictureFile)}>
+                                                Ajputer
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
 
-                                {/* Add Category Modal */}
-                                <Modal show={showAddCategoryModal} onHide={() => setShowAddCategoryModal(false)} centered>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Ajouter Category</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <Form>
-                                            <div style={{ marginBottom: '10px' }}>
-                                                <Form.Group controlId="formCategoryName">
-                                                    <Form.Label>Nom</Form.Label>
-                                                    <Form.Control
-                                                        type="text"
-                                                        value={addCategoryName}
-                                                        onChange={(e) => setAddCategoryName(e.target.value)} />
-                                                </Form.Group> </div>
-                                            <Form.Group controlId="formCategoryPicture">
-                                                <Form.Label>Photo: </Form.Label>
-                                                <input
-                                                    type="file"
-                                                    onChange={(e) => handleCategoryPictureChange(e.target.files[0])} />
-                                            </Form.Group>
-                                        </Form>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={() => setShowAddCategoryModal(false)}>
-                                            Annuler
-                                        </Button>
-                                        <Button variant="primary" onClick={() => handleAddCategory(addCategoryName, addCategoryPictureFile)}>
-                                            Ajputer
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
-
-                                {/* Edit Category Modal */}
-                                <Modal show={showEditCategoryModal} onHide={() => setShowEditCategoryModal(false)} centered>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Modifier Category</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <Form>
-                                            <div style={{ marginBottom: '10px' }}>
-                                                <Form.Group controlId="formEditCategoryName">
-                                                    <Form.Label>Nom</Form.Label>
-                                                    <Form.Control
-                                                        type="text"
-                                                        value={editCategoryName}
-                                                        onChange={(e) => setEditCategoryName(e.target.value)} />
+                                    {/* Edit Category Modal */}
+                                    <Modal show={showEditCategoryModal} onHide={() => setShowEditCategoryModal(false)} centered>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Modifier Category</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Form>
+                                                <div style={{ marginBottom: '10px' }}>
+                                                    <Form.Group controlId="formEditCategoryName">
+                                                        <Form.Label>Nom</Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            value={editCategoryName}
+                                                            onChange={(e) => setEditCategoryName(e.target.value)} />
+                                                    </Form.Group>
+                                                </div>
+                                                <Form.Group controlId="formEditCategoryPicture">
+                                                    <Form.Label>Photo: </Form.Label>
+                                                    <input
+                                                        type="file"
+                                                        onChange={(e) => handleCategoryPictureEdit(e.target.files[0])} />
                                                 </Form.Group>
-                                            </div>
-                                            <Form.Group controlId="formEditCategoryPicture">
-                                                <Form.Label>Photo: </Form.Label>
-                                                <input
-                                                    type="file"
-                                                    onChange={(e) => handleCategoryPictureEdit(e.target.files[0])} />
-                                            </Form.Group>
-                                        </Form>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={() => setShowEditCategoryModal(false)}>
-                                            Annuler
-                                        </Button>
-                                        <Button
-                                            variant="primary"
-                                            onClick={() => handleEditCategory(editCategoryId, editCategoryName, editCategoryPictureFile)}
-                                        >
-                                            Sauvegarder
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
-                                {/* Add Subcategory Modal */}
-                                <Modal show={showAddSubcategoryModal} onHide={() => setShowAddSubcategoryModal(false)} centered>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Ajouter Subcategory</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <Form>
-                                            <div style={{ marginBottom: '10px' }}>
-                                                <Form.Group controlId="formSubcategoryName">
-                                                    <Form.Label>Nom</Form.Label>
-                                                    <Form.Control
-                                                        type="text"
-                                                        value={addSubcategoryName}
-                                                        onChange={(e) => setAddSubcategoryName(e.target.value)} />
+                                            </Form>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={() => setShowEditCategoryModal(false)}>
+                                                Annuler
+                                            </Button>
+                                            <Button
+                                                variant="primary"
+                                                onClick={() => handleEditCategory(editCategoryId, editCategoryName, editCategoryPictureFile)}
+                                            >
+                                                Sauvegarder
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                    {/* Add Subcategory Modal */}
+                                    <Modal show={showAddSubcategoryModal} onHide={() => setShowAddSubcategoryModal(false)} centered>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Ajouter Subcategory</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Form>
+                                                <div style={{ marginBottom: '10px' }}>
+                                                    <Form.Group controlId="formSubcategoryName">
+                                                        <Form.Label>Nom</Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            value={addSubcategoryName}
+                                                            onChange={(e) => setAddSubcategoryName(e.target.value)} />
+                                                    </Form.Group>
+                                                </div>
+                                                <Form.Group controlId="formSubcategoryPicture">
+                                                    <Form.Label>Photo: </Form.Label>
+                                                    <input
+                                                        type="file"
+                                                        onChange={(e) => handleSubCategoryPictureAdd(e.target.files[0])} />
                                                 </Form.Group>
-                                            </div>
-                                            <Form.Group controlId="formSubcategoryPicture">
-                                                <Form.Label>Photo: </Form.Label>
-                                                <input
-                                                    type="file"
-                                                    onChange={(e) => handleSubCategoryPictureAdd(e.target.files[0])} />
-                                            </Form.Group>
-                                        </Form>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={() => setShowAddSubcategoryModal(false)}>
-                                            Annuler
-                                        </Button>
-                                        <Button variant="primary" onClick={() => handleAddSubcategory(editCategoryId, addSubcategoryName, addSubCategoryPictureFile)}>
-                                            Ajouter
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
-                            </div>
-                        </Tab>
-                        <Tab eventKey="reclamations" title="Reclamations">
-                            <div className="m-2" style={{ minHeight: "350px" }}>
-                                <h2 style={{ color: 'black' }}>Reclamations</h2>
-                                <p>Total Reclamations: {reclamationsCount}</p>
-                                <Table striped bordered hover style={{ borderColor: 'lightgray' }}>
-                                    <thead className='bg-dark text-white'>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Annonces Titre</th>
-                                            <th>Prénom</th>
-                                            <th>Info</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {reclamations.map((reclamation, index) => (
-                                            <tr key={reclamation._id}>
-                                                <td style={{ width: '40px' }}>{index + 1}</td>
-                                                <td>{reclamation.adTitle}</td>
-                                                <td>{reclamation.userName}</td>
-                                                <td>{reclamation.info}</td>
+                                            </Form>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={() => setShowAddSubcategoryModal(false)}>
+                                                Annuler
+                                            </Button>
+                                            <Button variant="primary" onClick={() => handleAddSubcategory(editCategoryId, addSubcategoryName, addSubCategoryPictureFile)}>
+                                                Ajouter
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                </div>
+                            </Tab>
+                            <Tab eventKey="reclamations" title="Reclamations">
+                                <div className="m-2" style={{ minHeight: "350px" }}>
+                                    <h2 style={{ color: 'black' }}>Reclamations</h2>
+                                    <p>Total Reclamations: {reclamationsCount}</p>
+                                    <Table striped bordered hover style={{ borderColor: 'lightgray' }}>
+                                        <thead className='bg-dark text-white'>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Annonces Titre</th>
+                                                <th>Prénom</th>
+                                                <th>Info</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </Table>
-                            </div>
-                        </Tab>
-                    </Tabs>
+                                        </thead>
+                                        <tbody>
+                                            {reclamations.map((reclamation, index) => (
+                                                <tr key={reclamation._id}>
+                                                    <td style={{ width: '40px' }}>{index + 1}</td>
+                                                    <td>{reclamation.adTitle}</td>
+                                                    <td>{reclamation.userName}</td>
+                                                    <td>{reclamation.info}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </div>
+                            </Tab>
+                        </Tabs>
+                    </div>
                 </div><Footer />
                 </>
             )}

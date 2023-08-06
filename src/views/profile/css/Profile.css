@@ -1,23 +1,20 @@
 .profile-section-main {
   display: flex;
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
+  justify-content: center;
+  align-items: center;
 }
 
-.upper-section-profile {
+.upper-profile-body-section {
   display: flex;
-  justify-content: space-between;
-  border: 2px solid rgb(200, 200, 200, 0.5);
-  border-radius: 25px;
-  padding: 40px;
-  width: 950px;
-  margin: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.upper-profile-section-info {
+.upper-profile-body-section-info {
   display: flex;
-  gap: 25px;
-
+  justify-content: space-around;
+  flex-direction: row;
+  gap: 20px;
 }
 
 .upper-profile-section-details {
@@ -50,29 +47,84 @@
   border: 2px solid rgb(200, 200, 200, 0.5);
   border-radius: 25px;
   padding: 20px 40px;
-  width: 950px;
+  width: 100%;
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;;
 }
 
 .profile-section-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0px;
+  padding-bottom: 1rem;
+  gap: 10px;
 }
 
 .profile-section-title span {
   font-weight: var(--ws-l);
+  font-size: 1.1rem;
 }
 
 .profile-body-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-start;
+}
 
+.profile-name-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .profile-body-section-info {
   display: flex;
-  justify-content: space-between;
-  width: 950px;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.profile-row-section {
+  display: flex;
+  flex-direction: column;
+  width:400px;
+}
+
+.profile-right-side {
+  margin-right: 250px;
+}
+
+@media (max-width:768px){
+  .profile-body-section-main {
+    border: 2px solid rgb(200, 200, 200, 0.5);
+    border-radius: 25px;
+    padding: 10px 10px;
+  }
+  .profile-body-section-info {
+    gap:0;
+    display: flex;
+    flex-direction: column;
+  }
+  .profile-right-side {
+    margin-right: 0px;
+  }
+  .profile-body-section {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 10px 10px;
+  }
+  .profile-body-section-info p {
+    font-size: 0.8rem;
+  }
+  .profile-name-section {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .profile-row-section {
+    width:200px;
+  }
+  .profile-section-title {
+    padding:10px 10px;
+  }
 }
