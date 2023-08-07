@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaUpload } from "react-icons/fa";
+import { IoMdCheckmark } from "react-icons/io";
+import { HiOutlineX } from "react-icons/hi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import PulseLoader from "react-spinners/PulseLoader";
 import Select from 'react-select';
 
@@ -15,6 +19,7 @@ function Profile({ userinfo }) {
   const [user] = useState(userinfo);
   const [showformgeneralinfo, setShowformGeneralInfo] = useState(false);
   const [showformPersonalinformation, setShowformPersonalinformation] = useState(false);
+  const [showformSecurity, setShowformSecurity] = useState(false);
   const [showformAddress, setShowformAddress] = useState(false);
   const [image, setPicture] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -30,6 +35,13 @@ function Profile({ userinfo }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSecond, setIsLoadingSecond] = useState(false);
   const [isLoadingThird, setIsLoadingThird] = useState(false);
+  const [isLoadingForth, setIsLoadingForth] = useState(false);
+
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   // const [message, setMessage] = useState('');
   // const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +74,12 @@ function Profile({ userinfo }) {
     }
   }, [isLoadingThird]);
 
+  useEffect(() => {
+    if (isLoadingForth) {
+      setTimeout(() => { setIsLoadingForth(false); }, 500);
+    }
+  }, [isLoadingForth]);
+
   // const handleSendVerification = async (userid, email) => {
   //   setIsLoading(true);
   //   try {
@@ -82,6 +100,9 @@ function Profile({ userinfo }) {
   const modifyGeneralInfo = () => {
     if (!showformgeneralinfo) {
       setIsLoading(true);
+      setShowformAddress(false);
+      setShowformPersonalinformation(false);
+      setShowformSecurity(false);
     } else {
       setSelectedImage('');
     }
@@ -91,13 +112,29 @@ function Profile({ userinfo }) {
   const modifyPersonalInfo = () => {
     if (!showformPersonalinformation) {
       setIsLoadingSecond(true);
+      setShowformGeneralInfo(false);
+      setShowformAddress(false);
+      setShowformSecurity(false);
     }
     setShowformPersonalinformation(!showformPersonalinformation);
   }
 
+  const modifySecurity = () => {
+    if (!showformSecurity) {
+      setIsLoadingThird(true);
+      setShowformGeneralInfo(false);
+      setShowformPersonalinformation(false);
+      setShowformAddress(false);
+    }
+    setShowformSecurity(!showformSecurity);
+  }
+
   const modifyAddress = () => {
     if (!showformAddress) {
-      setIsLoadingThird(true);
+      setIsLoadingForth(true);
+      setShowformGeneralInfo(false);
+      setShowformPersonalinformation(false);
+      setShowformSecurity(false)
     }
     setShowformAddress(!showformAddress);
   }
@@ -202,11 +239,27 @@ function Profile({ userinfo }) {
             <div style={{ padding: "5px" }}>
               <div className="profile-section-title">
                 <div>
-                  <span>General info</span>
+                  <span>General information</span>
                 </div>
-                <div>
-                  <div className="button profile-edit-button" onClick={modifyGeneralInfo}><AiFillEdit /></div>
-                </div>
+                {isLoading ? (
+                  null
+                ) : (
+                  showformgeneralinfo ? (
+                    <div className="d-flex flex-row gap-2">
+                      <div>
+                        <div className="button profile-cancel-button" onClick={modifyGeneralInfo}><HiOutlineX /></div>
+                      </div>
+                      <div>
+                        <div className="button profile-confirm-button" onClick={modifyGeneralInfo}><IoMdCheckmark /></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="button profile-edit-button" onClick={modifyGeneralInfo}><AiFillEdit /></div>
+                    </div>
+                  )
+                )}
+
               </div>
               {isLoading ? (
                 <div className="d-flex justify-content-center align-items-center mt-4">
@@ -256,9 +309,23 @@ function Profile({ userinfo }) {
                 <div>
                   <span>Personal information</span>
                 </div>
-                <div>
-                  <div className="button profile-edit-button" onClick={modifyPersonalInfo}><AiFillEdit /></div>
-                </div>
+                {isLoadingSecond ? (
+                  null
+                ) : (
+                  showformPersonalinformation ? (
+                    <div className="d-flex flex-row gap-2">
+                      <div>
+                        <div className="button profile-cancel-button" onClick={modifyPersonalInfo}><HiOutlineX /></div>
+                      </div>
+                      <div>
+                        <div className="button profile-confirm-button" onClick={modifyPersonalInfo}><IoMdCheckmark /></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="button profile-edit-button" onClick={modifyPersonalInfo}><AiFillEdit /></div>
+                    </div>
+                  ))}
               </div>
               {isLoadingSecond ? (
                 <div className="d-flex justify-content-center align-items-center mt-4">
@@ -333,7 +400,7 @@ function Profile({ userinfo }) {
                           <select id="type" name="type" className="input-form" value={type} onChange={handleChangeType}>
                             <option value="">Account type</option>
                             <option value="Individual">Individual</option>
-                            <option value="Entreprise">Entreprise</option>
+                            <option value="entreprise">Entreprise</option>
                           </select>
                         </div>
                       </div>
@@ -373,6 +440,138 @@ function Profile({ userinfo }) {
             </div>
           </div>
 
+          {/* Security Section */}
+
+          <div className="profile-body-section-main">
+            <div style={{ padding: "5px" }}>
+              <div className="profile-section-title">
+                <div>
+                  <span>Security</span>
+                </div>
+                {isLoadingThird ? (
+                  null
+                ) : (
+                  showformSecurity ? (
+                    <div className="d-flex flex-row gap-2">
+                      <div>
+                        <div className="button profile-cancel-button" onClick={modifySecurity}><HiOutlineX /></div>
+                      </div>
+                      <div>
+                        <div className="button profile-confirm-button" onClick={modifySecurity}><IoMdCheckmark /></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="button profile-edit-button" onClick={modifySecurity}><AiFillEdit /></div>
+                    </div>
+                  )
+                )}
+              </div>
+              {isLoadingThird ? (
+                <div className="d-flex justify-content-center align-items-center mt-4">
+                  <PulseLoader color="hsl(12, 88%, 59%)" />
+                </div>
+              ) : (
+                showformSecurity ? (
+                  <div>
+                    <div className="profile-name-section d-flex row-reverse">
+                      <div className="profile-row-section second-section">
+                        <p className="upper-profile-section-details-phone-adress">Account Status</p>
+                        {user.state ? (
+                          <>
+                            <p>Active</p>
+                          </>
+                        ) : (
+                          <>
+                          <p>Not Active (<span className="upper-profile-section-details-phone-adress profile-link-confirm-account"> Request a confirmation link </span>)</p>
+                            
+                          </>
+                        )}
+                      </div>
+                      <div className="profile-row-section first-section">
+                        <p className="upper-profile-section-details-phone-adress">Old Password</p>
+                        <div className="input-container d-flex flex-row justify-content-start align-items-center">
+                          <input
+                            className="profile-password-input"
+                            type={passwordVisible ? 'text' : 'password'}
+                            autoComplete="off"
+                          />
+                          <span
+                            className="eye-icon"
+                            style={{ cursor: "pointer" }}
+                            onClick={togglePasswordVisibility}
+                          >
+                            <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile-row-section">
+                      <p className="upper-profile-section-details-phone-adress">New Password</p>
+                    </div>
+                    <div className="input-container d-flex flex-row justify-content-start align-items-center">
+                      <input
+                        className="profile-password-input"
+                        type={passwordVisible ? 'text' : 'password'}
+                      />
+                      <span
+                        className="eye-icon"
+                        style={{ cursor: "pointer" }}
+                        onClick={togglePasswordVisibility}
+                      >
+                        <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                      </span>
+                    </div>
+                    <div className="profile-row-section">
+                      <p className="upper-profile-section-details-phone-adress">Confirm New Password</p>
+                    </div>
+                    <div className="input-container d-flex flex-row justify-content-start align-items-center">
+                      <input
+                        className="profile-password-input"
+                        type={passwordVisible ? 'text' : 'password'}
+                      />
+                      <span
+                        className="eye-icon"
+                        style={{ cursor: "pointer" }}
+                        onClick={togglePasswordVisibility}
+                      >
+                        <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                      </span>
+                    </div>
+                    <div className="profile-row-section">
+                      <p className="upper-profile-section-details-phone-adress profile-delete-account mt-4">Delete Account</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="profile-body-section">
+                    <div className="profile-body-section-info">
+                      <div className="profile-name-section">
+                        <div className="profile-row-section">
+                          <p className="upper-profile-section-details-phone-adress">Password</p>
+                          <p>******</p>
+                        </div>
+                        <div className="profile-row-section">
+                          <p className="upper-profile-section-details-phone-adress">Account Status</p>
+                          {user.state ? (
+                            <>
+                              <p>Active</p>
+                            </>
+                          ) : (
+                            <>
+                              <p>Not Active</p>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+
+
+
           {/* Address Section */}
 
           <div className="profile-body-section-main">
@@ -381,11 +580,26 @@ function Profile({ userinfo }) {
                 <div>
                   <span>Address</span>
                 </div>
-                <div>
-                  <div className="button profile-edit-button" onClick={modifyAddress}><AiFillEdit /></div>
-                </div>
+                {isLoadingForth ? (
+                  null
+                ) : (
+                  showformAddress ? (
+                    <div className="d-flex flex-row gap-2">
+                      <div>
+                        <div className="button profile-cancel-button" onClick={modifyAddress}><HiOutlineX /></div>
+                      </div>
+                      <div>
+                        <div className="button profile-confirm-button" onClick={modifyAddress}><IoMdCheckmark /></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="button profile-edit-button" onClick={modifyAddress}><AiFillEdit /></div>
+                    </div>
+                  )
+                )}
               </div>
-              {isLoadingThird ? (
+              {isLoadingForth ? (
                 <div className="d-flex justify-content-center align-items-center mt-4">
                   <PulseLoader color="hsl(12, 88%, 59%)" />
                 </div>
