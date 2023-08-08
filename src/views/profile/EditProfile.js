@@ -34,7 +34,6 @@ function EditProfile({ userinfo }) {
 
     useEffect(() => {
         if (deleted) {
-            // Wait for 5 seconds before navigating to another page
             const timeout = setTimeout(() => {
                 navigate('/');
             }, 5000);

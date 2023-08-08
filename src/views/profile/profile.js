@@ -4,6 +4,8 @@ import { IoMdCheckmark } from "react-icons/io";
 import { HiOutlineX } from "react-icons/hi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
+import { Button, Modal } from 'react-bootstrap';
 import PulseLoader from "react-spinners/PulseLoader";
 import Select from 'react-select';
 
@@ -21,6 +23,7 @@ function Profile({ userinfo }) {
   const [showformPersonalinformation, setShowformPersonalinformation] = useState(false);
   const [showformSecurity, setShowformSecurity] = useState(false);
   const [showformAddress, setShowformAddress] = useState(false);
+  const [showdeletemodal, setShowDeleteModel] = useState(false);
   const [image, setPicture] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
   const [firstname, setFirstname] = useState(user.firstname);
@@ -28,6 +31,9 @@ function Profile({ userinfo }) {
   const [email, setEmail] = useState(user.email);
   const [number, setNumber] = useState(user.tel);
   const [type, setType] = useState(user.type);
+  const [password, setPassword] = useState('');
+  const [newpassword, setNewPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
   const [locations, setLocations] = useState([]);
   const [location, setLocation] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -36,17 +42,19 @@ function Profile({ userinfo }) {
   const [isLoadingSecond, setIsLoadingSecond] = useState(false);
   const [isLoadingThird, setIsLoadingThird] = useState(false);
   const [isLoadingForth, setIsLoadingForth] = useState(false);
-
-
+  const [securityChecked, setSecurityChecked] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [sentEmail, setSent] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+  const navigate = useNavigate();
+  const togglePasswordVisibility = () => { setPasswordVisible(!passwordVisible); };
 
   // const [message, setMessage] = useState('');
   // const [isLoading, setIsLoading] = useState(false);
-  console.log(image);
-  console.log(selectedLocationId);
+  console.log(error);
+  console.log(success);
 
   useEffect(() => {
     fetchPlaces();
@@ -80,29 +88,33 @@ function Profile({ userinfo }) {
     }
   }, [isLoadingForth]);
 
-  // const handleSendVerification = async (userid, email) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await fetch(`https://annonce-backend.azurewebsites.net/user/send/${email}/${userid}`, {
-  //       method: "GET"
-  //     })
-  //     const data = await response.json();
-  //     if (data.status === true) {
-  //       setIsLoading(false);
-  //       setMessage(data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
+  useEffect(() => {
+    if (deleted) {
+      setTimeout(() => { navigate('/'); }, 2500);
+    }
+  }, [deleted]);
 
-  // }
+  const handleSendVerification = async (userid, email) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/user/send/${email}/${userid}`, {
+        method: "GET"
+      })
+      const data = await response.json();
+      if (data.status === true) {
+        setSent(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
 
   const modifyGeneralInfo = () => {
     if (!showformgeneralinfo) {
       setIsLoading(true);
-      setShowformAddress(false);
-      setShowformPersonalinformation(false);
-      setShowformSecurity(false);
+      const formsToHide = [setShowformAddress, setShowformPersonalinformation, setShowformSecurity];
+      formsToHide.forEach(formSetter => formSetter(false));
     } else {
       setSelectedImage('');
     }
@@ -112,9 +124,12 @@ function Profile({ userinfo }) {
   const modifyPersonalInfo = () => {
     if (!showformPersonalinformation) {
       setIsLoadingSecond(true);
-      setShowformGeneralInfo(false);
-      setShowformAddress(false);
-      setShowformSecurity(false);
+      const formsToHide = [setShowformGeneralInfo, setShowformAddress, setShowformSecurity];
+      formsToHide.forEach(formSetter => formSetter(false));
+    } else {
+      const userValues = [user.firstname, user.lastname, user.email, user.tel, user.type];
+      const inputSetters = [setFirstname, setLastname, setEmail, setNumber, setType];
+      inputSetters.forEach((clean, index) => clean(userValues[index]));
     }
     setShowformPersonalinformation(!showformPersonalinformation);
   }
@@ -122,9 +137,13 @@ function Profile({ userinfo }) {
   const modifySecurity = () => {
     if (!showformSecurity) {
       setIsLoadingThird(true);
-      setShowformGeneralInfo(false);
-      setShowformPersonalinformation(false);
-      setShowformAddress(false);
+      const formsToHide = [setShowformGeneralInfo, setShowformPersonalinformation, setShowformAddress];
+      formsToHide.forEach(show => show(false));
+      setSecurityChecked(true);
+    } else {
+      const PasswordCleaner = [setPassword, setNewPassword, setConfirmPassword];
+      PasswordCleaner.forEach(clean => clean(''));
+      setSecurityChecked(false);
     }
     setShowformSecurity(!showformSecurity);
   }
@@ -132,16 +151,11 @@ function Profile({ userinfo }) {
   const modifyAddress = () => {
     if (!showformAddress) {
       setIsLoadingForth(true);
-      setShowformGeneralInfo(false);
-      setShowformPersonalinformation(false);
-      setShowformSecurity(false)
+      const formsToHide = [setShowformGeneralInfo, setShowformPersonalinformation, setShowformSecurity];
+      formsToHide.forEach(formSetter => formSetter(false));
     }
     setShowformAddress(!showformAddress);
   }
-
-
-
-
 
   const handleImageChange = (e) => {
     setPicture(e.target.files[0]);
@@ -155,29 +169,6 @@ function Profile({ userinfo }) {
       reader.readAsDataURL(file);
     }
   };
-
-
-
-
-
-  const handleChangeFirstname = (e) => {
-    setFirstname(e.target.value);
-  };
-  const handleChangeLastname = (e) => {
-    setLastname(e.target.value);
-  };
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleChangeNumber = (e) => {
-    setNumber(e.target.value);
-  };
-  const handleChangeType = (e) => {
-    setType(e.target.value);
-  };
-
-
-
 
   const fetchPlaces = async () => {
     try {
@@ -226,6 +217,86 @@ function Profile({ userinfo }) {
     setLocation(location);
   };
 
+
+
+  const handleShowModal = (event) => {
+    event.preventDefault();
+    setShowDeleteModel(true);
+  };
+  const handleHideModal = () => {
+    setShowDeleteModel(false);
+  };
+  const handleDeleteUser = async (event, password) => {
+    setShowDeleteModel(false);
+    event.preventDefault();
+    try {
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/user/deleteuser/${user._id}`, {
+        method: "DELETE",
+        headers: { password: password }
+      });
+      const data = await response.json();
+      if (data.status === true) {
+        localStorage.removeItem("token");
+        setDeleted(true);
+      } else {
+        if (data.status === false) {
+          console.log('an error has happened');
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (securityChecked) {
+      if (password == null) {
+        setError("Veuillez entrer le mot de passe");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      if (newpassword !== null && newpassword !== ' ' && newpassword.length > 0) {
+        if (!newpassword || newpassword.length < 6) {
+          setError("Invalid password length (minimum 6 characters)");
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        if (newpassword !== confirmpassword) {
+          setError("New passwords do not match");
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+      }
+    }
+    try {
+      const formData = new FormData();
+      formData.append("firstname", firstname);
+      formData.append("lastname", lastname);
+      formData.append("email", email);
+      formData.append("oldPassword", password);
+      formData.append("newPassword", newpassword);
+      formData.append("tel", number);
+      formData.append("type", type);
+      formData.append("uncheck", false);
+      formData.append("file", image);
+      const response = await fetch(`https://annonce-backend.azurewebsites.net/user/edituser/${user._id}/${selectedLocationId}`, {
+        method: "PATCH",
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.success === true) {
+        setSuccess(true);
+      } else {
+        console.log(data.error);
+        setError(data.error);
+      }
+    } catch (error) {
+      setError("An error occurred while updating profile");
+    }
+  };
+
+  console.log(handleSubmit);
 
 
   return (
@@ -346,7 +417,7 @@ function Profile({ userinfo }) {
                               name="firstname"
                               className="input-form profile-input"
                               value={firstname}
-                              onChange={handleChangeFirstname} />
+                              onChange={(e) => setFirstname(e.target.value)} />
                           </div>
                           <div className="profile-row-section">
                             <p className="upper-profile-section-details-phone-adress">Last Name</p>
@@ -357,7 +428,7 @@ function Profile({ userinfo }) {
                               name="Lastname"
                               className="input-form profile-input"
                               value={lastname}
-                              onChange={handleChangeLastname} />
+                              onChange={(e) => setLastname(e.target.value)} />
                           </div>
                         </div>
                         <div className="profile-name-section">
@@ -370,7 +441,7 @@ function Profile({ userinfo }) {
                               name="email"
                               className="input-form profile-input"
                               value={email}
-                              onChange={handleChangeEmail} />
+                              onChange={(e) => setNumber(e.target.value)} />
                           </div>
                           <div className="profile-row-section">
                             <p className="upper-profile-section-details-phone-adress">Phone</p>
@@ -390,14 +461,14 @@ function Profile({ userinfo }) {
                                 name="tel"
                                 className="input-form phone-input profile-phone-input"
                                 value={number}
-                                onChange={handleChangeNumber}
+                                onChange={(e) => setNumber(e.target.value)}
                               />
                             </div>
                           </div>
                         </div>
                         <div className="profile-type-section">
                           <p className="upper-profile-section-details-phone-adress">Type</p>
-                          <select id="type" name="type" className="input-form" value={type} onChange={handleChangeType}>
+                          <select id="type" name="type" className="input-form" value={type} onChange={(e) => setType(e.target.value)}>
                             <option value="">Account type</option>
                             <option value="Individual">Individual</option>
                             <option value="entreprise">Entreprise</option>
@@ -483,8 +554,12 @@ function Profile({ userinfo }) {
                           </>
                         ) : (
                           <>
-                          <p>Not Active (<span className="upper-profile-section-details-phone-adress profile-link-confirm-account"> Request a confirmation link </span>)</p>
-                            
+                            <p>Not Active ( {sentEmail ? (
+                              <span className="upper-profile-section-details-phone-adress d-inline"> Confirmation link has been sent! </span>
+                            ) : (
+                              <span className="upper-profile-section-details-phone-adress profile-link-confirm-account" onClick={() => handleSendVerification(user._id, user.email)}> Request a confirmation link </span>
+                            )})</p>
+
                           </>
                         )}
                       </div>
@@ -495,6 +570,7 @@ function Profile({ userinfo }) {
                             className="profile-password-input"
                             type={passwordVisible ? 'text' : 'password'}
                             autoComplete="off"
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                           <span
                             className="eye-icon"
@@ -513,6 +589,7 @@ function Profile({ userinfo }) {
                       <input
                         className="profile-password-input"
                         type={passwordVisible ? 'text' : 'password'}
+                        onChange={(e) => setNewPassword(e.target.value)}
                       />
                       <span
                         className="eye-icon"
@@ -529,6 +606,7 @@ function Profile({ userinfo }) {
                       <input
                         className="profile-password-input"
                         type={passwordVisible ? 'text' : 'password'}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                       />
                       <span
                         className="eye-icon"
@@ -539,7 +617,7 @@ function Profile({ userinfo }) {
                       </span>
                     </div>
                     <div className="profile-row-section">
-                      <p className="upper-profile-section-details-phone-adress profile-delete-account mt-4">Delete Account</p>
+                      <p className="upper-profile-section-details-phone-adress profile-delete-account mt-4" onClick={handleShowModal}>Delete Account</p>
                     </div>
                   </div>
                 ) : (
@@ -638,46 +716,48 @@ function Profile({ userinfo }) {
             </div>
           </div>
 
-          {
-            /*
-             <div className="profile-body-section">
-              <div className="col-lg-8">
-                <div>
-                  {user.type === "individual" ? (
-                    <div><p><FaHome /><strong> Type: </strong>Individuelle</p></div>
-                  ) : (<div><p><FaBuilding /><strong> Type: </strong>Entreprise</p></div>)}
-                  <p><FaPhoneAlt /><strong> Telephone:</strong> +216 {user.tel}</p>
-                  <p><FaEnvelope /><strong> E-mail:</strong> {user.email} </p>
-                  <p><FaMapMarkerAlt /><strong> Région:</strong> {user.country} </p>
-                  <p><FaCity /><strong> Ville:</strong> {user.city}</p>
-                  <p><FaMapMarkerAlt /><strong> Rejoint à:</strong> {new Date(user.createdAt).toLocaleDateString()}</p>
-                  {user.state ? (
-                    <p className="d-flex flex-row"><FaUser /><strong> Status:</strong><p className="text text-success"> Compte activé                    </p></p>
-                  ) : (<div>
-                    <p><FaUser /><strong> Status:</strong> Compte non activé</p>
-                    <button
-                      type="button"
-                      className="button"
-                      onClick={() => handleSendVerification(user._id, user.email)}
-                    >Demande de vérification</button>
-                    {isLoading && (
-                      <div className="loading-block">
-                        <Spinner animation="border" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                      </div>
-                    )}
-                    {message && <p className="text text-success">{message}</p>}
-                  </div>)}
+          {/* Delete Account Modal */}
+
+          {showdeletemodal && (
+            <Modal show={showdeletemodal} onHide={handleHideModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmation</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Are you sure you want to delete your profile?</p>
+                <p>Enter the password to confirm.</p>
+                <div className="input-container d-flex flex-row justify-content-start align-items-center">
+                  <input
+                    className="profile-password-input"
+                    type={passwordVisible ? 'text' : 'password'}
+                    autoComplete="off"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <span
+                    className="eye-icon"
+                    style={{ cursor: "pointer" }}
+                    onClick={togglePasswordVisibility}
+                  >
+                    <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                  </span>
                 </div>
-              </div>
-            </div>
-            */
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleHideModal}>
+                  Annuler
+                </Button>
+                <Button variant="danger" onClick={(e) => handleDeleteUser(e, password)}>
+                  Yes, delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )
           }
 
         </div>
-      ) : (null)}
-    </div>
+      ) : (null)
+      }
+    </div >
   )
 }
 
