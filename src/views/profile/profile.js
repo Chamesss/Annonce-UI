@@ -584,7 +584,7 @@ function Profile({ userinfo }) {
                           />
                           <span
                             className="eye-icon"
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer", width:'20px' }}
                             onClick={togglePasswordVisibility}
                           >
                             <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
@@ -603,7 +603,7 @@ function Profile({ userinfo }) {
                       />
                       <span
                         className="eye-icon"
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", width:'20px' }}
                         onClick={togglePasswordVisibility}
                       >
                         <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
@@ -620,7 +620,7 @@ function Profile({ userinfo }) {
                       />
                       <span
                         className="eye-icon"
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", width:'20px' }}
                         onClick={togglePasswordVisibility}
                       >
                         <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
@@ -746,7 +746,7 @@ function Profile({ userinfo }) {
                   />
                   <span
                     className="eye-icon"
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", width:'20px' }}
                     onClick={togglePasswordVisibility}
                   >
                     <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />

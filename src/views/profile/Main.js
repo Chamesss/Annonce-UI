@@ -6,7 +6,6 @@ import Footer from '../../components/footer';
 import Favorites from "./favorites";
 import Category from '../../components/category';
 import Profile from './profile';
-import EditProfile from "./EditProfile";
 import MyAds from "./myads";
 import Spinner from "../../components/Spinner";
 // import { AiFillEdit } from 'react-icons/ai';
@@ -17,7 +16,6 @@ function Main() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const [starteditprofile, setStartEditProfile] = useState(false);
   const location = useLocation();
   const sectionParams = new URLSearchParams(location.search);
   const [selectedOption, setSelectedOption] = useState(sectionParams.get('section'));
@@ -44,10 +42,6 @@ function Main() {
   function handleLogout() {
     localStorage.removeItem('token');
     window.location.href = '/login';
-  }
-
-  const handleSwitchProfile = () => {
-    setStartEditProfile(!starteditprofile);
   }
 
   useEffect(() => {
@@ -101,32 +95,13 @@ function Main() {
       default:
         return (
           <div className="justify-content-center align-items-center">
-            {starteditprofile === false ? (
-              <div className="justify-content-center align-items-center">{user !== null ? (
-                <div>
-                  <Profile userinfo={user} />
-                  {/*
-                  <div className="d-flex justify-content-center pl-5">
-                    <div className="button edit-profile-button" onClick={() => handleSwitchProfile()}>Edit Profile <AiFillEdit /></div>
-                  </div>
-                  */}
-
-                </div>
-
-              ) : (null)}
-
-              </div>
-            ) : (<div className="container justify-content-center align-items-center py-5">{user !== null ? (
+            <div className="justify-content-center align-items-center">{user && (
               <div>
-                <EditProfile userinfo={user} />
-                <div className="d-flex justify-content-center pl-5">
-                  <div className="button edit-profile-button" onClick={() => handleSwitchProfile()}>Go back</div>
-                </div>
+                <Profile userinfo={user} />
               </div>
+            )}
 
-            ) : (null)}
-
-            </div>)}
+            </div>
           </div>
         );
     }
