@@ -46,7 +46,6 @@ function EditProfile({ userinfo }) {
 
     useEffect(() => {
         if (success) {
-            // Wait for 5 seconds before navigating to another page
             const timeout = setTimeout(() => {
                 window.location.reload()
             }, 5000);

@@ -8,17 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap';
 import PulseLoader from "react-spinners/PulseLoader";
 import Select from 'react-select';
-
-//import {FaCity, FaHome, FaBuilding, FaEnvelope, FaUser } from "react-icons/fa";
-
-// import { Spinner } from 'react-bootstrap';
 import { AiFillEdit } from 'react-icons/ai';
 import './css/Profile.css';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
 function Profile({ userinfo }) {
-  const [user] = useState(userinfo);
+  const [user, setUser] = useState(userinfo);
   const [showformgeneralinfo, setShowformGeneralInfo] = useState(false);
   const [showformPersonalinformation, setShowformPersonalinformation] = useState(false);
   const [showformSecurity, setShowformSecurity] = useState(false);
@@ -43,50 +39,24 @@ function Profile({ userinfo }) {
   const [isLoadingThird, setIsLoadingThird] = useState(false);
   const [isLoadingForth, setIsLoadingForth] = useState(false);
   const [securityChecked, setSecurityChecked] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
   const [sentEmail, setSent] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const togglePasswordVisibility = () => { setPasswordVisible(!passwordVisible); };
 
-  // const [message, setMessage] = useState('');
-  // const [isLoading, setIsLoading] = useState(false);
-  console.log(error);
-  console.log(success);
-
   useEffect(() => {
     fetchPlaces();
   }, []);
 
   useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }, [error]);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-
-  useEffect(() => {
-    if (isLoading) {
-      setTimeout(() => { setIsLoading(false); }, 500);
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    if (isLoadingSecond) {
-      setTimeout(() => { setIsLoadingSecond(false); }, 500);
-    }
-  }, [isLoadingSecond]);
-
-  useEffect(() => {
-    if (isLoadingThird) {
-      setTimeout(() => { setIsLoadingThird(false); }, 500);
-    }
-  }, [isLoadingThird]);
-
-  useEffect(() => {
-    if (isLoadingForth) {
-      setTimeout(() => { setIsLoadingForth(false); }, 500);
-    }
-  }, [isLoadingForth]);
 
   useEffect(() => {
     if (deleted) {
@@ -115,8 +85,10 @@ function Profile({ userinfo }) {
       setIsLoading(true);
       const formsToHide = [setShowformAddress, setShowformPersonalinformation, setShowformSecurity];
       formsToHide.forEach(formSetter => formSetter(false));
+      setIsLoading(false);
     } else {
       setSelectedImage('');
+      setPicture();
     }
     setShowformGeneralInfo(!showformgeneralinfo);
   }
@@ -126,6 +98,7 @@ function Profile({ userinfo }) {
       setIsLoadingSecond(true);
       const formsToHide = [setShowformGeneralInfo, setShowformAddress, setShowformSecurity];
       formsToHide.forEach(formSetter => formSetter(false));
+      setIsLoadingSecond(false);
     } else {
       const userValues = [user.firstname, user.lastname, user.email, user.tel, user.type];
       const inputSetters = [setFirstname, setLastname, setEmail, setNumber, setType];
@@ -140,6 +113,7 @@ function Profile({ userinfo }) {
       const formsToHide = [setShowformGeneralInfo, setShowformPersonalinformation, setShowformAddress];
       formsToHide.forEach(show => show(false));
       setSecurityChecked(true);
+      setIsLoadingThird(false);
     } else {
       const PasswordCleaner = [setPassword, setNewPassword, setConfirmPassword];
       PasswordCleaner.forEach(clean => clean(''));
@@ -153,6 +127,9 @@ function Profile({ userinfo }) {
       setIsLoadingForth(true);
       const formsToHide = [setShowformGeneralInfo, setShowformPersonalinformation, setShowformSecurity];
       formsToHide.forEach(formSetter => formSetter(false));
+      setIsLoadingForth(false);
+    } else {
+      defineLocation(locations);
     }
     setShowformAddress(!showformAddress);
   }
@@ -178,22 +155,26 @@ function Profile({ userinfo }) {
       const data = await response.json();
       const locations = data.locations;
       setLocations(locations);
-      const selectedLocation = locations.find(
-        (loc) =>
-          loc.city === user.city
-      );
-
-      if (selectedLocation) {
-        const defaultLocation = {
-          id: selectedLocation._id,
-          value: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
-          label: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
-        };
-        setSelectedLocationId(selectedLocation._id);
-        setLocation(defaultLocation);
-      }
+      defineLocation(locations);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const defineLocation = (locations) => {
+    const selectedLocation = locations.find(
+      (loc) =>
+        loc.city === user.city
+    );
+
+    if (selectedLocation) {
+      const defaultLocation = {
+        id: selectedLocation._id,
+        value: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
+        label: `${selectedLocation.admin_name}, ${selectedLocation.city}`,
+      };
+      setSelectedLocationId(selectedLocation._id);
+      setLocation(defaultLocation);
     }
   }
 
@@ -217,8 +198,6 @@ function Profile({ userinfo }) {
     setLocation(location);
   };
 
-
-
   const handleShowModal = (event) => {
     event.preventDefault();
     setShowDeleteModel(true);
@@ -226,6 +205,7 @@ function Profile({ userinfo }) {
   const handleHideModal = () => {
     setShowDeleteModel(false);
   };
+
   const handleDeleteUser = async (event, password) => {
     setShowDeleteModel(false);
     event.preventDefault();
@@ -250,26 +230,19 @@ function Profile({ userinfo }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (securityChecked) {
-      if (password == null) {
-        setError("Veuillez entrer le mot de passe");
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-      if (newpassword !== null && newpassword !== ' ' && newpassword.length > 0) {
-        if (!newpassword || newpassword.length < 6) {
-          setError("Invalid password length (minimum 6 characters)");
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-        }
-        if (newpassword !== confirmpassword) {
-          setError("New passwords do not match");
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-        }
-      }
-    }
     try {
+      if (showformgeneralinfo) {
+        setIsLoading(true);
+      }
+      if (showformPersonalinformation) {
+        setIsLoadingSecond(true);
+      }
+      if (showformSecurity) {
+        setIsLoadingThird(true);
+      }
+      if (showformAddress) {
+        setIsLoadingForth(true);
+      }
       const formData = new FormData();
       formData.append("firstname", firstname);
       formData.append("lastname", lastname);
@@ -278,7 +251,28 @@ function Profile({ userinfo }) {
       formData.append("newPassword", newpassword);
       formData.append("tel", number);
       formData.append("type", type);
-      formData.append("uncheck", false);
+      if (securityChecked) {
+        if (password == null) {
+          setError("Veuillez entrer le mot de passe");
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        if (newpassword !== null && newpassword !== ' ' && newpassword.length > 0) {
+          if (!newpassword || newpassword.length < 6) {
+            setError("Invalid password length (minimum 6 characters)");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+          if (newpassword !== confirmpassword) {
+            setError("New passwords do not match");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+        }
+        formData.append("uncheck", true);
+      } else {
+        formData.append("uncheck", false);
+      }
       formData.append("file", image);
       const response = await fetch(`https://annonce-backend.azurewebsites.net/user/edituser/${user._id}/${selectedLocationId}`, {
         method: "PATCH",
@@ -286,22 +280,38 @@ function Profile({ userinfo }) {
       });
       const data = await response.json();
       if (data.success === true) {
-        setSuccess(true);
+        try {
+          const innerResponse = await fetch(`https://annonce-backend.azurewebsites.net/user/getuserdetails`, {
+            method: "GET",
+            headers: { id: user._id }
+          });
+          const innerData = await innerResponse.json();
+          if (innerData.status === true) {
+            setUser(innerData.user);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        const formsToHide = [setShowformGeneralInfo, setShowformAddress, setShowformPersonalinformation, setShowformSecurity,
+          setIsLoading, setIsLoadingSecond, setIsLoadingThird, setIsLoadingForth];
+        formsToHide.forEach(formSetter => formSetter(false));
       } else {
-        console.log(data.error);
-        setError(data.error);
+        const formsToHide = [setShowformGeneralInfo, setShowformAddress, setShowformPersonalinformation, setShowformSecurity,
+          setIsLoading, setIsLoadingSecond, setIsLoadingThird, setIsLoadingForth];
+        formsToHide.forEach(formSetter => formSetter(false));
+        setError("An error occurred while updating profile, please come back later");
       }
     } catch (error) {
-      setError("An error occurred while updating profile");
+      const formsToHide = [setShowformGeneralInfo, setShowformAddress, setShowformPersonalinformation, setShowformSecurity,
+        setIsLoading, setIsLoadingSecond, setIsLoadingThird, setIsLoadingForth];
+      formsToHide.forEach(formSetter => formSetter(false));
+      setError("An error occurred while updating profile, please come back later");
     }
   };
 
-  console.log(handleSubmit);
-
-
   return (
     <div className="profile-section-main">
-      {user !== null ? (
+      {user && (
         <div>
 
           {/* General info Section */}
@@ -321,7 +331,7 @@ function Profile({ userinfo }) {
                         <div className="button profile-cancel-button" onClick={modifyGeneralInfo}><HiOutlineX /></div>
                       </div>
                       <div>
-                        <div className="button profile-confirm-button" onClick={modifyGeneralInfo}><IoMdCheckmark /></div>
+                        <div className="button profile-confirm-button" onClick={(event) => handleSubmit(event)}><IoMdCheckmark /></div>
                       </div>
                     </div>
                   ) : (
@@ -389,7 +399,7 @@ function Profile({ userinfo }) {
                         <div className="button profile-cancel-button" onClick={modifyPersonalInfo}><HiOutlineX /></div>
                       </div>
                       <div>
-                        <div className="button profile-confirm-button" onClick={modifyPersonalInfo}><IoMdCheckmark /></div>
+                        <div className="button profile-confirm-button" onClick={(event) => handleSubmit(event)}><IoMdCheckmark /></div>
                       </div>
                     </div>
                   ) : (
@@ -528,7 +538,7 @@ function Profile({ userinfo }) {
                         <div className="button profile-cancel-button" onClick={modifySecurity}><HiOutlineX /></div>
                       </div>
                       <div>
-                        <div className="button profile-confirm-button" onClick={modifySecurity}><IoMdCheckmark /></div>
+                        <div className="button profile-confirm-button" onClick={(event) => handleSubmit(event)}><IoMdCheckmark /></div>
                       </div>
                     </div>
                   ) : (
@@ -667,7 +677,7 @@ function Profile({ userinfo }) {
                         <div className="button profile-cancel-button" onClick={modifyAddress}><HiOutlineX /></div>
                       </div>
                       <div>
-                        <div className="button profile-confirm-button" onClick={modifyAddress}><IoMdCheckmark /></div>
+                        <div className="button profile-confirm-button" onClick={(event) => handleSubmit(event)}><IoMdCheckmark /></div>
                       </div>
                     </div>
                   ) : (
@@ -715,6 +725,7 @@ function Profile({ userinfo }) {
               )}
             </div>
           </div>
+          {error && (<p className="d-flex justify-content-center text-danger" style={{ marginTop: "10px" }}>{error}</p>)}
 
           {/* Delete Account Modal */}
 
@@ -751,12 +762,10 @@ function Profile({ userinfo }) {
                 </Button>
               </Modal.Footer>
             </Modal>
-          )
-          }
+          )}
 
         </div>
-      ) : (null)
-      }
+      )}
     </div >
   )
 }
