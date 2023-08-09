@@ -18,25 +18,12 @@ function Main() {
   const navigate = useNavigate();
   const location = useLocation();
   const sectionParams = new URLSearchParams(location.search);
-  const [selectedOption, setSelectedOption] = useState(sectionParams.get('section'));
+  const [selectedOption, setSelectedOption] = useState(sectionParams.get('section') || 'profile');
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-
-  useEffect(() => {
-    const sectionParams = new URLSearchParams(location.search);
-    const keyword = sectionParams.get('section');
-
-
-    if (user) {
-      if (keyword) {
-        setSelectedOption(keyword);
-      } else {
-        setSelectedOption("profile");
-      }
-    }
-  }, [user]);
 
 
   function handleLogout() {
@@ -95,18 +82,17 @@ function Main() {
       default:
         return (
           <div className="justify-content-center align-items-center">
-            <div className="justify-content-center align-items-center">{user && (
-              <div>
-                <Profile userinfo={user} />
-              </div>
-            )}
-
+            <div className="justify-content-center align-items-center">
+              {user && (
+                <div>
+                  <Profile userinfo={user} />
+                </div>
+              )}
             </div>
           </div>
         );
     }
   };
-
 
   return (
     <div>
@@ -119,14 +105,29 @@ function Main() {
           <div>
             <div className="main-sidebar">
               <p>Settings</p>
-              <ul>
+              <div className="sidebar-container">
+                <div className="sidebar-trigger" onClick={() => setSidebarVisible(!sidebarVisible)}>
+                  aaaa
+                </div>
+                {sidebarVisible && (
+                  <div className="sidebar-mobile">
+                    <ul>
+                      <li className={`side-bar-selection ${selectedOption === 'profile' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('profile')}>My Profile</li>
+                      <li className={`side-bar-selection ${selectedOption === 'ads' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('ads')}>My Ads</li>
+                      <li className={`side-bar-selection ${selectedOption === 'favorites' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('favorites')}>My Favorites</li>
+                      <li className="side-bar-selection" onClick={handleLogout}>Log out</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="sidebar-plain">
                 <ul>
                   <li className={`side-bar-selection ${selectedOption === "profile" ? "selected-option" : ""}`} onClick={() => setSelectedOption("profile")}>My Profile</li>
                   <li className={`side-bar-selection ${selectedOption === "ads" ? "selected-option" : ""}`} onClick={() => setSelectedOption("ads")}>My Ads</li>
                   <li className={`side-bar-selection ${selectedOption === "favorites" ? "selected-option" : ""}`} onClick={() => setSelectedOption("favorites")}>My Favorites</li>
                   <li className="side-bar-selection" onClick={handleLogout}>Log out</li>
                 </ul>
-              </ul>
+              </div>
             </div>
           </div>
           <div className="main-detailed-page">

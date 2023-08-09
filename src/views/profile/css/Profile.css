@@ -41,13 +41,18 @@
 /* BODY SECTION */
 
 .profile-body-section-main {
-  border: 2px solid rgb(200, 200, 200, 0.5);
   border-radius: 25px;
   padding: 20px 40px;
   width: 100%;
   margin-top: 50px;
   flex-direction: column;
   min-height: 200px;
+  box-shadow: 0 0 10px rgba(36, 45, 82, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-body-section-main:hover {
+  box-shadow: 0 0 10px rgba(36, 45, 82, 0.5);
 }
 
 .profile-section-title {

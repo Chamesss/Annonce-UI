@@ -6,11 +6,12 @@
     color: var(--clr-bright-red);
     font-weight: var(--ws-x);
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(36, 45, 82, 0.15);
     transition: box-shadow 0.2s ease;
 }
 
 .button:hover {
-    box-shadow: 0 0.25rem 1rem rgba(242, 95, 58, 0.3);
+    box-shadow: 0 0 10px rgba(36, 45, 82, 0.3);
 }
 
 @media (max-width: 475px) {
