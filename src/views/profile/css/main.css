@@ -102,8 +102,34 @@
 .sidebar-container {
     display: none;
     position: relative;
-    height: fit-content;
+    height: 40px;
     overflow: hidden;
+}
+
+.sidebar-collapse {
+    animation: expandSidebar 0.3s ease forwards;
+}
+
+.sidebar-close {
+    animation: closeSidebar 0.3s ease forwards;
+}
+
+@keyframes expandSidebar {
+    from {
+        height: 40px;
+    }
+    to {
+        height: 275px;
+    }
+}
+
+@keyframes closeSidebar {
+    from {
+        height: 275px;
+    }
+    to {
+        height: 40px;
+    }
 }
 
 .sidebar-trigger {
@@ -113,41 +139,10 @@
 
 .sidebar-mobile {
     position: relative;
-    top: -100%;
-    /* Start hidden */
-    right: 0;
     width: 100%;
     height: 100%;
     background-color: #fff;
     z-index: 1000;
-}
-
-@keyframes slideIn {
-    0% {
-        right: -100%;
-    }
-
-    100% {
-        right: 0;
-    }
-}
-
-.sidebar-mobile.slide-in {
-    animation: slideIn 0.3s ease;
-}
-
-@keyframes slideOut {
-    0% {
-        right: 0;
-    }
-
-    100% {
-        right: -100%;
-    }
-}
-
-.sidebar-mobile.slide-out {
-    animation: slideOut 0.3s ease;
 }
 
 .arrow-icon {

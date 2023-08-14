@@ -21,20 +21,10 @@ function Main() {
   const sectionParams = new URLSearchParams(location.search);
   const [selectedOption, setSelectedOption] = useState(sectionParams.get('section') || 'profile');
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [delay, setDelay] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-
-  const handleDelay = () => {
-    setSidebarVisible(!sidebarVisible);
-    if (delay) {
-      setTimeout(() => { setDelay(!delay); }, 250);
-    } else {
-      setDelay(!delay);
-    }
-  }
 
 
   function handleLogout() {
@@ -115,24 +105,23 @@ function Main() {
         <div className="main-page-container">
           <div>
             <div className="main-sidebar">
-              <p>Settings &nbsp;
-                <div className="sidebar-container sidebar-trigger" onClick={handleDelay}>
-                  <span className={`arrow-icon ${sidebarVisible ? 'up' : 'down'}`}><SlArrowDown /></span>
-                </div>
-              </p>
-              <div className="sidebar-container">
-                {delay && (
-                  <div className={`sidebar-mobile ${sidebarVisible ? 'slide-in' : 'slide-out'}`}>
-                    <ul>
-                      <li className={`side-bar-selection ${selectedOption === 'profile' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('profile')}>My Profile</li>
-                      <li className={`side-bar-selection ${selectedOption === 'ads' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('ads')}>My Ads</li>
-                      <li className={`side-bar-selection ${selectedOption === 'favorites' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('favorites')}>My Favorites</li>
-                      <li className="side-bar-selection" onClick={handleLogout}>Log out</li>
-                    </ul>
+              <div className={`sidebar-container ${sidebarVisible ? 'sidebar-collapse' : 'sidebar-close'}`}>
+                <p style={{ cursor: "pointer" }} onClick={()=> setSidebarVisible(!sidebarVisible)}>Settings &nbsp;
+                  <div className="sidebar-trigger">
+                    <span className={`arrow-icon ${sidebarVisible ? 'up' : 'down'}`}><SlArrowDown /></span>
                   </div>
-                )}
+                </p>
+                <div className="sidebar-mobile">
+                  <ul>
+                    <li className={`side-bar-selection ${selectedOption === 'profile' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('profile')}>My Profile</li>
+                    <li className={`side-bar-selection ${selectedOption === 'ads' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('ads')}>My Ads</li>
+                    <li className={`side-bar-selection ${selectedOption === 'favorites' ? 'selected-option' : ''}`} onClick={() => setSelectedOption('favorites')}>My Favorites</li>
+                    <li className="side-bar-selection" onClick={handleLogout}>Log out</li>
+                  </ul>
+                </div>
               </div>
               <div className="sidebar-plain">
+                <p>Settings</p>
                 <ul>
                   <li className={`side-bar-selection ${selectedOption === "profile" ? "selected-option" : ""}`} onClick={() => setSelectedOption("profile")}>My Profile</li>
                   <li className={`side-bar-selection ${selectedOption === "ads" ? "selected-option" : ""}`} onClick={() => setSelectedOption("ads")}>My Ads</li>
