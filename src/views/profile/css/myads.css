@@ -1,0 +1,14 @@
+.myads-main {
+    border-radius: 25px;
+    padding: 40px 40px;
+    width: 100% !important;
+    margin-top: 50px;
+    flex-direction: column;
+    min-height: 200px;
+    box-shadow: 0 0 10px rgba(36, 45, 82, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.myads-main:hover {
+    box-shadow: 0 0 10px rgba(36, 45, 82, 0.3);
+}

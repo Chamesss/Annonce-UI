@@ -65,8 +65,8 @@ function Main() {
     switch (selectedOption) {
       case "ads":
         return (
-          <div className="container d-flex justify-content-center align-items-center">
-            <div className="content p-5">
+          <div className="justify-content-center align-items-center">
+            <div className="justify-content-center align-items-center">
               <MyAds user={user} />
             </div>
           </div>
@@ -106,7 +106,7 @@ function Main() {
           <div>
             <div className="main-sidebar">
               <div className={`sidebar-container ${sidebarVisible ? 'sidebar-collapse' : 'sidebar-close'}`}>
-                <p style={{ cursor: "pointer" }} onClick={()=> setSidebarVisible(!sidebarVisible)}>Settings &nbsp;
+                <p style={{ cursor: "pointer" }} onClick={() => setSidebarVisible(!sidebarVisible)}>Settings &nbsp;
                   <div className="sidebar-trigger">
                     <span className={`arrow-icon ${sidebarVisible ? 'up' : 'down'}`}><SlArrowDown /></span>
                   </div>
@@ -140,7 +140,11 @@ function Main() {
                   : "My Favorites"}
             </span>
             <div className="page-container">
-              {isLoading && (<div><Spinner /></div>)}
+              {isLoading && (
+                <div style={{height:"100px", margin:"50px"}}>
+                  <Spinner />
+                </div>
+              )}
               {user && selectedOption && (
                 <div>
                   {renderContent()}
